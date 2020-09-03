@@ -24,25 +24,28 @@ async function createFixture(mode, predicate, authFetcher, testFolderUrl) {
 }
 
 describe('Create', () => {
-  let authFetcher;
+  let authFetcherAlice;
+  let authFetcherBob;
+  
   const { testFolderUrl } = generateTestFolder();
   const containerUrl = `${testFolderUrl}empty/`;
   beforeEach(async () => {
-    authFetcher = await getAuthFetcher();
+    authFetcherAlice = await getAuthFetcher('alice');
+    authFetcherBob = await getAuthFetcher('bob');
     // FIXME: NSS ACL cache,
     // wait for ACL cache to clear:
     await new Promise(resolve => setTimeout(resolve, 20));
   });
 
   afterEach(() => {
-    return recursiveDelete(testFolderUrl, authFetcher);
+    return recursiveDelete(testFolderUrl, authFetcherAlice);
   });
 
   describe('Using POST', () => {
     function testFor(mode, predicate, allowed) {
       it(`Is ${allowed ? 'allowed' : 'not allowed'} with ${predicate} ${mode} access`, async () => {
-        await createFixture(mode, predicate, authFetcher, testFolderUrl);
-        const result = await authFetcher.fetch(`${testFolderUrl}${predicate}${mode}/`, {
+        await createFixture(mode, predicate, authFetcherAlice, testFolderUrl);
+        const result = await authFetcherAlice.fetch(`${testFolderUrl}${predicate}${mode}/`, {
           method: 'POST',
           body: 'hello'
         });
@@ -63,8 +66,8 @@ describe('Create', () => {
   describe('Using PUT', () => {
     function testFor(mode, predicate, allowed) {
       it(`Is ${allowed ? 'allowed' : 'not allowed'} with ${predicate} ${mode} access`, async () => {
-        await createFixture(mode, predicate, authFetcher, testFolderUrl);
-        const result = await authFetcher.fetch(`${testFolderUrl}${predicate}${mode}/new.txt`, {
+        await createFixture(mode, predicate, authFetcherAlice, testFolderUrl);
+        const result = await authFetcherBob.fetch(`${testFolderUrl}${predicate}${mode}/new.txt`, {
           method: 'PUT',
           body: 'hello',
           headers: {

@@ -1,14 +1,14 @@
 import { customAuthFetcher } from "solid-auth-fetcher";
-import {SERVER_ROOT, USERNAME, PASSWORD } from "./global";
+import {SERVER_ROOT, USERNAME_ALICE, PASSWORD_ALICE, USERNAME_BOB, PASSWORD_BOB } from "./global";
 import fetch from "node-fetch";
 
-export async function getAuthFetcher() {
+export async function getAuthFetcher(user = 'alice') {
   const authFetcher = await customAuthFetcher();
   const serverLoginResult = await authFetcher.fetch(`${SERVER_ROOT}/login/password`, {
     headers: {
       "content-type": "application/x-www-form-urlencoded"
     },
-    body: `username=${USERNAME}&password=${PASSWORD}`,
+    body: `username=${(user === 'alice' ? USERNAME_ALICE : USERNAME_BOB)}&password=${(user === 'alice' ? PASSWORD_ALICE : PASSWORD_BOB)}`,
     method: "POST",
     redirect: "manual"
   });
