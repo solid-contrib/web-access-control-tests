@@ -86,3 +86,10 @@ export class WPSClient {
 export function responseCodeGroup(code) {
   return `${Math.floor(code / 100)}xx`;
 }
+
+// FIXME: this function also exists in Solid-UI, should move
+// it into a module one day:
+const ACL_LINK = rdf.sym('http://www.iana.org/assignments/link-relations/acl')
+export function findAclDoc(doc, kb) {
+  return kb.any(doc, ACL_LINK); // @@ check that this get set by web.js
+}
