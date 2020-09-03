@@ -90,6 +90,13 @@ export function responseCodeGroup(code) {
 // FIXME: this function also exists in Solid-UI, should move
 // it into a module one day:
 const ACL_LINK = rdf.sym('http://www.iana.org/assignments/link-relations/acl')
-export function findAclDoc(doc, kb) {
-  return kb.any(doc, ACL_LINK); // @@ check that this get set by web.js
+export async function findAclDocUrl(url, authFetcher) {
+  const store = getStore(authFetcher);
+  const doc = store.sym(url);
+  await store.fetcher.load(doc);
+  const docNode = store.any(doc, ACL_LINK);
+  if (!docNode) {
+    throw new Error(`No ACL link discovered for ${url}`);
+  }
+  return docNode.value;
 }
