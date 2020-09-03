@@ -79,7 +79,7 @@ describe('ACL doc application', () => {
     });
 
     afterAll(() => {
-      // return recursiveDelete(testFolderUrl, authFetcher);
+      return recursiveDelete(testFolderUrl, authFetcher);
     });
 
     it('allows GET accessTo/', async () => {
@@ -122,7 +122,7 @@ describe('ACL doc application', () => {
     });
 
     afterAll(() => {
-      // return recursiveDelete(testFolderUrl, authFetcher);
+      return recursiveDelete(testFolderUrl, authFetcher);
     });
 
     it('does not allow GET accessTo/', async () => {

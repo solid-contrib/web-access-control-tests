@@ -27,14 +27,20 @@ export async function getContainerMembers(containerUrl, authFetcher) {
 }
 
 export async function recursiveDelete(url, authFetcher) {
-  if (!authFetcher) {
-    throw new Error('please pass authFetcher to recursiveDelete!');
+  try {
+    if (!authFetcher) {
+      throw new Error('please pass authFetcher to recursiveDelete!');
+    }
+    if (isContainer(url)) {
+      const aclDocUrl = await findAclDocUrl(url, authFetcher);
+      await authFetcher.fetch(aclDocUrl, { method: 'DELETE' });
+      const containerMembers = await getContainerMembers(url, authFetcher);
+      await Promise.all(containerMembers.map(url => recursiveDelete(url, authFetcher)));
+    }
+    return authFetcher.fetch(url, { method: 'DELETE' });
+  } catch (e) {
+    console.log(`Please manually remove ${url} from your system under test.`);
   }
-  if (isContainer(url)) {
-    const containerMembers = await getContainerMembers(url, authFetcher);
-    await Promise.all(containerMembers.map(url => recursiveDelete(url, authFetcher)));
-  }
-  return authFetcher.fetch(url, { method: 'DELETE' });
 }
 
 export class WPSClient {
