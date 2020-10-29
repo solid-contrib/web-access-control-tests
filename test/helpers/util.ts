@@ -1,7 +1,8 @@
-import { getAuthHeaders } from "./obtain-auth-headers";
+import { getAuthHeaders } from "solid-auth-fetcher";
+import { findAclDocUrl } from "solid-logic";
 
 const WebSocket = require('ws');
-const rdf = require('rdflib');
+const rdflib = require('rdflib');
 
 
 function isContainer(url) {
@@ -12,11 +13,12 @@ export function getStore(authFetcher) {
   if (!authFetcher) {
     throw new Error('please pass authFetcher to getStore!');
   }
-  var store = (module.exports = rdf.graph()) // Make a Quad store
-  rdf.fetcher(store, { fetch: authFetcher.fetch.bind(authFetcher) }) // Attach a web I/O module, store.fetcher
-  store.updater = new rdf.UpdateManager(store) // Add real-time live updates store.updater
+  var store = (module.exports = rdflib.graph()) // Make a Quad store
+  rdflib.fetcher(store, { fetch: authFetcher.fetch.bind(authFetcher) }) // Attach a web I/O module, store.fetcher
+  store.updater = new rdflib.UpdateManager(store) // Add real-time live updates store.updater
   return store;
 }
+
 export async function getContainerMembers(containerUrl, authFetcher) {
   if (!authFetcher) {
     throw new Error('please pass authFetcher to getContainerMembers!');
@@ -93,16 +95,12 @@ export function responseCodeGroup(code) {
   return `${Math.floor(code / 100)}xx`;
 }
 
-// FIXME: this function also exists in Solid-UI, should move
-// it into a module one day:
-const ACL_LINK = rdf.sym('http://www.iana.org/assignments/link-relations/acl')
-export async function findAclDocUrl(url, authFetcher) {
-  const store = getStore(authFetcher);
-  const doc = store.sym(url);
-  await store.fetcher.load(doc);
-  const docNode = store.any(doc, ACL_LINK);
-  if (!docNode) {
-    throw new Error(`No ACL link discovered for ${url}`);
-  }
-  return docNode.value;
+export async function generateTestFolder() {
+  const alicePodRoot = getPodRoot(webIdAlice);
+  const testFolder = `web-access-control-tests-${new Date().getTime()}`;
+  return {
+    testFolder,
+    alicePodRoot,
+    testFolderUrl: `${alicePodRoot}/${testFolder}/`
+  };
 }

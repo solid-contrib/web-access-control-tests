@@ -1,5 +1,5 @@
-import { generateTestFolder } from '../helpers/global';
-import { getAuthFetcher } from '../helpers/obtain-auth-headers';
+import { generateTestFolder, oidcIssuer, cookie, appOrigin } from '../helpers/env';
+import { getAuthFetcher } from 'solid-auth-fetcher';
 import { recursiveDelete, findAclDocUrl } from '../helpers/util';
 
 const ALICE_WEBID = process.env.ALICE_WEBID;

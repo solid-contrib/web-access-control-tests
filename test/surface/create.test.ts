@@ -1,4 +1,4 @@
-import { generateTestFolder } from '../helpers/global';
+import { generateTestFolder } from '../helpers/env';
 import { getAuthFetcher } from '../helpers/obtain-auth-headers';
 import { recursiveDelete, findAclDocUrl } from '../helpers/util';
 
