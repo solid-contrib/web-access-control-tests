@@ -1,5 +1,5 @@
 import { getAuthHeaders } from "solid-auth-fetcher";
-import { SolidLogic } from "solid-logic";
+import { SolidLogic } from "../../solid-logic-move-me";
 
 const WebSocket = require('ws');
 const rdflib = require('rdflib');

@@ -1,32 +1,61 @@
 import { generateTestFolder, getSolidLogicInstance } from '../helpers/env';
-import { SolidLogic } from 'solid-logic';
+import { SolidLogic } from '../../solid-logic-move-me';
 
 const ALICE_WEBID = process.env.ALICE_WEBID;
 
 // jest.setTimeout(30000);
 
+function getAclBody(aliceWebId: string, bobWebId: string, target: string, bobAccessTo: string[], bobDefault: string[]) {
+  let turtle = `@prefix acl: <http://www.w3.org/ns/auth/acl#>.\n\
+\n\
+<#alice> a acl:Authorization;\n\
+  acl:agent <${aliceWebId}>;\n\
+  acl:accessTo <${target}>;\n
+  acl:default <${target}>;\n
+  acl:mode acl:Read, acl:Write, acl:Control.\n\
+`
+  if (bobAccessTo.length) {
+    turtle += `\
+<#bobAccessTo> a acl:Authorization;\n\
+acl:agent <${bobWebId}>;\n\
+acl:accessTo <${target}>;\n
+acl:mode ${bobAccessTo.join(', ')}.\n\
+`
+  }
+  if (bobDefault.length) {
+    turtle += `\
+<#bobAccessTo> a acl:Authorization;\n\
+acl:agent <${bobWebId}>;\n\
+acl:default <${target}>;\n
+acl:mode ${bobDefault.join(' ')}.\n\
+`
+  }
+  return turtle;
+}
+
 describe('ACL doc application', () => {
-  let solidLogicAlice;
-  let solidLogicBob;
+  let solidLogicAlice: SolidLogic;
+  let solidLogicBob: SolidLogic;
   beforeAll(async () => {
-    const solidLogicAlice = getSolidLogicInstance('ALICE')
-    const solidLogicBob = getSolidLogicInstance('BOB')
+    solidLogicAlice = await getSolidLogicInstance('ALICE')
+    solidLogicBob = await getSolidLogicInstance('BOB')
   });
 
-  describe('empty ACL doc on container', () => {
+
+  describe('No access on container', () => {
     const { testFolderUrl } = generateTestFolder('ALICE');
-    const containerUrl = `${testFolderUrl}empty/`;
+    const containerUrl = `${testFolderUrl}denied/`;
 
     beforeAll(async () => {
       // This will do mkdir-p:
-      await solidLogicAlice.store.fetcher.fetch(`${testFolderUrl}empty/noAclDoc/noAclDoc.txt`, {
+      await solidLogicAlice.fetch(`${testFolderUrl}denied/noAclDoc/noAclDoc.txt`, {
         method: 'PUT',
         body: 'hello'
       });
-      const aclDocUrl = await solidLogicAlice.findAclDocUrl(`${testFolderUrl}empty/`);
-      await solidLogicAlice.store.fetcher.fetch(aclDocUrl, {
+      const aclDocUrl = await solidLogicAlice.findAclDocUrl(`${testFolderUrl}denied/`);
+      await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: '',
+        body: getAclBody(solidLogicAlice.me, solidLogicBob.me, containerUrl, [], []),
         headers: {
           'Content-Type': 'text/turtle'
         }
@@ -37,21 +66,21 @@ describe('ACL doc application', () => {
     });
 
     afterAll(() => {
-      return solidLogicAlice.recursiveDelete(testFolderUrl);
+      // return solidLogicAlice.recursiveDelete(testFolderUrl);
     });
 
-    it('does not allow GET empty/', async () => {
-      const result = await solidLogicAlice.store.fetcher.fetch(`${testFolderUrl}empty/`);
+    it('does not allow GET denied/', async () => {
+      const result = await solidLogicBob.fetch(`${testFolderUrl}denied/`);
       expect(result.status).toEqual(403);
     });
 
-    it('does not allow GET empty/noAclDoc/', async () => {
-      const result = await solidLogicAlice.store.fetcher.fetch(`${testFolderUrl}empty/noAclDoc/`);
+    it('does not allow GET denied/noAclDoc/', async () => {
+      const result = await solidLogicBob.fetch(`${testFolderUrl}denied/noAclDoc/`);
       expect(result.status).toEqual(403);
     });
 
-    it('does not allow GET empty/noAclDoc/noAclDoc.txt', async () => {
-      const result = await solidLogicAlice.store.fetcher.fetch(`${testFolderUrl}empty/noAclDoc/noAclDoc.txt`);
+    it('does not allow GET denied/noAclDoc/noAclDoc.txt', async () => {
+      const result = await solidLogicBob.fetch(`${testFolderUrl}denied/noAclDoc/noAclDoc.txt`);
       expect(result.status).toEqual(403);
     });
   });
@@ -62,14 +91,14 @@ describe('ACL doc application', () => {
 
     beforeAll(async () => {
       // This will do mkdir-p:
-      await solidLogicAlice.store.fetcher.fetch(`${containerUrl}noAclDoc/noAclDoc.txt`, {
+      await solidLogicAlice.fetch(`${containerUrl}noAclDoc/noAclDoc.txt`, {
         method: 'PUT',
         body: 'hello'
       });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
-      await solidLogicAlice.store.fetcher.fetch(aclDocUrl, {
+      await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: `@prefix acl: <http://www.w3.org/ns/auth/acl#>.\n\n<#this> a acl:Authorization;\n acl:agent <${solidLogicAlice.me}>;\n acl:accessTo <${containerUrl}>;\n acl:mode acl:Read.\n`,
+        body: getAclBody(solidLogicAlice.me, solidLogicBob.me, containerUrl, ['acl:Read'], []),
         headers: {
           'Content-Type': 'text/turtle'
         }
@@ -80,21 +109,21 @@ describe('ACL doc application', () => {
     });
 
     afterAll(() => {
-      return solidLogicAlice.recursiveDelete(testFolderUrl);
+      // return solidLogicAlice.recursiveDelete(testFolderUrl);
     });
 
     it('allows GET accessTo/', async () => {
-      const result = await solidLogicAlice.store.fetcher.fetch(containerUrl);
+      const result = await solidLogicBob.fetch(containerUrl);
       expect(result.status).toEqual(200);
     });
 
     it('does not allow GET accessTo/noAclDoc/', async () => {
-      const result = await solidLogicAlice.store.fetcher.fetch(`${containerUrl}noAclDoc/`);
+      const result = await solidLogicBob.fetch(`${containerUrl}noAclDoc/`);
       expect(result.status).toEqual(403);
     });
 
     it('does not allow GET accessTo/noAclDoc/noAclDoc.txt', async () => {
-      const result = await solidLogicAlice.store.fetcher.fetch(`${containerUrl}noAclDoc/noAclDoc.txt`);
+      const result = await solidLogicBob.fetch(`${containerUrl}noAclDoc/noAclDoc.txt`);
       expect(result.status).toEqual(403);
     });
   });
@@ -105,14 +134,14 @@ describe('ACL doc application', () => {
 
     beforeAll(async () => {
       // This will do mkdir-p:
-      await solidLogicAlice.store.fetcher.fetch(`${containerUrl}noAclDoc/noAclDoc.txt`, {
+      await solidLogicAlice.fetch(`${containerUrl}noAclDoc/noAclDoc.txt`, {
         method: 'PUT',
         body: 'hello'
       });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
-      await solidLogicAlice.store.fetcher.fetch(aclDocUrl, {
+      await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: `@prefix acl: <http://www.w3.org/ns/auth/acl#>.\n\n<#this> a acl:Authorization;\n acl:agent <${solidLogicAlice.me}>;\n acl:default <${containerUrl}>;\n acl:mode acl:Read.\n`,
+        body: getAclBody(solidLogicAlice.me, solidLogicBob.me, containerUrl, [], ['acl:Read']),
         headers: {
           'Content-Type': 'text/turtle'
         }
@@ -123,21 +152,21 @@ describe('ACL doc application', () => {
     });
 
     afterAll(() => {
-      return solidLogicAlice.recursiveDelete(testFolderUrl);
+      // return solidLogicAlice.recursiveDelete(testFolderUrl);
     });
 
     it('does not allow GET accessTo/', async () => {
-      const result = await solidLogicAlice.store.fetcher.fetch(containerUrl);
+      const result = await solidLogicBob.fetch(containerUrl);
       expect(result.status).toEqual(403);
     });
 
-    it('does allow GET accessTo/noAclDoc/', async () => {
-      const result = await solidLogicAlice.store.fetcher.fetch(`${containerUrl}noAclDoc/`);
+    it('allows GET accessTo/noAclDoc/', async () => {
+      const result = await solidLogicBob.fetch(`${containerUrl}noAclDoc/`);
       expect(result.status).toEqual(200);
     });
 
-    it('does allow GET accessTo/noAclDoc/noAclDoc.txt', async () => {
-      const result = await solidLogicAlice.store.fetcher.fetch(`${containerUrl}noAclDoc/noAclDoc.txt`);
+    it('allows GET accessTo/noAclDoc/noAclDoc.txt', async () => {
+      const result = await solidLogicBob.fetch(`${containerUrl}noAclDoc/noAclDoc.txt`);
       expect(result.status).toEqual(200);
     });
   });

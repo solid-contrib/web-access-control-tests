@@ -12,15 +12,21 @@ function getEnvVars(who: string) {
 
 export async function getSolidLogicInstance(who: string) {
   const envVars: any = getEnvVars(who)
+  console.log({ envVars })
   const fetcher = await getAuthFetcher(envVars.oidcIssuer, envVars.cookie, "https://tester")
-  return new SolidLogic(fetcher as { fetch: () => any }, envVars.webId)
+  console.log(fetcher)
+  return new SolidLogic(fetcher.fetch.bind(fetcher), envVars.webId)
 }
 
 export function generateTestFolder(who: string) {
-  const storageRoot = getEnvVars(who).storageRoot;
+  let storageRoot = getEnvVars(who).storageRoot;
+  if (storageRoot.substr(-1) !== '/') {
+    console.warn(`Adding slash to the end of ${who}'s storage root ->"${storageRoot}"+"/"`);
+    storageRoot += '/';
+  }
   const testFolder = `web-access-control-tests-${new Date().getTime()}`;
   return {
     testFolder,
-    testFolderUrl: `${storageRoot}/${testFolder}/`
+    testFolderUrl: `${storageRoot}${testFolder}/`
   };
 }

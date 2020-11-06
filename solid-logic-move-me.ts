@@ -7,7 +7,7 @@ import * as debug from './debug'
 
 export const ACL_LINK = rdf.sym('http://www.iana.org/assignments/link-relations/acl')
 
-const ns = solidNamespace(rdf)
+const ns = solidNamespace
 
 export class SolidLogic {
   cache: {
@@ -19,22 +19,46 @@ export class SolidLogic {
     }
   }
 
+  fetcher: any
   store: IndexedFomula
   me: string | undefined
-  constructor (fetcher: { fetch: () => any }, me?: string) {
+  constructor (fetch: (url: string, options?: any) => any, me?: string) {
     this.store = rdf.graph() // Make a Quad store
-    rdf.fetcher(this.store, fetcher) // Attach a web I/O module, store.fetcher
+    rdf.fetcher(this.store, { fetch }) // Attach a web I/O module, store.fetcher
     this.store.updater = new rdf.UpdateManager(this.store) // Add real-time live updates store.updater
     this.cache = {
       profileDocument: {},
       preferencesFile: {}
     }
     this.me = me;
+    this.fetch = async (url, options) => {
+      console.log('fetching', url, options)
+      try {
+        return fetch(url, options);
+      } catch (e) {
+        console.error('solidLogic.fetch error:', e.message);
+      }
+    }
+  }
+
+  async fetch (url, options?) {
+    console.log('fetching', url, options)
+    try {
+      return this.fetcher.fetch(url, options);
+    } catch (e) {
+      console.error('solidLogic.fetch error:', e.message);
+    }
   }
 
   async findAclDocUrl (url: string | NamedNode) {
     const doc = this.store.sym(url)
-    await this.store.fetcher.load(doc)
+    console.log('calling load', doc)
+    try {
+      await this.store.fetcher.load(doc)
+    } catch (e) {
+      console.error('error loading', doc, e.message)
+    }
+    console.log('called load', doc)
     const docNode = this.store.any(doc, ACL_LINK)
     if (!docNode) {
       throw new Error(`No ACL link discovered for ${url}`)
