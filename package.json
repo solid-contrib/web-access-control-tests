@@ -7,9 +7,10 @@
     "test": "test"
   },
   "scripts": {
+    "build": "echo nothing to build",
     "jest": "jest",
-    "lint": "eslint test/ --ext .ts",
-    "local": "NODE_TLS_REJECT_UNAUTHORIZED=0 SERVER_ROOT=https://localhost ALICE_WEBID=https://localhost/profile/card#me npm run jest"
+    "test": "echo nothing to test these tests",
+    "postversion": "git push --follow-tags"
   },
   "repository": {
     "type": "git",
