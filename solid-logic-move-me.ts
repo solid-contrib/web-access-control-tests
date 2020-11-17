@@ -244,7 +244,7 @@ export class SolidLogic {
       }
       return this.store.fetcher.fetch(url, { method: 'DELETE' });
     } catch (e) {
-      console.log(`Please manually remove ${url} from your system under test.`);
+      console.log(`Please manually remove ${url} from your system under test.`, e);
     }
   }
   clearStore () {
