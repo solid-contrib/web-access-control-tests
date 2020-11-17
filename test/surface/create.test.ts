@@ -1,9 +1,38 @@
 import { generateTestFolder, getSolidLogicInstance } from '../helpers/env';
 import { SolidLogic } from '../../solid-logic-move-me';
 
-const ALICE_WEBID = process.env.ALICE_WEBID;
+const WEBID_ALICE = process.env.WEBID_ALICE;
+const WEBID_BOB = process.env.WEBID_BOB;
 
 // jest.setTimeout(30000);
+
+function makeBody(accessToModes: string, defaultModes: string, target: string) {
+  let str = [
+    '@prefix acl: <http://www.w3.org/ns/auth/acl#>.',
+    '',
+    `<#alice> a acl:Authorization;\n  acl:agent <${WEBID_ALICE}>;`,
+    `  acl:accessTo <${target}>;`,
+    `  acl:default <${target}>;`,
+    '  acl:mode acl:Read, acl:Write, acl:Control.'
+  ].join('\n')
+  if (accessToModes) {
+    str += [
+      '<#bobAccessTo> a acl:Authorization;',
+      `  acl:agent <${WEBID_BOB}>;`,
+      `  acl:accessTo <${target}>;`,
+      `  acl:mode ${accessToModes}.`
+    ].join('\n')
+  }
+  if (defaultModes) {
+    str += [
+      '<#bobDefault> a acl:Authorization;',
+      `  acl:agent <${WEBID_BOB}>;`,
+      `  acl:default <${target}>;`,
+      `  acl:mode ${defaultModes}.`
+    ].join('\n')
+  }
+  return str
+}
 
 describe('Create', () => {
   let solidLogicAlice: SolidLogic;
@@ -35,9 +64,7 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        // FIXME: leave Alice with Control, but give only Append to Bob:
-        // body: `@prefix acl: <http://www.w3.org/ns/auth/acl#>.\n\n<#this> a acl:Authorization;\n  acl:agent <${ALICE_WEBID}>;\n  acl:accessTo <${containerUrl}>;\n  acl:mode acl:Append.\n`,
-        body: `@prefix acl: <http://www.w3.org/ns/auth/acl#>.\n\n<#this> a acl:Authorization;\n  acl:agent <${ALICE_WEBID}>;\n  acl:accessTo <${containerUrl}>;\n  acl:mode acl:Append, acl:Control.\n`,
+        body: makeBody('acl:Append', null, containerUrl),
         headers: {
           'Content-Type': 'text/turtle'
         }
@@ -58,9 +85,7 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        // FIXME: leave Alice with Control, but give only Write to Bob:
-        // body: `@prefix acl: <http://www.w3.org/ns/auth/acl#>.\n\n<#this> a acl:Authorization;\n  acl:agent <${ALICE_WEBID}>;\n  acl:accessTo <${containerUrl}>;\n  acl:mode acl:Write.\n`,
-        body: `@prefix acl: <http://www.w3.org/ns/auth/acl#>.\n\n<#this> a acl:Authorization;\n  acl:agent <${ALICE_WEBID}>;\n  acl:accessTo <${containerUrl}>;\n  acl:mode acl:Write, acl:Control.\n`,
+        body: makeBody('acl:Write', null, containerUrl),
         headers: {
           'Content-Type': 'text/turtle'
         }
@@ -81,9 +106,7 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        // FIXME: leave Alice with Control, but give only Write to Bob:
-        // body: `@prefix acl: <http://www.w3.org/ns/auth/acl#>.\n\n<#this> a acl:Authorization;\n  acl:agent <${ALICE_WEBID}>;\n  acl:accessTo <${containerUrl}>;\n  acl:mode acl:Write.\n`,
-        body: `@prefix acl: <http://www.w3.org/ns/auth/acl#>.\n\n<#one> a acl:Authorization;\n  acl:agent <${ALICE_WEBID}>;\n  acl:accessTo <${containerUrl}>;\n  acl:mode acl:Read, acl:Control.\n<#two> a acl:Authorization;\n  acl:agent <${ALICE_WEBID}>;\n  acl:default <${containerUrl}>;\n  acl:mode acl:Read, acl:Append, acl:Write, acl:Control.\n`,
+        body: makeBody('acl:Read, acl:Control', 'acl:Read, acl:Append, acl:Write, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle'
         }
@@ -97,7 +120,7 @@ describe('Create', () => {
   });
 
   describe('Using PUT', () => {
-    it(`Is allowed with accessTo and default Write access`, async () => {
+    it(`Is allowed with accessTo Write and default Write access`, async () => {
       const containerUrl = `${testFolderUrl}accessToAndDefaultWrite/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -108,7 +131,7 @@ describe('Create', () => {
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
         // FIXME: leave Alice with Control, but give only Append to Bob:
-        body: `@prefix acl: <http://www.w3.org/ns/auth/acl#>.\n\n<#this> a acl:Authorization;\n  acl:agent <${ALICE_WEBID}>;\n  acl:accessTo <${containerUrl}>;\n  acl:default <${containerUrl}>;\n  acl:mode acl:Write, acl:Control.\n`,
+        body: makeBody('acl:Write', 'acl:Write', containerUrl),
         headers: {
           'Content-Type': 'text/turtle'
         }
@@ -123,7 +146,33 @@ describe('Create', () => {
       });
       expect(result.status).toEqual(201);
     });
-    it(`requires default Write`, async () => {
+    it(`Is allowed with accessTo Append and default Write access`, async () => {
+      const containerUrl = `${testFolderUrl}accessToAndDefaultWrite/`;
+      // This will do mkdir-p:
+      await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
+        method: 'PUT',
+        body: 'hello'
+      });
+      const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
+      await solidLogicAlice.fetch(aclDocUrl, {
+        method: 'PUT',
+        // FIXME: leave Alice with Control, but give only Append to Bob:
+        body: makeBody('acl:Append', 'acl:Write', containerUrl),
+        headers: {
+          'Content-Type': 'text/turtle'
+        }
+      });
+      const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
+        method: 'PUT',
+        body: 'hello',
+        headers: {
+          'Content-Type': 'text/plain',
+          'If-None-Match': '*'
+        }
+      });
+      expect(result.status).toEqual(201);
+    });
+    it(`is disallowed without default Write`, async () => {
       const containerUrl = `${testFolderUrl}allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -133,9 +182,7 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        // FIXME: leave Alice with Control, but give only Write to Bob:
-        // body: `@prefix acl: <http://www.w3.org/ns/auth/acl#>.\n\n<#this> a acl:Authorization;\n  acl:agent <${ALICE_WEBID}>;\n  acl:accessTo <${containerUrl}>;\n  acl:mode acl:Write.\n`,
-        body: `@prefix acl: <http://www.w3.org/ns/auth/acl#>.\n\n<#one> a acl:Authorization;\n  acl:agent <${ALICE_WEBID}>;\n  acl:accessTo <${containerUrl}>;\n  acl:mode acl:Read, acl:Append, acl:Write, acl:Control.\n<#two> a acl:Authorization;\n  acl:agent <${ALICE_WEBID}>;\n  acl:default <${containerUrl}>;\n  acl:mode acl:Read, acl:Append, acl:Control.\n`,
+        body:  makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Append, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle'
         }
@@ -151,7 +198,7 @@ describe('Create', () => {
       expect(result.status).toEqual(403);
     });
 
-    it(`requires accessTo Write`, async () => {
+    it(`is disallowed without accessTo Write or Append`, async () => {
       const containerUrl = `${testFolderUrl}allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -161,9 +208,7 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        // FIXME: leave Alice with Control, but give only Write to Bob:
-        // body: `@prefix acl: <http://www.w3.org/ns/auth/acl#>.\n\n<#this> a acl:Authorization;\n  acl:agent <${ALICE_WEBID}>;\n  acl:accessTo <${containerUrl}>;\n  acl:mode acl:Write.\n`,
-        body: `@prefix acl: <http://www.w3.org/ns/auth/acl#>.\n\n<#one> a acl:Authorization;\n  acl:agent <${ALICE_WEBID}>;\n  acl:accessTo <${containerUrl}>;\n  acl:mode acl:Read, acl:Append, acl:Control.\n<#two> a acl:Authorization;\n  acl:agent <${ALICE_WEBID}>;\n  acl:default <${containerUrl}>;\n  acl:mode acl:Read, acl:Append, acl:Write, acl:Control.\n`,
+        body:  makeBody('acl:Read, acl:Control', 'acl:Read, acl:Append, acl:Write, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle'
         }
