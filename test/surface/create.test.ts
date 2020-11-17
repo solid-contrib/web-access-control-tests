@@ -28,7 +28,7 @@ describe('Create', () => {
     it(`Is allowed with accessTo Append access`, async () => {
       const containerUrl = `${testFolderUrl}accessToAppend/`;
       // This will do mkdir-p:
-      await solidLogicAlice.fetch(`${containerUrl}/test.txt`, {
+      await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
         body: 'hello'
       });
@@ -51,7 +51,7 @@ describe('Create', () => {
     it(`Is allowed with accessTo Write access`, async () => {
       const containerUrl = `${testFolderUrl}accessToWrite/`;
       // This will do mkdir-p:
-      await solidLogicAlice.fetch(`${containerUrl}/test.txt`, {
+      await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
         body: 'hello'
       });
@@ -74,7 +74,7 @@ describe('Create', () => {
     it(`Is disallowed otherwise`, async () => {
       const containerUrl = `${testFolderUrl}allOtherModes/`;
       // This will do mkdir-p:
-      await solidLogicAlice.fetch(`${containerUrl}/test.txt`, {
+      await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
         body: 'hello'
       });
@@ -88,7 +88,7 @@ describe('Create', () => {
           'Content-Type': 'text/turtle'
         }
       });
-      const result = await solidLogicAlice.fetch(`${containerUrl}/`, {
+      const result = await solidLogicAlice.fetch(containerUrl, {
         method: 'POST',
         body: 'hello'
       });
@@ -100,7 +100,7 @@ describe('Create', () => {
     it(`Is allowed with accessTo and default Write access`, async () => {
       const containerUrl = `${testFolderUrl}accessToAndDefaultWrite/`;
       // This will do mkdir-p:
-      await solidLogicAlice.fetch(`${containerUrl}/test.txt`, {
+      await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
         body: 'hello'
       });
@@ -113,7 +113,7 @@ describe('Create', () => {
           'Content-Type': 'text/turtle'
         }
       });
-      const result = await solidLogicBob.fetch(`${containerUrl}/new.txt`, {
+      const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
         method: 'PUT',
         body: 'hello',
         headers: {
@@ -126,7 +126,7 @@ describe('Create', () => {
     it(`requires default Write`, async () => {
       const containerUrl = `${testFolderUrl}allOtherModes/`;
       // This will do mkdir-p:
-      await solidLogicAlice.fetch(`${containerUrl}/test.txt`, {
+      await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
         body: 'hello'
       });
@@ -140,7 +140,7 @@ describe('Create', () => {
           'Content-Type': 'text/turtle'
         }
       });
-      const result = await solidLogicBob.fetch(`${containerUrl}/new.txt`, {
+      const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
         method: 'PUT',
         body: 'hello',
         headers: {
@@ -154,7 +154,7 @@ describe('Create', () => {
     it(`requires accessTo Write`, async () => {
       const containerUrl = `${testFolderUrl}allOtherModes/`;
       // This will do mkdir-p:
-      await solidLogicAlice.fetch(`${containerUrl}/test.txt`, {
+      await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
         body: 'hello'
       });
@@ -168,7 +168,7 @@ describe('Create', () => {
           'Content-Type': 'text/turtle'
         }
       });
-      const result = await solidLogicBob.fetch(`${containerUrl}/new.txt`, {
+      const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
         method: 'PUT',
         body: 'hello',
         headers: {
