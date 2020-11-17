@@ -13,14 +13,16 @@ function makeBody(accessToModes: string, defaultModes: string, target: string) {
     `<#alice> a acl:Authorization;\n  acl:agent <${WEBID_ALICE}>;`,
     `  acl:accessTo <${target}>;`,
     `  acl:default <${target}>;`,
-    '  acl:mode acl:Read, acl:Write, acl:Control.'
+    '  acl:mode acl:Read, acl:Write, acl:Control.',
+    ''
   ].join('\n')
   if (accessToModes) {
     str += [
       '<#bobAccessTo> a acl:Authorization;',
       `  acl:agent <${WEBID_BOB}>;`,
       `  acl:accessTo <${target}>;`,
-      `  acl:mode ${accessToModes}.`
+      `  acl:mode ${accessToModes}.`,
+      ''
     ].join('\n')
   }
   if (defaultModes) {
@@ -28,7 +30,8 @@ function makeBody(accessToModes: string, defaultModes: string, target: string) {
       '<#bobDefault> a acl:Authorization;',
       `  acl:agent <${WEBID_BOB}>;`,
       `  acl:default <${target}>;`,
-      `  acl:mode ${defaultModes}.`
+      `  acl:mode ${defaultModes}.`,
+      ''
     ].join('\n')
   }
   return str
