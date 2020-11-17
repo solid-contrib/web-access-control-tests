@@ -133,7 +133,6 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        // FIXME: leave Alice with Control, but give only Append to Bob:
         body: makeBody('acl:Write', 'acl:Write', containerUrl),
         headers: {
           'Content-Type': 'text/turtle'
@@ -159,7 +158,6 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        // FIXME: leave Alice with Control, but give only Append to Bob:
         body: makeBody('acl:Append', 'acl:Write', containerUrl),
         headers: {
           'Content-Type': 'text/turtle'
