@@ -41,7 +41,6 @@ describe('ACL doc application', () => {
     solidLogicBob = await getSolidLogicInstance('BOB')
   });
 
-
   describe('No access on container', () => {
     const { testFolderUrl } = generateTestFolder('ALICE');
     const containerUrl = `${testFolderUrl}denied/`;
@@ -66,7 +65,7 @@ describe('ACL doc application', () => {
     });
 
     afterAll(() => {
-      // return solidLogicAlice.recursiveDelete(testFolderUrl);
+      return solidLogicAlice.recursiveDelete(testFolderUrl);
     });
 
     it('does not allow GET denied/', async () => {
@@ -109,7 +108,7 @@ describe('ACL doc application', () => {
     });
 
     afterAll(() => {
-      // return solidLogicAlice.recursiveDelete(testFolderUrl);
+      return solidLogicAlice.recursiveDelete(testFolderUrl);
     });
 
     it('allows GET accessTo/', async () => {
@@ -152,7 +151,7 @@ describe('ACL doc application', () => {
     });
 
     afterAll(() => {
-      // return solidLogicAlice.recursiveDelete(testFolderUrl);
+      return solidLogicAlice.recursiveDelete(testFolderUrl);
     });
 
     it('does not allow GET accessTo/', async () => {
