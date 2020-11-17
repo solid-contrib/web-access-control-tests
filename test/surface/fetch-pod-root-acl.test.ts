@@ -3,7 +3,7 @@ import { generateTestFolder, getSolidLogicInstance } from '../helpers/env';
 import { SolidLogic } from '../../solid-logic-move-me';
 import { sym } from 'rdflib'
 
-const ALICE_WEBID = process.env.ALICE_WEBID;
+const WEBID_ALICE = process.env.WEBID_ALICE;
 
 describe("Alice's storage root", () => {
   let solidLogicAlice: SolidLogic;
@@ -11,8 +11,8 @@ describe("Alice's storage root", () => {
 
   beforeAll(async () => {
     solidLogicAlice = await getSolidLogicInstance('ALICE')
-    await solidLogicAlice.load(sym(ALICE_WEBID).doc())
-    podRoots = solidLogicAlice.store.statementsMatching(sym(ALICE_WEBID), sym(space.storage)).map(st => st.object.value);
+    await solidLogicAlice.load(sym(WEBID_ALICE).doc())
+    podRoots = solidLogicAlice.store.statementsMatching(sym(WEBID_ALICE), sym(space.storage)).map(st => st.object.value);
   });
 
   test("has an ACL", async () => {
