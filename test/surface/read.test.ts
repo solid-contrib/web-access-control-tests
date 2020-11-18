@@ -1,5 +1,6 @@
 import { generateTestFolder, getSolidLogicInstance } from '../helpers/env';
 import { SolidLogic } from '../../solid-logic-move-me';
+import { responseCodeGroup } from '../helpers/util';
 
 const WEBID_ALICE = process.env.WEBID_ALICE;
 const WEBID_BOB = process.env.WEBID_BOB;
