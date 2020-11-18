@@ -113,7 +113,7 @@ describe('ACL doc application', () => {
 
     it('allows GET accessTo/', async () => {
       const result = await solidLogicBob.fetch(containerUrl);
-      expect(result.status).toEqual(200);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
 
     it('does not allow GET accessTo/noAclDoc/', async () => {
@@ -161,12 +161,12 @@ describe('ACL doc application', () => {
 
     it('allows GET accessTo/noAclDoc/', async () => {
       const result = await solidLogicBob.fetch(`${containerUrl}noAclDoc/`);
-      expect(result.status).toEqual(200);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
 
     it('allows GET accessTo/noAclDoc/noAclDoc.txt', async () => {
       const result = await solidLogicBob.fetch(`${containerUrl}noAclDoc/noAclDoc.txt`);
-      expect(result.status).toEqual(200);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
   });
 

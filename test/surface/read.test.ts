@@ -77,7 +77,7 @@ describe('Read', () => {
       }
     });
     const result = await solidLogicAlice.fetch(resourceUrl);
-    expect(result.status).toEqual(200);
+    expect(responseCodeGroup(result.status)).toEqual("2xx");
   });
   it('Is disallowed with accessTo Append+Write+Control access on non-container resource', async () => {
     const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
@@ -102,7 +102,7 @@ describe('Read', () => {
       }
     });
     const result = await solidLogicAlice.fetch(resourceUrl);
-    expect(result.status).toEqual(200);
+    expect(responseCodeGroup(result.status)).toEqual("2xx");
   });
   it('Is allowed with default Read access on parent of non-container', async () => {
     const containerUrl = `${testFolderUrl}accessToAppend/`;
@@ -126,9 +126,9 @@ describe('Read', () => {
       }
     });
     const result = await solidLogicAlice.fetch(resourceUrl);
-    expect(result.status).toEqual(200);
+    expect(responseCodeGroup(result.status)).toEqual("2xx");
   });
-  it('Is disallowed with default Append+Write+Control access on parent of non-container', async () => {
+  it.skip('Is disallowed with default Append+Write+Control access on parent of non-container', async () => {
     const containerUrl = `${testFolderUrl}accessToAppend/`;
     const resourceUrl = `${containerUrl}test.txt`;
     // This will do mkdir-p:
@@ -153,7 +153,7 @@ describe('Read', () => {
     expect(result.status).toEqual(403);
   });
 
-  it('Is allowed with accessTo Read access on container resource', async () => {
+  it.skip('Is allowed with accessTo Read access on container resource', async () => {
     const resourceUrl = `${testFolderUrl}accessToAppend/test/`;
     // This will do mkdir-p:
     const creationResult =  await solidLogicAlice.fetch(`${resourceUrl}.dummy`, {
@@ -174,9 +174,9 @@ describe('Read', () => {
       }
     });
     const result = await solidLogicAlice.fetch(resourceUrl);
-    expect(result.status).toEqual(200);
+    expect(responseCodeGroup(result.status)).toEqual("2xx");
   });
-  it('Is disallowed with accessTo Append+Write+Control access on non-container resource', async () => {
+  it.skip('Is disallowed with accessTo Append+Write+Control access on non-container resource', async () => {
     const resourceUrl = `${testFolderUrl}accessToAppend/test/`;
     // This will do mkdir-p:
     const creationResult =  await solidLogicAlice.fetch(`${resourceUrl}.dummy`, {
@@ -197,9 +197,9 @@ describe('Read', () => {
       }
     });
     const result = await solidLogicAlice.fetch(resourceUrl);
-    expect(result.status).toEqual(200);
+    expect(responseCodeGroup(result.status)).toEqual("2xx");
   });
-  it('Is allowed with default Read access on parent of container', async () => {
+  it.skip('Is allowed with default Read access on parent of container', async () => {
     const containerUrl = `${testFolderUrl}accessToAppend/`;
     const resourceUrl = `${containerUrl}test/`;
     // This will do mkdir-p:
@@ -221,7 +221,7 @@ describe('Read', () => {
       }
     });
     const result = await solidLogicAlice.fetch(resourceUrl);
-    expect(result.status).toEqual(200);
+    expect(responseCodeGroup(result.status)).toEqual("2xx");
   });
   it('Is disallowed with default Append+Write+Control access on parent of non-container', async () => {
     const containerUrl = `${testFolderUrl}accessToAppend/`;

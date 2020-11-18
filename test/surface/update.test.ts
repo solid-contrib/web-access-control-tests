@@ -1,5 +1,6 @@
 import { generateTestFolder, getSolidLogicInstance } from '../helpers/env';
 import { SolidLogic } from '../../solid-logic-move-me';
+import { responseCodeGroup } from '../helpers/util';
 
 const WEBID_ALICE = process.env.WEBID_ALICE;
 const WEBID_BOB = process.env.WEBID_BOB;
@@ -87,7 +88,7 @@ describe('Update', () => {
           'If-Match': etagInQuotes
         }
       });
-      expect(result.status).toEqual(200);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is allowed with accessTo Write access on resource', async () => {
       const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
@@ -119,7 +120,7 @@ describe('Update', () => {
           'If-Match': etagInQuotes
         }
       });
-      expect(result.status).toEqual(200);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is disallowed with accessTo Read+Control access on resource', async () => {
       const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
@@ -151,7 +152,7 @@ describe('Update', () => {
           'If-Match': etagInQuotes
         }
       });
-      expect(result.status).toEqual(200);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is allowed with default Append access on parent', async () => {
       const containerUrl = `${testFolderUrl}accessToAppend/`;
@@ -184,7 +185,7 @@ describe('Update', () => {
           'If-Match': etagInQuotes
         }
       });
-      expect(result.status).toEqual(200);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is allowed with default Write access on parent', async () => {
       const containerUrl = `${testFolderUrl}accessToAppend/`;
@@ -217,7 +218,7 @@ describe('Update', () => {
           'If-Match': etagInQuotes
         }
       });
-      expect(result.status).toEqual(200);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is disallowed with default Read+Control access on parent', async () => {
       const containerUrl = `${testFolderUrl}accessToAppend/`;
@@ -285,7 +286,7 @@ describe('Update', () => {
           'If-Match': etagInQuotes
         }
       });
-      expect(result.status).toEqual(200);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is disallowed with accessTo Read+Append+Control access on resource', async () => {
       const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
@@ -317,7 +318,7 @@ describe('Update', () => {
           'If-Match': etagInQuotes
         }
       });
-      expect(result.status).toEqual(200);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is allowed with default Write access on parent', async () => {
       const containerUrl = `${testFolderUrl}accessToAppend/`;
@@ -350,7 +351,7 @@ describe('Update', () => {
           'If-Match': etagInQuotes
         }
       });
-      expect(result.status).toEqual(200);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is disallowed with default Read+Append+Control access on parent', async () => {
       const containerUrl = `${testFolderUrl}accessToAppend/`;
@@ -412,10 +413,10 @@ describe('Update', () => {
         method: 'PATCH',
         body: 'INSERT { <#how> <#are> <#you> . }',
         headers: {
-          'Content-Type': 'sparql-update'
+          'Content-Type': 'application/sparql-update'
         }
       });
-      expect(result.status).toEqual(200);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is allowed with accessTo Write access on resource', async () => {
       const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
@@ -443,10 +444,10 @@ describe('Update', () => {
         method: 'PATCH',
         body: 'INSERT { <#how> <#are> <#you> . }',
         headers: {
-          'Content-Type': 'sparql-update'
+          'Content-Type': 'application/sparql-update'
         }
       });
-      expect(result.status).toEqual(200);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is disallowed with accessTo Read+Control access on resource', async () => {
       const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
@@ -474,10 +475,10 @@ describe('Update', () => {
         method: 'PATCH',
         body: 'INSERT { <#how> <#are> <#you> . }',
         headers: {
-          'Content-Type': 'sparql-update'
+          'Content-Type': 'application/sparql-update'
         }
       });
-      expect(result.status).toEqual(200);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is allowed with default Append access on parent', async () => {
       const containerUrl = `${testFolderUrl}accessToAppend/`;
@@ -506,10 +507,10 @@ describe('Update', () => {
         method: 'PATCH',
         body: 'INSERT { <#how> <#are> <#you> . }',
         headers: {
-          'Content-Type': 'sparql-update'
+          'Content-Type': 'application/sparql-update'
         }
       });
-      expect(result.status).toEqual(200);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is allowed with default Write access on parent', async () => {
       const containerUrl = `${testFolderUrl}accessToAppend/`;
@@ -538,10 +539,10 @@ describe('Update', () => {
         method: 'PATCH',
         body: 'INSERT { <#how> <#are> <#you> . }',
         headers: {
-          'Content-Type': 'sparql-update'
+          'Content-Type': 'application/sparql-update'
         }
       });
-      expect(result.status).toEqual(200);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is disallowed with default Read+Control access on parent', async () => {
       const containerUrl = `${testFolderUrl}accessToAppend/`;
@@ -570,7 +571,7 @@ describe('Update', () => {
         method: 'PATCH',
         body: 'INSERT { <#how> <#are> <#you> . }',
         headers: {
-          'Content-Type': 'sparql-update'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(403);
@@ -604,10 +605,10 @@ describe('Update', () => {
         method: 'PATCH',
         body: 'DELETE { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'sparql-update'
+          'Content-Type': 'application/sparql-update'
         }
       });
-      expect(result.status).toEqual(200);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is disallowed with accessTo Read+Append+Control access on resource', async () => {
       const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
@@ -635,10 +636,10 @@ describe('Update', () => {
         method: 'PATCH',
         body: 'DELETE { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'sparql-update'
+          'Content-Type': 'application/sparql-update'
         }
       });
-      expect(result.status).toEqual(200);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is allowed with default Write access on parent', async () => {
       const containerUrl = `${testFolderUrl}accessToAppend/`;
@@ -667,10 +668,10 @@ describe('Update', () => {
         method: 'PATCH',
         body: 'DELETE { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'sparql-update'
+          'Content-Type': 'application/sparql-update'
         }
       });
-      expect(result.status).toEqual(200);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is disallowed with default Read+Append+Control access on parent', async () => {
       const containerUrl = `${testFolderUrl}accessToAppend/`;
@@ -699,7 +700,7 @@ describe('Update', () => {
         method: 'PATCH',
         body: 'DELETE { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'sparql-update'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(403);

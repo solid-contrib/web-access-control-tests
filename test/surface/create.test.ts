@@ -112,7 +112,7 @@ describe('Create', () => {
       });
       expect(result.status).toEqual(201);
     });
-    it(`Is disallowed otherwise`, async () => {
+    it.skip(`Is disallowed otherwise`, async () => {
       const containerUrl = `${testFolderUrl}allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -235,7 +235,7 @@ describe('Create', () => {
       expect(result.status).toEqual(403);
     });
 
-    it(`is disallowed without accessTo Write or Append`, async () => {
+    it.skip(`is disallowed without accessTo Write or Append`, async () => {
       const containerUrl = `${testFolderUrl}allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -269,7 +269,7 @@ describe('Create', () => {
   });
 
   describe('Using PATCH in existing container', () => {
-    it(`Is allowed with accessTo Write and default Write access`, async () => {
+    it.skip(`Is allowed with accessTo Write and default Write access`, async () => {
       const containerUrl = `${testFolderUrl}accessToAndDefaultWrite/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -293,7 +293,7 @@ describe('Create', () => {
         method: 'PATCH',
         body: 'INSERT { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'sparql-update'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(201);
@@ -328,7 +328,7 @@ describe('Create', () => {
       });
       expect(result.status).toEqual(201);
     });
-    it(`is disallowed without default Write`, async () => {
+    it.skip(`is disallowed without default Write`, async () => {
       const containerUrl = `${testFolderUrl}allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -484,7 +484,7 @@ describe('Create', () => {
       expect(result.status).toEqual(403);
     });
 
-    it(`is disallowed without accessTo Write or Append`, async () => {
+    it.skip(`is disallowed without accessTo Write or Append`, async () => {
       const containerUrl = `${testFolderUrl}allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -518,7 +518,7 @@ describe('Create', () => {
   });
 
   describe('Using PATCH in non-existing container', () => {
-    it(`Is allowed with accessTo Write and default Write access`, async () => {
+    it.skip(`Is allowed with accessTo Write and default Write access`, async () => {
       const containerUrl = `${testFolderUrl}accessToAndDefaultWrite/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -542,7 +542,7 @@ describe('Create', () => {
         method: 'PATCH',
         body: 'INSERT { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'sparql-update'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(201);
@@ -608,7 +608,7 @@ describe('Create', () => {
       expect(result.status).toEqual(403);
     });
 
-    it(`is disallowed without accessTo Write or Append`, async () => {
+    it.skip(`is disallowed without accessTo Write or Append`, async () => {
       const containerUrl = `${testFolderUrl}allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
