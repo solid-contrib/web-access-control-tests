@@ -69,7 +69,7 @@ describe('Update', () => {
         }
       });
       const etagInQuotes = creationResult.headers.get('etag');
-      console.log({ etag: etagInQuotes });
+      // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
@@ -101,7 +101,7 @@ describe('Update', () => {
         }
       });
       const etagInQuotes = creationResult.headers.get('etag');
-      console.log({ etag: etagInQuotes });
+      // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
@@ -133,7 +133,7 @@ describe('Update', () => {
         }
       });
       const etagInQuotes = creationResult.headers.get('etag');
-      console.log({ etag: etagInQuotes });
+      // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
@@ -166,7 +166,7 @@ describe('Update', () => {
         }
       });
       const etagInQuotes = creationResult.headers.get('etag');
-      console.log({ etag: etagInQuotes });
+      // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
@@ -199,7 +199,7 @@ describe('Update', () => {
         }
       });
       const etagInQuotes = creationResult.headers.get('etag');
-      console.log({ etag: etagInQuotes });
+      // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
@@ -232,7 +232,7 @@ describe('Update', () => {
         }
       });
       const etagInQuotes = creationResult.headers.get('etag');
-      console.log({ etag: etagInQuotes });
+      // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
@@ -267,7 +267,7 @@ describe('Update', () => {
         }
       });
       const etagInQuotes = creationResult.headers.get('etag');
-      console.log({ etag: etagInQuotes });
+      // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
@@ -299,7 +299,7 @@ describe('Update', () => {
         }
       });
       const etagInQuotes = creationResult.headers.get('etag');
-      console.log({ etag: etagInQuotes });
+      // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
@@ -332,7 +332,7 @@ describe('Update', () => {
         }
       });
       const etagInQuotes = creationResult.headers.get('etag');
-      console.log({ etag: etagInQuotes });
+      // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
@@ -365,7 +365,7 @@ describe('Update', () => {
         }
       });
       const etagInQuotes = creationResult.headers.get('etag');
-      console.log({ etag: etagInQuotes });
+      // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
@@ -429,7 +429,7 @@ describe('Update', () => {
         }
       });
       const etagInQuotes = creationResult.headers.get('etag');
-      console.log({ etag: etagInQuotes });
+      // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
@@ -460,7 +460,7 @@ describe('Update', () => {
         }
       });
       const etagInQuotes = creationResult.headers.get('etag');
-      console.log({ etag: etagInQuotes });
+      // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
@@ -492,7 +492,7 @@ describe('Update', () => {
         }
       });
       const etagInQuotes = creationResult.headers.get('etag');
-      console.log({ etag: etagInQuotes });
+      // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
@@ -524,7 +524,7 @@ describe('Update', () => {
         }
       });
       const etagInQuotes = creationResult.headers.get('etag');
-      console.log({ etag: etagInQuotes });
+      // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
@@ -556,7 +556,7 @@ describe('Update', () => {
         }
       });
       const etagInQuotes = creationResult.headers.get('etag');
-      console.log({ etag: etagInQuotes });
+      // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
@@ -590,7 +590,7 @@ describe('Update', () => {
         }
       });
       const etagInQuotes = creationResult.headers.get('etag');
-      console.log({ etag: etagInQuotes });
+      // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
@@ -621,7 +621,7 @@ describe('Update', () => {
         }
       });
       const etagInQuotes = creationResult.headers.get('etag');
-      console.log({ etag: etagInQuotes });
+      // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
@@ -653,7 +653,7 @@ describe('Update', () => {
         }
       });
       const etagInQuotes = creationResult.headers.get('etag');
-      console.log({ etag: etagInQuotes });
+      // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
@@ -685,7 +685,7 @@ describe('Update', () => {
         }
       });
       const etagInQuotes = creationResult.headers.get('etag');
-      console.log({ etag: etagInQuotes });
+      // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',

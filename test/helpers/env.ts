@@ -12,9 +12,9 @@ function getEnvVars(who: string) {
 
 export async function getSolidLogicInstance(who: string) {
   const envVars: any = getEnvVars(who)
-  console.log({ envVars })
+  // console.log({ envVars })
   const fetcher = await getAuthFetcher(envVars.oidcIssuer, envVars.cookie, "https://tester")
-  console.log(fetcher)
+  // console.log(fetcher)
   return new SolidLogic(fetcher.fetch.bind(fetcher), envVars.webId)
 }
 

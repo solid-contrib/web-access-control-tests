@@ -91,7 +91,7 @@ describe('Read', () => {
       }
     });
     const etagInQuotes = creationResult.headers.get('etag');
-    console.log({ etag: etagInQuotes });
+    // console.log({ etag: etagInQuotes });
     const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
     await solidLogicAlice.fetch(aclDocUrl, {
       method: 'PUT',

@@ -32,7 +32,7 @@ export class SolidLogic {
     }
     this.me = me;
     this.fetch = async (url, options) => {
-      console.log('fetching', url, options)
+      // console.log('fetching', url, options)
       try {
         return fetch(url, options);
       } catch (e) {
@@ -42,7 +42,7 @@ export class SolidLogic {
   }
 
   async fetch (url, options?) {
-    console.log('fetching', url, options)
+    // console.log('fetching', url, options)
     try {
       return this.fetcher.fetch(url, options);
     } catch (e) {
@@ -52,13 +52,13 @@ export class SolidLogic {
 
   async findAclDocUrl (url: string | NamedNode) {
     const doc = this.store.sym(url)
-    console.log('calling load', doc)
+    // console.log('calling load', doc)
     try {
       await this.store.fetcher.load(doc)
     } catch (e) {
       console.error('error loading', doc, e.message)
     }
-    console.log('called load', doc)
+    // console.log('called load', doc)
     const docNode = this.store.any(doc, ACL_LINK)
     if (!docNode) {
       throw new Error(`No ACL link discovered for ${url}`)
@@ -244,7 +244,7 @@ export class SolidLogic {
       }
       return this.store.fetcher.fetch(url, { method: 'DELETE' });
     } catch (e) {
-      console.log(`Please manually remove ${url} from your system under test.`, e);
+      // console.log(`Please manually remove ${url} from your system under test.`, e);
     }
   }
   clearStore () {
