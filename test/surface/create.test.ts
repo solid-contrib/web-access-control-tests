@@ -293,7 +293,7 @@ describe('Create', () => {
         method: 'PATCH',
         body: 'INSERT { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'sparql-update'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(201);
@@ -542,7 +542,7 @@ describe('Create', () => {
         method: 'PATCH',
         body: 'INSERT { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'sparql-update'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(201);

@@ -79,7 +79,7 @@ describe('Delete', () => {
     const result = await solidLogicAlice.fetch(resourceUrl, {
       method: 'DELETE'
     });
-    expect(result.status).toEqual(200);
+    expect(responseCodeGroup(result.status)).toEqual("2xx");
   });
   it('Is disallowed with accessTo Read+Append+Control access on resource', async () => {
     const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
@@ -104,7 +104,7 @@ describe('Delete', () => {
     const result = await solidLogicAlice.fetch(resourceUrl, {
       method: 'DELETE'
     });
-    expect(result.status).toEqual(200);
+    expect(responseCodeGroup(result.status)).toEqual("2xx");
   });
   it('Is allowed with default Write access on parent', async () => {
     const containerUrl = `${testFolderUrl}accessToAppend/`;
@@ -130,7 +130,7 @@ describe('Delete', () => {
     const result = await solidLogicAlice.fetch(resourceUrl, {
       method: 'DELETE'
     });
-    expect(result.status).toEqual(200);
+    expect(responseCodeGroup(result.status)).toEqual("2xx");
   });
   it('Is disallowed with default Read+Append+Control access on parent', async () => {
     const containerUrl = `${testFolderUrl}accessToAppend/`;
