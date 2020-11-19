@@ -77,7 +77,7 @@ describe('Create', () => {
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicAlice.fetch(`${testFolderUrl}accessToAppend/`, {
+      const result = await solidLogicBob.fetch(`${testFolderUrl}accessToAppend/`, {
         method: 'POST',
         body: 'hello',
         headers: {
@@ -132,7 +132,7 @@ describe('Create', () => {
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicAlice.fetch(containerUrl, {
+      const result = await solidLogicBob.fetch(containerUrl, {
         method: 'POST',
         body: 'hello',
         headers: {
