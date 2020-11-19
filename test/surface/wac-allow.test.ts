@@ -76,7 +76,7 @@ describe('From accessTo', () => {
     return solidLogicAlice.recursiveDelete(testFolderUrl);
   });
 
-  describe('Public accessTo Read, Bob accessTo Write', () => {
+  describe('Public accessTo Read+Append, Bob accessTo Write', () => {
     beforeAll(async () => {
       const containerUrl = `${testFolderUrl}publicReadBobWrite/`;
       // This will do mkdir-p:
@@ -91,7 +91,7 @@ describe('From accessTo', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody('acl:Write', null, 'acl:Read', null, containerUrl),
+        body: makeBody('acl:Write', null, 'acl:Read, acl:Append', null, containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
@@ -100,11 +100,63 @@ describe('From accessTo', () => {
     });
     it(`Shows the correct WAC-Allow header to Bob`, async () => {
       const result = await solidLogicBob.fetch(`${testFolderUrl}accessToAppend/`);
-      expect(result.headers.get('WAC-Allow')).toEqual('');
+      expect(result.headers.get('WAC-Allow')).toEqual('user="write",public="read append"');
     });
     it(`Shows the correct WAC-Allow header to the public`, async () => {
       const result = await fetch(`${testFolderUrl}accessToAppend/`);
-      expect(result.headers.get('WAC-Allow')).toEqual('');
+      expect(result.headers.get('WAC-Allow')).toEqual('user="write",public="read append"');
+    });
+  });
+});
+
+describe('From default', () => {
+  let solidLogicAlice: SolidLogic;
+  let solidLogicBob: SolidLogic;
+  beforeAll(async () => {
+    solidLogicAlice = await getSolidLogicInstance('ALICE')
+    solidLogicBob = await getSolidLogicInstance('BOB')
+  });
+  
+  const { testFolderUrl } = generateTestFolder('ALICE');
+  beforeEach(async () => {
+    // FIXME: NSS ACL cache,
+    // wait for ACL cache to clear:
+    await new Promise(resolve => setTimeout(resolve, 20));
+  });
+
+  afterEach(() => {
+    return solidLogicAlice.recursiveDelete(testFolderUrl);
+  });
+
+  describe('Public accessTo Read+Append, Bob accessTo Write', () => {
+    beforeAll(async () => {
+      const containerUrl = `${testFolderUrl}publicReadBobWrite/`;
+      // This will do mkdir-p:
+      await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
+        method: 'PUT',
+        body: 'hello',
+        headers: {
+          'Content-Type': 'text/plain',
+          'If-None-Match': '*'
+        }
+      });
+      const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
+      await solidLogicAlice.fetch(aclDocUrl, {
+        method: 'PUT',
+        body: makeBody(null, 'acl:Write', null, 'acl:Read, acl:Append', containerUrl),
+        headers: {
+          'Content-Type': 'text/turtle',
+          'If-None-Match': '*'
+        }
+      });
+    });
+    it(`Shows the correct WAC-Allow header to Bob`, async () => {
+      const result = await solidLogicBob.fetch(`${testFolderUrl}accessToAppend/test.txt`);
+      expect(result.headers.get('WAC-Allow')).toEqual('user="write",public="read append"');
+    });
+    it(`Shows the correct WAC-Allow header to the public`, async () => {
+      const result = await fetch(`${testFolderUrl}accessToAppend/test.txt`);
+      expect(result.headers.get('WAC-Allow')).toEqual('user="write",public="read append"');
     });
   });
 });
