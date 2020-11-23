@@ -1,10 +1,9 @@
+import fetch from 'node-fetch';
 import { generateTestFolder, getSolidLogicInstance } from '../helpers/env';
 import { SolidLogic } from '../../solid-logic-move-me';
 
 const WEBID_ALICE = process.env.WEBID_ALICE;
 const WEBID_BOB = process.env.WEBID_BOB;
-
-// jest.setTimeout(30000);
 
 function makeBody(accessToModes: string, defaultModes: string, publicAccessToModes: string, publicDefaultModes: string, target: string) {
   let str = [
@@ -37,25 +36,40 @@ function makeBody(accessToModes: string, defaultModes: string, publicAccessToMod
   }
   if (publicAccessToModes) {
     str += [
-      '<#bobAccessTo> a acl:Authorization;',
+      '<#publicAccessTo> a acl:Authorization;',
       `  acl:agentClass foaf:Agent;`,
       `  acl:accessTo <${target}>;`,
-      `  acl:mode ${accessToModes}.`,
+      `  acl:mode ${publicAccessToModes}.`,
       ''
     ].join('\n')
   }
 
   if (publicDefaultModes) {
     str += [
-      '<#bobDefault> a acl:Authorization;',
+      '<#publicDefault> a acl:Authorization;',
       `  acl:agentClass foaf:Agent;`,
       `  acl:default <${target}>;`,
-      `  acl:mode ${defaultModes}.`,
+      `  acl:mode ${publicDefaultModes}.`,
       ''
     ].join('\n')
   }
   return str
 }
+
+describe('For Alice\'s public folder', () => {
+  let solidLogicBob: SolidLogic;
+  beforeAll(async () => {
+    solidLogicBob = await getSolidLogicInstance('BOB')
+  });
+  it(`Shows the correct WAC-Allow header for Bob's request`, async () => {
+    const result = await solidLogicBob.fetch(`https://server/public/`);
+    expect(result.headers.get('WAC-Allow')).toEqual('user="read",public="read"');
+  });
+  it(`Shows the correct WAC-Allow header for an unauthenticated request`, async () => {
+    const result = await fetch(`https://server/public/`);
+    expect(result.headers.get('WAC-Allow')).toEqual('user="read",public="read"');
+  });
+});
 
 describe('From accessTo', () => {
   let solidLogicAlice: SolidLogic;
@@ -99,12 +113,12 @@ describe('From accessTo', () => {
       });
     });
     it(`Shows the correct WAC-Allow header to Bob`, async () => {
-      const result = await solidLogicBob.fetch(`${testFolderUrl}accessToAppend/`);
-      expect(result.headers.get('WAC-Allow')).toEqual('user="write",public="read append"');
+      const result = await solidLogicBob.fetch(`${testFolderUrl}publicReadBobWrite/`);
+      expect(result.headers.get('WAC-Allow')).toEqual('user="read write append",public="read append"');
     });
     it(`Shows the correct WAC-Allow header to the public`, async () => {
-      const result = await fetch(`${testFolderUrl}accessToAppend/`);
-      expect(result.headers.get('WAC-Allow')).toEqual('user="write",public="read append"');
+      const result = await fetch(`${testFolderUrl}publicReadBobWrite/`);
+      expect(result.headers.get('WAC-Allow')).toEqual('user="read append",public="read append"');
     });
   });
 });
@@ -116,7 +130,7 @@ describe('From default', () => {
     solidLogicAlice = await getSolidLogicInstance('ALICE')
     solidLogicBob = await getSolidLogicInstance('BOB')
   });
-  
+
   const { testFolderUrl } = generateTestFolder('ALICE');
   beforeEach(async () => {
     // FIXME: NSS ACL cache,
@@ -151,12 +165,12 @@ describe('From default', () => {
       });
     });
     it(`Shows the correct WAC-Allow header to Bob`, async () => {
-      const result = await solidLogicBob.fetch(`${testFolderUrl}accessToAppend/test.txt`);
-      expect(result.headers.get('WAC-Allow')).toEqual('user="write",public="read append"');
+      const result = await solidLogicBob.fetch(`${testFolderUrl}publicReadBobWrite/test.txt`);
+      expect(result.headers.get('WAC-Allow')).toEqual('user="read write append",public="read append"');
     });
     it(`Shows the correct WAC-Allow header to the public`, async () => {
-      const result = await fetch(`${testFolderUrl}accessToAppend/test.txt`);
-      expect(result.headers.get('WAC-Allow')).toEqual('user="write",public="read append"');
+      const result = await fetch(`${testFolderUrl}publicReadBobWrite/test.txt`);
+      expect(result.headers.get('WAC-Allow')).toEqual('user="read append",public="read append"');
     });
   });
 });
