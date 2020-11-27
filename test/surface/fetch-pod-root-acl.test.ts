@@ -1,6 +1,6 @@
 import { space } from "rdf-namespaces";
 import { generateTestFolder, getSolidLogicInstance } from '../helpers/env';
-import { SolidLogic } from '../../solid-logic-move-me';
+import { SolidLogic } from 'solid-logic';
 import { sym } from 'rdflib'
 
 const WEBID_ALICE = process.env.WEBID_ALICE;
