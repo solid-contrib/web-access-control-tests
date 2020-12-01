@@ -1,9 +1,6 @@
 import fetch from 'node-fetch';
-import { generateTestFolder, getSolidLogicInstance } from '../helpers/env';
 import { SolidLogic } from 'solid-logic';
-
-const WEBID_ALICE = process.env.WEBID_ALICE;
-const WEBID_BOB = process.env.WEBID_BOB;
+import { generateTestFolder, getSolidLogicInstance, WEBID_ALICE, WEBID_BOB } from '../helpers/env';
 
 function makeBody(accessToModes: string, defaultModes: string, publicAccessToModes: string, publicDefaultModes: string, target: string) {
   let str = [

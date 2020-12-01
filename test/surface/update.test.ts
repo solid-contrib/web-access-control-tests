@@ -1,9 +1,6 @@
-import { generateTestFolder, getSolidLogicInstance } from '../helpers/env';
 import { SolidLogic } from 'solid-logic';
+import { generateTestFolder, getSolidLogicInstance, WEBID_ALICE, WEBID_BOB } from '../helpers/env';
 import { responseCodeGroup } from '../helpers/util';
-
-const WEBID_ALICE = process.env.WEBID_ALICE;
-const WEBID_BOB = process.env.WEBID_BOB;
 
 function makeBody(accessToModes: string, defaultModes: string, target: string) {
   let str = [

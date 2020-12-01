@@ -1,6 +1,9 @@
 import { getAuthFetcher } from 'solid-auth-fetcher';
 import { SolidLogic } from 'solid-logic';
 
+export const WEBID_ALICE = process.env.WEBID_ALICE;
+export const WEBID_BOB = process.env.WEBID_BOB;
+
 function getEnvVars(who: string) {
   return {
     oidcIssuer: process.env[`OIDC_ISSUER_${who}`],
