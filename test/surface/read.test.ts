@@ -51,9 +51,8 @@ describe('Read', () => {
   afterEach(() => {
     return solidLogicAlice.recursiveDelete(testFolderUrl);
   });
-
   it('Is allowed with accessTo Read access on non-container resource', async () => {
-    const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
+    const resourceUrl = `${testFolderUrl}1/accessToAppend/test.txt`;
     // This will do mkdir-p:
     const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
       method: 'PUT',
@@ -72,11 +71,11 @@ describe('Read', () => {
         'If-None-Match': '*'
       }
     });
-    const result = await solidLogicAlice.fetch(resourceUrl);
+    const result = await solidLogicBob.fetch(resourceUrl);
     expect(responseCodeGroup(result.status)).toEqual("2xx");
   });
   it('Is disallowed with accessTo Append+Write+Control access on non-container resource', async () => {
-    const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
+    const resourceUrl = `${testFolderUrl}2/accessToAppend/test.txt`;
     // This will do mkdir-p:
     const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
       method: 'PUT',
@@ -97,11 +96,11 @@ describe('Read', () => {
         'If-None-Match': '*'
       }
     });
-    const result = await solidLogicAlice.fetch(resourceUrl);
-    expect(responseCodeGroup(result.status)).toEqual("2xx");
+    const result = await solidLogicBob.fetch(resourceUrl);
+    expect(result.status).toEqual(403);
   });
   it('Is allowed with default Read access on parent of non-container', async () => {
-    const containerUrl = `${testFolderUrl}accessToAppend/`;
+    const containerUrl = `${testFolderUrl}3/accessToAppend/`;
     const resourceUrl = `${containerUrl}test.txt`;
     // This will do mkdir-p:
     const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -121,11 +120,11 @@ describe('Read', () => {
         'If-None-Match': '*'
       }
     });
-    const result = await solidLogicAlice.fetch(resourceUrl);
+    const result = await solidLogicBob.fetch(resourceUrl);
     expect(responseCodeGroup(result.status)).toEqual("2xx");
   });
   it('Is disallowed with default Append+Write+Control access on parent of non-container', async () => {
-    const containerUrl = `${testFolderUrl}accessToAppend/`;
+    const containerUrl = `${testFolderUrl}4/accessToAppend/`;
     const resourceUrl = `${containerUrl}test.txt`;
     // This will do mkdir-p:
     const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -145,12 +144,12 @@ describe('Read', () => {
         'If-None-Match': '*'
       }
     });
-    const result = await solidLogicAlice.fetch(resourceUrl);
+    const result = await solidLogicBob.fetch(resourceUrl);
     expect(result.status).toEqual(403);
   });
 
   it('Is allowed with accessTo Read access on container resource', async () => {
-    const resourceUrl = `${testFolderUrl}accessToAppend/test/`;
+    const resourceUrl = `${testFolderUrl}5/accessToAppend/test/`;
     // This will do mkdir-p:
     const creationResult =  await solidLogicAlice.fetch(`${resourceUrl}.dummy`, {
       method: 'PUT',
@@ -169,11 +168,12 @@ describe('Read', () => {
         'If-None-Match': '*'
       }
     });
-    const result = await solidLogicAlice.fetch(resourceUrl);
+    const result = await solidLogicBob.fetch(resourceUrl);
     expect(responseCodeGroup(result.status)).toEqual("2xx");
   });
+
   it('Is disallowed with accessTo Append+Write+Control access on non-container resource', async () => {
-    const resourceUrl = `${testFolderUrl}accessToAppend/test/`;
+    const resourceUrl = `${testFolderUrl}6/accessToAppend/test/`;
     // This will do mkdir-p:
     const creationResult =  await solidLogicAlice.fetch(`${resourceUrl}.dummy`, {
       method: 'PUT',
@@ -192,14 +192,15 @@ describe('Read', () => {
         'If-None-Match': '*'
       }
     });
-    const result = await solidLogicAlice.fetch(resourceUrl);
-    expect(responseCodeGroup(result.status)).toEqual("2xx");
+    const result = await solidLogicBob.fetch(resourceUrl);
+    expect(result.status).toEqual(403);
   });
+
   it('Is allowed with default Read access on parent of container', async () => {
-    const containerUrl = `${testFolderUrl}accessToAppend/`;
+    const containerUrl = `${testFolderUrl}7/accessToAppend/`;
     const resourceUrl = `${containerUrl}test/`;
     // This will do mkdir-p:
-    const creationResult =  await solidLogicAlice.fetch(`${resourceUrl}.dummy`, {
+    const creationResult =  await solidLogicAlice.fetch(`${resourceUrl}dummy`, {
       method: 'PUT',
       body: '<#hello> <#linked> <#world> .',
       headers: {
@@ -216,11 +217,12 @@ describe('Read', () => {
         'If-None-Match': '*'
       }
     });
-    const result = await solidLogicAlice.fetch(resourceUrl);
+    const result = await solidLogicBob.fetch(resourceUrl);
     expect(responseCodeGroup(result.status)).toEqual("2xx");
   });
+
   it('Is disallowed with default Append+Write+Control access on parent of non-container', async () => {
-    const containerUrl = `${testFolderUrl}accessToAppend/`;
+    const containerUrl = `${testFolderUrl}8/accessToAppend/`;
     const resourceUrl = `${containerUrl}test/`;
     // This will do mkdir-p:
     const creationResult =  await solidLogicAlice.fetch(`${resourceUrl}.dummy`, {
@@ -240,7 +242,8 @@ describe('Read', () => {
         'If-None-Match': '*'
       }
     });
-    const result = await solidLogicAlice.fetch(resourceUrl);
+    const result = await solidLogicBob.fetch(resourceUrl);
     expect(result.status).toEqual(403);
   });
+
 });
