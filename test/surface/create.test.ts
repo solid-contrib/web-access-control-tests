@@ -314,11 +314,10 @@ describe('Create', () => {
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
-        method: 'PUT',
-        body: 'hello',
+        method: 'PATCH',
+        body: 'INSERT { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'text/plain',
-          'If-None-Match': '*'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(201);
@@ -344,11 +343,10 @@ describe('Create', () => {
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
-        method: 'PUT',
-        body: 'hello',
+        method: 'PATCH',
+        body: 'INSERT { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'text/plain',
-          'If-None-Match': '*'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(403);
@@ -375,11 +373,10 @@ describe('Create', () => {
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
-        method: 'PUT',
-        body: 'hello',
+        method: 'PATCH',
+        body: 'INSERT { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'text/plain',
-          'If-None-Match': '*'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(403);
@@ -563,11 +560,10 @@ describe('Create', () => {
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {
-        method: 'PUT',
-        body: 'hello',
+        method: 'PATCH',
+        body: 'INSERT { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'text/plain',
-          'If-None-Match': '*'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(201);
@@ -593,11 +589,10 @@ describe('Create', () => {
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {
-        method: 'PUT',
-        body: 'hello',
+        method: 'PATCH',
+        body: 'INSERT { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'text/plain',
-          'If-None-Match': '*'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(403);
@@ -624,11 +619,10 @@ describe('Create', () => {
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {
-        method: 'PUT',
-        body: 'hello',
+        method: 'PATCH',
+        body: 'INSERT { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'text/plain',
-          'If-None-Match': '*'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(403);
