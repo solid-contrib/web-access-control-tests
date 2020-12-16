@@ -200,7 +200,7 @@ describe('Read', () => {
     const containerUrl = `${testFolderUrl}7/accessToAppend/`;
     const resourceUrl = `${containerUrl}test/`;
     // This will do mkdir-p:
-    const creationResult =  await solidLogicAlice.fetch(`${resourceUrl}dummy`, {
+    const creationResult =  await solidLogicAlice.fetch(`${resourceUrl}.dummy`, {
       method: 'PUT',
       body: '<#hello> <#linked> <#world> .',
       headers: {
