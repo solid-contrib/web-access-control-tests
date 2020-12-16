@@ -199,7 +199,7 @@ describe('Create', () => {
       });
       expect(result.status).toEqual(201);
     });
-    it(`is disallowed without default Write or Append`, async () => {
+    it(`is disallowed without default Write`, async () => {
       const containerUrl = `${testFolderUrl}6/allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -213,7 +213,7 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Control', containerUrl),
+        body: makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Append, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
@@ -230,8 +230,7 @@ describe('Create', () => {
       expect(result.status).toEqual(403);
     });
 
-    it.skip(`is disallowed without accessTo Write or Append`, async () => {
-      // FIXME: if the default grants on the container allow write/append, the put should succeed?
+    it(`is disallowed without accessTo Write or Append`, async () => {
       const containerUrl = `${testFolderUrl}7/allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -353,8 +352,7 @@ describe('Create', () => {
       expect(result.status).toEqual(403);
     });
 
-    it.skip(`is disallowed without accessTo Write or Append`, async () => {
-      // FIXME: if the default grants on the container allow write/append, the put should succeed?
+    it(`is disallowed without accessTo Write or Append`, async () => {
       const containerUrl = `${testFolderUrl}11/allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -447,7 +445,7 @@ describe('Create', () => {
       });
       expect(result.status).toEqual(201);
     });
-    it(`is disallowed without default Write or Append`, async () => {
+    it(`is disallowed without default Write`, async () => {
       const containerUrl = `${testFolderUrl}14/allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -461,7 +459,7 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Control', containerUrl),
+        body: makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Append, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
@@ -478,9 +476,7 @@ describe('Create', () => {
       expect(result.status).toEqual(403);
     });
 
-    it.skip(`is disallowed without accessTo Write or Append`, async () => {
-      // FIXME: if the default grants on the container allow write/append, the put should succeed?
-
+    it(`is disallowed without accessTo Write or Append`, async () => {
       const containerUrl = `${testFolderUrl}15/allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -602,8 +598,7 @@ describe('Create', () => {
       expect(result.status).toEqual(403);
     });
 
-    it.skip(`is disallowed without accessTo Write or Append`, async () => {
-      // FIXME: if the default for containerUrl is 'append' and 'write', why should it be disallowed on containerUrl/nested/ ?
+    it(`is disallowed without accessTo Write or Append`, async () => {
       const containerUrl = `${testFolderUrl}19/allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
