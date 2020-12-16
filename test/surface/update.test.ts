@@ -166,7 +166,7 @@ describe('Update', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody(null, 'acl:Append', resourceUrl),
+        body: makeBody(null, 'acl:Append', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
@@ -199,7 +199,7 @@ describe('Update', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody(null, 'acl:Write', resourceUrl),
+        body: makeBody(null, 'acl:Write', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
@@ -332,7 +332,7 @@ describe('Update', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody(null, 'acl:Write', resourceUrl),
+        body: makeBody(null, 'acl:Write', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
@@ -492,7 +492,7 @@ describe('Update', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody(null, 'acl:Append', resourceUrl),
+        body: makeBody(null, 'acl:Append', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
@@ -524,7 +524,7 @@ describe('Update', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody(null, 'acl:Write', resourceUrl),
+        body: makeBody(null, 'acl:Write', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
@@ -653,7 +653,7 @@ describe('Update', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody(null, 'acl:Write', resourceUrl),
+        body: makeBody(null, 'acl:Write', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
