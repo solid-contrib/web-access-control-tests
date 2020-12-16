@@ -53,21 +53,6 @@ function makeBody(accessToModes: string, defaultModes: string, publicAccessToMod
   return str
 }
 
-describe('For Alice\'s public folder', () => {
-  let solidLogicBob: SolidLogic;
-  beforeAll(async () => {
-    solidLogicBob = await getSolidLogicInstance('BOB')
-  });
-  it(`Shows the correct WAC-Allow header for Bob's request`, async () => {
-    const result = await solidLogicBob.fetch(`https://server/public/`);
-    expect(result.headers.get('WAC-Allow')).toEqual('user="read",public="read"');
-  });
-  it(`Shows the correct WAC-Allow header for an unauthenticated request`, async () => {
-    const result = await fetch(`https://server/public/`);
-    expect(result.headers.get('WAC-Allow')).toEqual('user="read",public="read"');
-  });
-});
-
 describe('From accessTo', () => {
   let solidLogicAlice: SolidLogic;
   let solidLogicBob: SolidLogic;
@@ -85,6 +70,38 @@ describe('From accessTo', () => {
 
   afterEach(() => {
     return solidLogicAlice.recursiveDelete(testFolderUrl);
+  });
+
+  describe('Public accessTo Read', () => {
+    beforeAll(async () => {
+      const containerUrl = `${testFolderUrl}publicRead/`;
+      // This will do mkdir-p:
+      await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
+        method: 'PUT',
+        body: 'hello',
+        headers: {
+          'Content-Type': 'text/plain',
+          'If-None-Match': '*'
+        }
+      });
+      const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
+      await solidLogicAlice.fetch(aclDocUrl, {
+        method: 'PUT',
+        body: makeBody(null, null, 'acl:Read', null, containerUrl),
+        headers: {
+          'Content-Type': 'text/turtle',
+          'If-None-Match': '*'
+        }
+      });
+    });
+    it(`Shows the correct WAC-Allow header to Bob`, async () => {
+      const result = await solidLogicBob.fetch(`${testFolderUrl}publicRead/`);
+      expect(result.headers.get('WAC-Allow')).toEqual('user="read",public="read"');
+    });
+    it(`Shows the correct WAC-Allow header to the public`, async () => {
+      const result = await fetch(`${testFolderUrl}publicRead/`);
+      expect(result.headers.get('WAC-Allow')).toEqual('user="read",public="read"');
+    });
   });
 
   describe('Public accessTo Read+Append, Bob accessTo Write', () => {
@@ -139,7 +156,7 @@ describe('From default', () => {
     return solidLogicAlice.recursiveDelete(testFolderUrl);
   });
 
-  describe('Public accessTo Read+Append, Bob accessTo Write', () => {
+  describe('Public default Read+Append, Bob default Write', () => {
     beforeAll(async () => {
       const containerUrl = `${testFolderUrl}publicReadBobWrite/`;
       // This will do mkdir-p:
