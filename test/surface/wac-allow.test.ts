@@ -53,6 +53,19 @@ function makeBody(accessToModes: string, defaultModes: string, publicAccessToMod
   return str
 }
 
+const sortObject = obj => Object.keys(obj).sort().reduce((res, key) => (res[key] = obj[key], res), {})
+function sortWac(wac: string) {
+	let sorted = {};
+	let users = wac.split(","); // ['user="read"', 'public="read"']
+	users.forEach(function(grant) {
+		let parts = grant.split("="); // ['user', '"read append"']
+		let user = parts[0]; // user
+		let usergrants = parts[1].replace(/"/g, '').split(" ").sort(); // ["append", "read"]
+		sorted[user] = usergrants;
+	});
+	return sortObject(sorted);
+}
+
 describe('From accessTo', () => {
   let solidLogicAlice: SolidLogic;
   let solidLogicBob: SolidLogic;
@@ -74,7 +87,7 @@ describe('From accessTo', () => {
 
   describe('Public accessTo Read', () => {
     beforeAll(async () => {
-      const containerUrl = `${testFolderUrl}publicRead/`;
+      const containerUrl = `${testFolderUrl}1/publicRead/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -95,18 +108,18 @@ describe('From accessTo', () => {
       });
     });
     it(`Shows the correct WAC-Allow header to Bob`, async () => {
-      const result = await solidLogicBob.fetch(`${testFolderUrl}publicRead/`);
-      expect(result.headers.get('WAC-Allow')).toEqual('user="read",public="read"');
+      const result = await solidLogicBob.fetch(`${testFolderUrl}1/publicRead/`);
+      expect(sortWac(result.headers.get('WAC-Allow'))).toEqual(sortWac('user="read",public="read"'));
     });
     it(`Shows the correct WAC-Allow header to the public`, async () => {
-      const result = await fetch(`${testFolderUrl}publicRead/`);
-      expect(result.headers.get('WAC-Allow')).toEqual('user="read",public="read"');
+      const result = await fetch(`${testFolderUrl}1/publicRead/`);
+      expect(sortWac(result.headers.get('WAC-Allow'))).toEqual(sortWac('user="read",public="read"'));
     });
   });
 
   describe('Public accessTo Read+Append, Bob accessTo Write', () => {
     beforeAll(async () => {
-      const containerUrl = `${testFolderUrl}publicReadBobWrite/`;
+      const containerUrl = `${testFolderUrl}2/publicReadBobWrite/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -127,12 +140,12 @@ describe('From accessTo', () => {
       });
     });
     it(`Shows the correct WAC-Allow header to Bob`, async () => {
-      const result = await solidLogicBob.fetch(`${testFolderUrl}publicReadBobWrite/`);
-      expect(result.headers.get('WAC-Allow')).toEqual('user="read write append",public="read append"');
+      const result = await solidLogicBob.fetch(`${testFolderUrl}2/publicReadBobWrite/`);
+      expect(sortWac(result.headers.get('WAC-Allow'))).toEqual(sortWac('user="read write append",public="read append"'));
     });
     it(`Shows the correct WAC-Allow header to the public`, async () => {
-      const result = await fetch(`${testFolderUrl}publicReadBobWrite/`);
-      expect(result.headers.get('WAC-Allow')).toEqual('user="read append",public="read append"');
+      const result = await fetch(`${testFolderUrl}2/publicReadBobWrite/`);
+      expect(sortWac(result.headers.get('WAC-Allow'))).toEqual(sortWac('user="read append",public="read append"'));
     });
   });
 });
@@ -158,7 +171,7 @@ describe('From default', () => {
 
   describe('Public default Read+Append, Bob default Write', () => {
     beforeAll(async () => {
-      const containerUrl = `${testFolderUrl}publicReadBobWrite/`;
+      const containerUrl = `${testFolderUrl}3/publicReadBobWrite/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -179,12 +192,12 @@ describe('From default', () => {
       });
     });
     it(`Shows the correct WAC-Allow header to Bob`, async () => {
-      const result = await solidLogicBob.fetch(`${testFolderUrl}publicReadBobWrite/test.txt`);
-      expect(result.headers.get('WAC-Allow')).toEqual('user="read write append",public="read append"');
+      const result = await solidLogicBob.fetch(`${testFolderUrl}3/publicReadBobWrite/test.txt`);
+      expect(sortWac(result.headers.get('WAC-Allow'))).toEqual(sortWac('user="read write append",public="read append"'));
     });
     it(`Shows the correct WAC-Allow header to the public`, async () => {
-      const result = await fetch(`${testFolderUrl}publicReadBobWrite/test.txt`);
-      expect(result.headers.get('WAC-Allow')).toEqual('user="read append",public="read append"');
+      const result = await fetch(`${testFolderUrl}3/publicReadBobWrite/test.txt`);
+      expect(sortWac(result.headers.get('WAC-Allow'))).toEqual(sortWac('user="read append",public="read append"'));
     });
   });
 });
