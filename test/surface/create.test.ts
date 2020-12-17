@@ -39,7 +39,7 @@ describe('Create', () => {
     solidLogicAlice = await getSolidLogicInstance('ALICE')
     solidLogicBob = await getSolidLogicInstance('BOB')
   });
-  
+
   const { testFolderUrl } = generateTestFolder('ALICE');
   beforeEach(async () => {
     // FIXME: NSS ACL cache,
@@ -53,7 +53,7 @@ describe('Create', () => {
 
   describe('Using POST to existing container', () => {
     it(`Is allowed with accessTo Append access`, async () => {
-      const containerUrl = `${testFolderUrl}accessToAppend/`;
+      const containerUrl = `${testFolderUrl}1/accessToAppend/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -72,7 +72,7 @@ describe('Create', () => {
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicBob.fetch(`${testFolderUrl}accessToAppend/`, {
+      const result = await solidLogicBob.fetch(`${testFolderUrl}1/accessToAppend/`, {
         method: 'POST',
         body: 'hello',
         headers: {
@@ -82,7 +82,7 @@ describe('Create', () => {
       expect(result.status).toEqual(201);
     });
     it(`Is allowed with accessTo Write access`, async () => {
-      const containerUrl = `${testFolderUrl}accessToWrite/`;
+      const containerUrl = `${testFolderUrl}2/accessToWrite/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -101,14 +101,14 @@ describe('Create', () => {
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicBob.fetch(`${testFolderUrl}accessToWrite/`, {
+      const result = await solidLogicBob.fetch(`${testFolderUrl}2/accessToWrite/`, {
         method: 'POST',
         body: 'hello'
       });
       expect(result.status).toEqual(201);
     });
     it(`Is disallowed otherwise`, async () => {
-      const containerUrl = `${testFolderUrl}allOtherModes/`;
+      const containerUrl = `${testFolderUrl}3/allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -140,7 +140,7 @@ describe('Create', () => {
 
   describe('Using PUT in existing container', () => {
     it(`Is allowed with accessTo Write and default Write access`, async () => {
-      const containerUrl = `${testFolderUrl}accessToAndDefaultWrite/`;
+      const containerUrl = `${testFolderUrl}4/accessToAndDefaultWrite/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -170,7 +170,7 @@ describe('Create', () => {
       expect(result.status).toEqual(201);
     });
     it(`Is allowed with accessTo Append and default Write access`, async () => {
-      const containerUrl = `${testFolderUrl}accessToAndDefaultWrite/`;
+      const containerUrl = `${testFolderUrl}5/accessToAndDefaultWrite/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -200,7 +200,7 @@ describe('Create', () => {
       expect(result.status).toEqual(201);
     });
     it(`is disallowed without default Write`, async () => {
-      const containerUrl = `${testFolderUrl}allOtherModes/`;
+      const containerUrl = `${testFolderUrl}6/allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -213,7 +213,7 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body:  makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Append, acl:Control', containerUrl),
+        body: makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Append, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
@@ -231,7 +231,7 @@ describe('Create', () => {
     });
 
     it(`is disallowed without accessTo Write or Append`, async () => {
-      const containerUrl = `${testFolderUrl}allOtherModes/`;
+      const containerUrl = `${testFolderUrl}7/allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -244,7 +244,7 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body:  makeBody('acl:Read, acl:Control', 'acl:Read, acl:Append, acl:Write, acl:Control', containerUrl),
+        body: makeBody('acl:Read, acl:Control', 'acl:Read, acl:Append, acl:Write, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
@@ -265,7 +265,7 @@ describe('Create', () => {
 
   describe('Using PATCH in existing container', () => {
     it(`Is allowed with accessTo Write and default Write access`, async () => {
-      const containerUrl = `${testFolderUrl}accessToAndDefaultWrite/`;
+      const containerUrl = `${testFolderUrl}8/accessToAndDefaultWrite/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -294,7 +294,7 @@ describe('Create', () => {
       expect(result.status).toEqual(201);
     });
     it(`Is allowed with accessTo Append and default Write access`, async () => {
-      const containerUrl = `${testFolderUrl}accessToAndDefaultWrite/`;
+      const containerUrl = `${testFolderUrl}9/accessToAndDefaultWrite/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -314,17 +314,16 @@ describe('Create', () => {
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
-        method: 'PUT',
-        body: 'hello',
+        method: 'PATCH',
+        body: 'INSERT { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'text/plain',
-          'If-None-Match': '*'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(201);
     });
     it(`is disallowed without default Write`, async () => {
-      const containerUrl = `${testFolderUrl}allOtherModes/`;
+      const containerUrl = `${testFolderUrl}10/allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -337,25 +336,24 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body:  makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Append, acl:Control', containerUrl),
+        body: makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Append, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
-        method: 'PUT',
-        body: 'hello',
+        method: 'PATCH',
+        body: 'INSERT { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'text/plain',
-          'If-None-Match': '*'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(403);
     });
 
     it(`is disallowed without accessTo Write or Append`, async () => {
-      const containerUrl = `${testFolderUrl}allOtherModes/`;
+      const containerUrl = `${testFolderUrl}11/allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -368,18 +366,17 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body:  makeBody('acl:Read, acl:Control', 'acl:Read, acl:Append, acl:Write, acl:Control', containerUrl),
+        body: makeBody('acl:Read, acl:Control', 'acl:Read, acl:Append, acl:Write, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
-        method: 'PUT',
-        body: 'hello',
+        method: 'PATCH',
+        body: 'INSERT { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'text/plain',
-          'If-None-Match': '*'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(403);
@@ -389,7 +386,7 @@ describe('Create', () => {
 
   describe('Using PUT in non-existing container', () => {
     it(`Is allowed with accessTo Write and default Write access`, async () => {
-      let containerUrl = `${testFolderUrl}accessToAndDefaultWrite/`;
+      let containerUrl = `${testFolderUrl}12/accessToAndDefaultWrite/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -419,7 +416,7 @@ describe('Create', () => {
       expect(result.status).toEqual(201);
     });
     it(`Is allowed with accessTo Append and default Write access`, async () => {
-      const containerUrl = `${testFolderUrl}accessToAndDefaultWrite/`;
+      const containerUrl = `${testFolderUrl}13/accessToAndDefaultWrite/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -449,7 +446,7 @@ describe('Create', () => {
       expect(result.status).toEqual(201);
     });
     it(`is disallowed without default Write`, async () => {
-      const containerUrl = `${testFolderUrl}allOtherModes/`;
+      const containerUrl = `${testFolderUrl}14/allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -462,7 +459,7 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body:  makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Append, acl:Control', containerUrl),
+        body: makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Append, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
@@ -480,7 +477,7 @@ describe('Create', () => {
     });
 
     it(`is disallowed without accessTo Write or Append`, async () => {
-      const containerUrl = `${testFolderUrl}allOtherModes/`;
+      const containerUrl = `${testFolderUrl}15/allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -493,7 +490,7 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body:  makeBody('acl:Read, acl:Control', 'acl:Read, acl:Append, acl:Write, acl:Control', containerUrl),
+        body: makeBody('acl:Read, acl:Control', 'acl:Read, acl:Append, acl:Write, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
@@ -514,7 +511,7 @@ describe('Create', () => {
 
   describe('Using PATCH in non-existing container', () => {
     it(`Is allowed with accessTo Write and default Write access`, async () => {
-      const containerUrl = `${testFolderUrl}accessToAndDefaultWrite/`;
+      const containerUrl = `${testFolderUrl}16/accessToAndDefaultWrite/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -543,7 +540,7 @@ describe('Create', () => {
       expect(result.status).toEqual(201);
     });
     it(`Is allowed with accessTo Append and default Write access`, async () => {
-      const containerUrl = `${testFolderUrl}accessToAndDefaultWrite/`;
+      const containerUrl = `${testFolderUrl}17/accessToAndDefaultWrite/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -563,17 +560,16 @@ describe('Create', () => {
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {
-        method: 'PUT',
-        body: 'hello',
+        method: 'PATCH',
+        body: 'INSERT { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'text/plain',
-          'If-None-Match': '*'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(201);
     });
     it(`is disallowed without default Write`, async () => {
-      const containerUrl = `${testFolderUrl}allOtherModes/`;
+      const containerUrl = `${testFolderUrl}18/allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -586,25 +582,24 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body:  makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Append, acl:Control', containerUrl),
+        body: makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Append, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {
-        method: 'PUT',
-        body: 'hello',
+        method: 'PATCH',
+        body: 'INSERT { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'text/plain',
-          'If-None-Match': '*'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(403);
     });
 
     it(`is disallowed without accessTo Write or Append`, async () => {
-      const containerUrl = `${testFolderUrl}allOtherModes/`;
+      const containerUrl = `${testFolderUrl}19/allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -617,22 +612,20 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body:  makeBody('acl:Read, acl:Control', 'acl:Read, acl:Append, acl:Write, acl:Control', containerUrl),
+        body: makeBody('acl:Read, acl:Control', 'acl:Read, acl:Append, acl:Write, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {
-        method: 'PUT',
-        body: 'hello',
+        method: 'PATCH',
+        body: 'INSERT { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'text/plain',
-          'If-None-Match': '*'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(403);
     });
-
   });
 });
