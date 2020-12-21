@@ -55,15 +55,18 @@ function makeBody(accessToModes: string, defaultModes: string, publicAccessToMod
 
 const sortObject = obj => Object.keys(obj).sort().reduce((res, key) => (res[key] = obj[key], res), {})
 function sortWac(wac: string) {
-	let sorted = {};
-	let users = wac.split(","); // ['user="read"', 'public="read"']
-	users.forEach(function(grant) {
-		let parts = grant.split("="); // ['user', '"read append"']
-		let user = parts[0]; // user
-		let usergrants = parts[1].replace(/"/g, '').split(" ").sort(); // ["append", "read"]
-		sorted[user] = usergrants;
-	});
-	return sortObject(sorted);
+  if (!wac) {
+    return {};
+  }
+  let sorted = {};
+  let users = wac.split(","); // ['user="read"', 'public="read"']
+  users.forEach(function(grant) {
+    let parts = grant.split("="); // ['user', '"read append"']
+    let user = parts[0]; // user
+    let usergrants = parts[1].replace(/"/g, '').split(" ").sort(); // ["append", "read"]
+    sorted[user] = usergrants;
+  });
+  return sortObject(sorted);
 }
 
 describe('From accessTo', () => {
