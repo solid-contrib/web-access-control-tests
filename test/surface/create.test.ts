@@ -1,5 +1,6 @@
 import { SolidLogic } from 'solid-logic';
 import { generateTestFolder, getSolidLogicInstance, WEBID_ALICE, WEBID_BOB } from '../helpers/env';
+import { responseCodeGroup } from '../helpers/util'
 
 function makeBody(accessToModes: string, defaultModes: string, target: string) {
   let str = [
@@ -291,7 +292,7 @@ describe('Create', () => {
           'Content-Type': 'application/sparql-update'
         }
       });
-      expect(result.status).toEqual(201);
+      expect(responseCodeGroup(result.status)).toEqual('2xx');
     });
     it(`Is allowed with accessTo Append and default Write access`, async () => {
       const containerUrl = `${testFolderUrl}9/accessToAndDefaultWrite/`;
@@ -320,7 +321,7 @@ describe('Create', () => {
           'Content-Type': 'application/sparql-update'
         }
       });
-      expect(result.status).toEqual(201);
+      expect(responseCodeGroup(result.status)).toEqual('2xx');
     });
     it(`is disallowed without default Write`, async () => {
       const containerUrl = `${testFolderUrl}10/allOtherModes/`;
@@ -537,7 +538,7 @@ describe('Create', () => {
           'Content-Type': 'application/sparql-update'
         }
       });
-      expect(result.status).toEqual(201);
+      expect(responseCodeGroup(result.status)).toEqual('2xx');
     });
     it(`Is allowed with accessTo Append and default Write access`, async () => {
       const containerUrl = `${testFolderUrl}17/accessToAndDefaultWrite/`;
@@ -566,7 +567,7 @@ describe('Create', () => {
           'Content-Type': 'application/sparql-update'
         }
       });
-      expect(result.status).toEqual(201);
+      expect(responseCodeGroup(result.status)).toEqual('2xx');
     });
     it(`is disallowed without default Write`, async () => {
       const containerUrl = `${testFolderUrl}18/allOtherModes/`;
