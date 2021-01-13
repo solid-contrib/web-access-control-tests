@@ -53,8 +53,9 @@ describe('Update', () => {
   });
 
   describe('Using PUT to append', () => {
+    const containerUrl = `${testFolderUrl}1/accessToAppend/`;
     it('Is allowed with accessTo Write access on resource', async () => {
-      const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
+      const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
         method: 'PUT',
@@ -86,7 +87,7 @@ describe('Update', () => {
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is disallowed with accessTo Read+Append+Control access on resource', async () => {
-      const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
+      const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
         method: 'PUT',
@@ -118,7 +119,6 @@ describe('Update', () => {
 	  expect(result.status).toEqual(403);
     });
     it('Is allowed with default Write access on parent', async () => {
-      const containerUrl = `${testFolderUrl}accessToAppend/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -151,7 +151,6 @@ describe('Update', () => {
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is disallowed with default Read+Append+Control access on parent', async () => {
-      const containerUrl = `${testFolderUrl}accessToAppend/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -186,8 +185,9 @@ describe('Update', () => {
   });
 
   describe('Using PUT to overwrite', () => {
+    const containerUrl = `${testFolderUrl}2/accessToAppend/`;
     it('Is allowed with accessTo Write access on resource', async () => {
-      const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
+      const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
         method: 'PUT',
@@ -218,40 +218,7 @@ describe('Update', () => {
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
-    it('Is disallowed with accessTo Read+Append+Control access on resource', async () => {
-      const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
-      // This will do mkdir-p:
-      const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
-        method: 'PUT',
-        body: 'hello',
-        headers: {
-          'Content-Type': 'text/plain',
-          'If-None-Match': '*'
-        }
-      });
-      const etagInQuotes = creationResult.headers.get('etag');
-      // console.log({ etag: etagInQuotes });
-      const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
-      await solidLogicAlice.fetch(aclDocUrl, {
-        method: 'PUT',
-        body: makeBody('acl:Read, acl:Append, acl:Control', null, resourceUrl),
-        headers: {
-          'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
-        }
-      });
-      const result = await solidLogicBob.fetch(resourceUrl, {
-        method: 'PUT',
-        body: 'goodbye',
-        headers: {
-          'Content-Type': 'text/plain',
-          'If-Match': etagInQuotes
-        }
-      });
-      expect(result.status).toEqual(403);
-    });
     it('Is allowed with default Write access on parent', async () => {
-      const containerUrl = `${testFolderUrl}accessToAppend/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -283,8 +250,39 @@ describe('Update', () => {
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
+    it('Is disallowed with accessTo Read+Append+Control access on resource', async () => {
+      const resourceUrl = `${containerUrl}test.txt`;
+      // This will do mkdir-p:
+      const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
+        method: 'PUT',
+        body: 'hello',
+        headers: {
+          'Content-Type': 'text/plain',
+          'If-None-Match': '*'
+        }
+      });
+      const etagInQuotes = creationResult.headers.get('etag');
+      // console.log({ etag: etagInQuotes });
+      const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
+      await solidLogicAlice.fetch(aclDocUrl, {
+        method: 'PUT',
+        body: makeBody('acl:Read, acl:Append, acl:Control', null, resourceUrl),
+        headers: {
+          'Content-Type': 'text/turtle',
+          'If-None-Match': '*'
+        }
+      });
+      const result = await solidLogicBob.fetch(resourceUrl, {
+        method: 'PUT',
+        body: 'goodbye',
+        headers: {
+          'Content-Type': 'text/plain',
+          'If-Match': etagInQuotes
+        }
+      });
+      expect(result.status).toEqual(403);
+    });
     it('Is disallowed with default Read+Append+Control access on parent', async () => {
-      const containerUrl = `${testFolderUrl}accessToAppend/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -319,8 +317,9 @@ describe('Update', () => {
   });
 
   describe('Using PATCH to append', () => {
+    const containerUrl = `${testFolderUrl}3/accessToAppend/`;
     it('Is allowed with accessTo Append access on resource', async () => {
-      const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
+      const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
         method: 'PUT',
@@ -349,7 +348,7 @@ describe('Update', () => {
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is allowed with accessTo Write access on resource', async () => {
-      const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
+      const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
         method: 'PUT',
@@ -379,39 +378,7 @@ describe('Update', () => {
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
-    it('Is disallowed with accessTo Read+Control access on resource', async () => {
-      const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
-      // This will do mkdir-p:
-      const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
-        method: 'PUT',
-        body: '<#hello> <#linked> <#world> .',
-        headers: {
-          'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
-        }
-      });
-      const etagInQuotes = creationResult.headers.get('etag');
-      // console.log({ etag: etagInQuotes });
-      const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
-      await solidLogicAlice.fetch(aclDocUrl, {
-        method: 'PUT',
-        body: makeBody('acl:Read, acl:Control', null, resourceUrl),
-        headers: {
-          'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
-        }
-      });
-      const result = await solidLogicBob.fetch(resourceUrl, {
-        method: 'PATCH',
-        body: 'INSERT { <#how> <#are> <#you> . }',
-        headers: {
-          'Content-Type': 'application/sparql-update'
-        }
-      });
-      expect(result.status).toEqual(403);
-    });
     it('Is allowed with default Append access on parent', async () => {
-      const containerUrl = `${testFolderUrl}accessToAppend/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -443,7 +410,6 @@ describe('Update', () => {
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is allowed with default Write access on parent', async () => {
-      const containerUrl = `${testFolderUrl}accessToAppend/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -474,8 +440,38 @@ describe('Update', () => {
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
+    it('Is disallowed with accessTo Read+Control access on resource', async () => {
+      const resourceUrl = `${containerUrl}test.txt`;
+      // This will do mkdir-p:
+      const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
+        method: 'PUT',
+        body: '<#hello> <#linked> <#world> .',
+        headers: {
+          'Content-Type': 'text/turtle',
+          'If-None-Match': '*'
+        }
+      });
+      const etagInQuotes = creationResult.headers.get('etag');
+      // console.log({ etag: etagInQuotes });
+      const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
+      await solidLogicAlice.fetch(aclDocUrl, {
+        method: 'PUT',
+        body: makeBody('acl:Read, acl:Control', null, resourceUrl),
+        headers: {
+          'Content-Type': 'text/turtle',
+          'If-None-Match': '*'
+        }
+      });
+      const result = await solidLogicBob.fetch(resourceUrl, {
+        method: 'PATCH',
+        body: 'INSERT { <#how> <#are> <#you> . }',
+        headers: {
+          'Content-Type': 'application/sparql-update'
+        }
+      });
+      expect(result.status).toEqual(403);
+    });
     it('Is disallowed with default Read+Control access on parent', async () => {
-      const containerUrl = `${testFolderUrl}accessToAppend/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -509,8 +505,9 @@ describe('Update', () => {
   });
 
   describe('Using PATCH to overwrite', () => {
+    const containerUrl = `${testFolderUrl}4/accessToAppend/`;
     it('Is allowed with accessTo Write access on resource', async () => {
-      const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
+      const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
         method: 'PUT',
@@ -540,39 +537,7 @@ describe('Update', () => {
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
-    it('Is disallowed with accessTo Read+Append+Control access on resource', async () => {
-      const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
-      // This will do mkdir-p:
-      const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
-        method: 'PUT',
-        body: '<#hello> <#linked> <#world> .',
-        headers: {
-          'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
-        }
-      });
-      const etagInQuotes = creationResult.headers.get('etag');
-      // console.log({ etag: etagInQuotes });
-      const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
-      await solidLogicAlice.fetch(aclDocUrl, {
-        method: 'PUT',
-        body: makeBody('acl:Read, acl:Append, acl:Control', null, resourceUrl),
-        headers: {
-          'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
-        }
-      });
-      const result = await solidLogicBob.fetch(resourceUrl, {
-        method: 'PATCH',
-        body: 'DELETE { <#hello> <#linked> <#world> . }',
-        headers: {
-          'Content-Type': 'application/sparql-update'
-        }
-      });
-      expect(result.status).toEqual(403);
-    });
     it('Is allowed with default Write access on parent', async () => {
-      const containerUrl = `${testFolderUrl}accessToAppend/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -603,8 +568,38 @@ describe('Update', () => {
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
+    it('Is disallowed with accessTo Read+Append+Control access on resource', async () => {
+      const resourceUrl = `${containerUrl}test.txt`;
+      // This will do mkdir-p:
+      const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
+        method: 'PUT',
+        body: '<#hello> <#linked> <#world> .',
+        headers: {
+          'Content-Type': 'text/turtle',
+          'If-None-Match': '*'
+        }
+      });
+      const etagInQuotes = creationResult.headers.get('etag');
+      // console.log({ etag: etagInQuotes });
+      const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
+      await solidLogicAlice.fetch(aclDocUrl, {
+        method: 'PUT',
+        body: makeBody('acl:Read, acl:Append, acl:Control', null, resourceUrl),
+        headers: {
+          'Content-Type': 'text/turtle',
+          'If-None-Match': '*'
+        }
+      });
+      const result = await solidLogicBob.fetch(resourceUrl, {
+        method: 'PATCH',
+        body: 'DELETE { <#hello> <#linked> <#world> . }',
+        headers: {
+          'Content-Type': 'application/sparql-update'
+        }
+      });
+      expect(result.status).toEqual(403);
+    });
     it('Is disallowed with default Read+Append+Control access on parent', async () => {
-      const containerUrl = `${testFolderUrl}accessToAppend/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
