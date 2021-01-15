@@ -3,7 +3,7 @@ set -e
 
 # either test against a local server or in a container testnet
 #export SERVER_ROOT=https://localhost
-export SERVER_ROOT=https://alice.localhost:8443 #https://server
+export SERVER_ROOT=https://server
 export USERNAME_ALICE=alice
 export PASSWORD_ALICE=123
 
