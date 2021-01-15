@@ -78,19 +78,15 @@ describe('From accessTo', () => {
   });
   
   const { testFolderUrl } = generateTestFolder('ALICE');
-  beforeEach(async () => {
+  /*beforeEach(async () => {
     // FIXME: NSS ACL cache,
     // wait for ACL cache to clear:
     await new Promise(resolve => setTimeout(resolve, 20));
-  });
-
-  afterEach(() => {
-    return solidLogicAlice.recursiveDelete(testFolderUrl);
-  });
+  }); */
 
   describe('Public accessTo Read', () => {
     beforeAll(async () => {
-      const containerUrl = `${testFolderUrl}1/publicRead/`;
+      const containerUrl = `${testFolderUrl}publicRead/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -110,19 +106,23 @@ describe('From accessTo', () => {
         }
       });
     });
+    afterAll(() => {
+      return solidLogicAlice.recursiveDelete(testFolderUrl);
+    });
+
     it(`Shows the correct WAC-Allow header to Bob`, async () => {
-      const result = await solidLogicBob.fetch(`${testFolderUrl}1/publicRead/`);
+      const result = await solidLogicBob.fetch(`${testFolderUrl}publicRead/`);
       expect(sortWac(result.headers.get('WAC-Allow'))).toEqual(sortWac('user="read",public="read"'));
     });
     it(`Shows the correct WAC-Allow header to the public`, async () => {
-      const result = await fetch(`${testFolderUrl}1/publicRead/`);
+      const result = await fetch(`${testFolderUrl}publicRead/`);
       expect(sortWac(result.headers.get('WAC-Allow'))).toEqual(sortWac('user="read",public="read"'));
     });
   });
 
   describe('Public accessTo Read+Append, Bob accessTo Write', () => {
     beforeAll(async () => {
-      const containerUrl = `${testFolderUrl}2/publicReadBobWrite/`;
+      const containerUrl = `${testFolderUrl}publicReadBobWrite/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -142,12 +142,16 @@ describe('From accessTo', () => {
         }
       });
     });
+    afterAll(() => {
+      return solidLogicAlice.recursiveDelete(testFolderUrl);
+    })
+
     it(`Shows the correct WAC-Allow header to Bob`, async () => {
-      const result = await solidLogicBob.fetch(`${testFolderUrl}2/publicReadBobWrite/`);
+      const result = await solidLogicBob.fetch(`${testFolderUrl}publicReadBobWrite/`);
       expect(sortWac(result.headers.get('WAC-Allow'))).toEqual(sortWac('user="read write append",public="read append"'));
     });
     it(`Shows the correct WAC-Allow header to the public`, async () => {
-      const result = await fetch(`${testFolderUrl}2/publicReadBobWrite/`);
+      const result = await fetch(`${testFolderUrl}publicReadBobWrite/`);
       expect(sortWac(result.headers.get('WAC-Allow'))).toEqual(sortWac('user="read append",public="read append"'));
     });
   });
@@ -162,19 +166,15 @@ describe('From default', () => {
   });
 
   const { testFolderUrl } = generateTestFolder('ALICE');
-  beforeEach(async () => {
+  /* beforeEach(async () => {
     // FIXME: NSS ACL cache,
     // wait for ACL cache to clear:
     await new Promise(resolve => setTimeout(resolve, 20));
-  });
-
-  afterEach(() => {
-    return solidLogicAlice.recursiveDelete(testFolderUrl);
-  });
+  }); */
 
   describe('Public default Read+Append, Bob default Write', () => {
     beforeAll(async () => {
-      const containerUrl = `${testFolderUrl}3/publicReadBobWrite/`;
+      const containerUrl = `${testFolderUrl}publicReadBobWrite/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -194,12 +194,16 @@ describe('From default', () => {
         }
       });
     });
+    afterAll(() => {
+      return solidLogicAlice.recursiveDelete(testFolderUrl);
+    });
+
     it(`Shows the correct WAC-Allow header to Bob`, async () => {
-      const result = await solidLogicBob.fetch(`${testFolderUrl}3/publicReadBobWrite/test.txt`);
+      const result = await solidLogicBob.fetch(`${testFolderUrl}publicReadBobWrite/test.txt`);
       expect(sortWac(result.headers.get('WAC-Allow'))).toEqual(sortWac('user="read write append",public="read append"'));
     });
     it(`Shows the correct WAC-Allow header to the public`, async () => {
-      const result = await fetch(`${testFolderUrl}3/publicReadBobWrite/test.txt`);
+      const result = await fetch(`${testFolderUrl}publicReadBobWrite/test.txt`);
       expect(sortWac(result.headers.get('WAC-Allow'))).toEqual(sortWac('user="read append",public="read append"'));
     });
   });
