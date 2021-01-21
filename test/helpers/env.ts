@@ -1,5 +1,8 @@
 import { getAuthFetcher } from 'solid-auth-fetcher';
-import { SolidLogic } from '../../solid-logic-move-me';
+import { SolidLogic } from 'solid-logic';
+
+export const WEBID_ALICE = process.env.WEBID_ALICE;
+export const WEBID_BOB = process.env.WEBID_BOB;
 
 function getEnvVars(who: string) {
   return {
@@ -15,7 +18,7 @@ export async function getSolidLogicInstance(who: string) {
   // console.log({ envVars })
   const fetcher = await getAuthFetcher(envVars.oidcIssuer, envVars.cookie, "https://tester")
   // console.log(fetcher)
-  return new SolidLogic(fetcher.fetch.bind(fetcher), envVars.webId)
+  return new SolidLogic({fetch: fetcher.fetch.bind(fetcher)}, envVars.webId)
 }
 
 export function generateTestFolder(who: string) {

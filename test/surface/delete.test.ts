@@ -1,11 +1,6 @@
-import { generateTestFolder, getSolidLogicInstance } from '../helpers/env';
-import { SolidLogic } from '../../solid-logic-move-me';
+import { SolidLogic } from 'solid-logic';
+import { generateTestFolder, getSolidLogicInstance, WEBID_ALICE, WEBID_BOB } from '../helpers/env';
 import { responseCodeGroup } from '../helpers/util';
-
-const WEBID_ALICE = process.env.WEBID_ALICE;
-const WEBID_BOB = process.env.WEBID_BOB;
-
-// jest.setTimeout(30000);
 
 function makeBody(accessToModes: string, defaultModes: string, target: string) {
   let str = [
@@ -58,7 +53,7 @@ describe('Delete', () => {
   });
 
   it('Is allowed with accessTo Write access on resource', async () => {
-    const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
+    const resourceUrl = `${testFolderUrl}1/accessToAppend/test.txt`;
     // This will do mkdir-p:
     const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
       method: 'PUT',
@@ -77,13 +72,14 @@ describe('Delete', () => {
         'If-None-Match': '*'
       }
     });
-    const result = await solidLogicAlice.fetch(resourceUrl, {
+    const result = await solidLogicBob.fetch(resourceUrl, {
       method: 'DELETE'
     });
     expect(responseCodeGroup(result.status)).toEqual("2xx");
   });
+
   it('Is disallowed with accessTo Read+Append+Control access on resource', async () => {
-    const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
+    const resourceUrl = `${testFolderUrl}2/accessToAppend/test.txt`;
     // This will do mkdir-p:
     const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
       method: 'PUT',
@@ -102,13 +98,14 @@ describe('Delete', () => {
         'If-None-Match': '*'
       }
     });
-    const result = await solidLogicAlice.fetch(resourceUrl, {
+    const result = await solidLogicBob.fetch(resourceUrl, {
       method: 'DELETE'
     });
-    expect(responseCodeGroup(result.status)).toEqual("2xx");
+    expect(result.status).toEqual(403);
   });
+
   it('Is allowed with default Write access on parent', async () => {
-    const containerUrl = `${testFolderUrl}accessToAppend/`;
+    const containerUrl = `${testFolderUrl}3/accessToAppend/`;
     const resourceUrl = `${containerUrl}test.txt`;
     // This will do mkdir-p:
     const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -122,19 +119,20 @@ describe('Delete', () => {
     const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
     await solidLogicAlice.fetch(aclDocUrl, {
       method: 'PUT',
-      body: makeBody(null, 'acl:Write', resourceUrl),
+      body: makeBody(null, 'acl:Write', containerUrl),
       headers: {
         'Content-Type': 'text/turtle',
         'If-None-Match': '*'
       }
     });
-    const result = await solidLogicAlice.fetch(resourceUrl, {
+    const result = await solidLogicBob.fetch(resourceUrl, {
       method: 'DELETE'
     });
     expect(responseCodeGroup(result.status)).toEqual("2xx");
   });
+
   it('Is disallowed with default Read+Append+Control access on parent', async () => {
-    const containerUrl = `${testFolderUrl}accessToAppend/`;
+    const containerUrl = `${testFolderUrl}4/accessToAppend/`;
     const resourceUrl = `${containerUrl}test.txt`;
     // This will do mkdir-p:
     const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -156,7 +154,7 @@ describe('Delete', () => {
         'If-None-Match': '*'
       }
     });
-    const result = await solidLogicAlice.fetch(resourceUrl, {
+    const result = await solidLogicBob.fetch(resourceUrl, {
       method: 'DELETE'
     });
     expect(result.status).toEqual(403);

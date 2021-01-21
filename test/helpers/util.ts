@@ -1,8 +1,6 @@
 import { getAuthHeaders } from "solid-auth-fetcher";
-import { SolidLogic } from "../../solid-logic-move-me";
 
 const WebSocket = require('ws');
-const rdflib = require('rdflib');
 
 export class WPSClient {
   received: string[];
@@ -26,7 +24,7 @@ export class WPSClient {
       // console.log('WS <', msg);
       this.received.push(msg);
     });  
-    await new Promise((resolve) => {
+    await new Promise<void>((resolve) => {
       this.ws.on('open', async () => {
         const authHeaders = await getAuthHeaders(this.resourceUrl, 'GET', this.authFetcher);
         await this.send(`sub ${this.resourceUrl}`);

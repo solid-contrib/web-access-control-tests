@@ -1,10 +1,6 @@
-import { generateTestFolder, getSolidLogicInstance } from '../helpers/env';
-import { SolidLogic } from '../../solid-logic-move-me';
+import { SolidLogic } from 'solid-logic';
+import { generateTestFolder, getSolidLogicInstance, WEBID_ALICE } from '../helpers/env';
 import { responseCodeGroup } from '../helpers/util';
-
-const ALICE_WEBID = process.env.ALICE_WEBID;
-
-// jest.setTimeout(30000);
 
 function getAclBody(aliceWebId: string, bobWebId: string, target: string, bobAccessTo: string[], bobDefault: string[]) {
   let turtle = `@prefix acl: <http://www.w3.org/ns/auth/acl#>.\n\

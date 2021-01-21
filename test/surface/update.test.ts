@@ -1,11 +1,6 @@
-import { generateTestFolder, getSolidLogicInstance } from '../helpers/env';
-import { SolidLogic } from '../../solid-logic-move-me';
+import { SolidLogic } from 'solid-logic';
+import { generateTestFolder, getSolidLogicInstance, WEBID_ALICE, WEBID_BOB } from '../helpers/env';
 import { responseCodeGroup } from '../helpers/util';
-
-const WEBID_ALICE = process.env.WEBID_ALICE;
-const WEBID_BOB = process.env.WEBID_BOB;
-
-// jest.setTimeout(30000);
 
 function makeBody(accessToModes: string, defaultModes: string, target: string) {
   let str = [
@@ -58,38 +53,6 @@ describe('Update', () => {
   });
 
   describe('Using PUT to append', () => {
-    it('Is allowed with accessTo Append access on resource', async () => {
-      const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
-      // This will do mkdir-p:
-      const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
-        method: 'PUT',
-        body: 'hello',
-        headers: {
-          'Content-Type': 'text/plain',
-          'If-None-Match': '*'
-        }
-      });
-      const etagInQuotes = creationResult.headers.get('etag');
-      // console.log({ etag: etagInQuotes });
-      const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
-      await solidLogicAlice.fetch(aclDocUrl, {
-        method: 'PUT',
-        body: makeBody('acl:Append', null, resourceUrl),
-        headers: {
-          'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
-        }
-      });
-      const result = await solidLogicAlice.fetch(resourceUrl, {
-        method: 'PUT',
-        body: 'hello world',
-        headers: {
-          'Content-Type': 'text/plain',
-          'If-Match': etagInQuotes
-        }
-      });
-      expect(responseCodeGroup(result.status)).toEqual("2xx");
-    });
     it('Is allowed with accessTo Write access on resource', async () => {
       const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
       // This will do mkdir-p:
@@ -112,7 +75,7 @@ describe('Update', () => {
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicAlice.fetch(resourceUrl, {
+      const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PUT',
         body: 'hello world',
         headers: {
@@ -122,7 +85,7 @@ describe('Update', () => {
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
-    it('Is disallowed with accessTo Read+Control access on resource', async () => {
+    it('Is disallowed with accessTo Read+Append+Control access on resource', async () => {
       const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -138,13 +101,13 @@ describe('Update', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody('acl:Read, acl:Control', null, resourceUrl),
+        body: makeBody('acl:Read, acl:Append, acl:Control', null, resourceUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicAlice.fetch(resourceUrl, {
+      const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PUT',
         body: 'hello world',
         headers: {
@@ -152,40 +115,7 @@ describe('Update', () => {
           'If-Match': etagInQuotes
         }
       });
-      expect(responseCodeGroup(result.status)).toEqual("2xx");
-    });
-    it('Is allowed with default Append access on parent', async () => {
-      const containerUrl = `${testFolderUrl}accessToAppend/`;
-      const resourceUrl = `${containerUrl}test.txt`;
-      // This will do mkdir-p:
-      const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
-        method: 'PUT',
-        body: 'hello',
-        headers: {
-          'Content-Type': 'text/plain',
-          'If-None-Match': '*'
-        }
-      });
-      const etagInQuotes = creationResult.headers.get('etag');
-      // console.log({ etag: etagInQuotes });
-      const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
-      await solidLogicAlice.fetch(aclDocUrl, {
-        method: 'PUT',
-        body: makeBody(null, 'acl:Append', resourceUrl),
-        headers: {
-          'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
-        }
-      });
-      const result = await solidLogicAlice.fetch(resourceUrl, {
-        method: 'PUT',
-        body: 'hello world',
-        headers: {
-          'Content-Type': 'text/plain',
-          'If-Match': etagInQuotes
-        }
-      });
-      expect(responseCodeGroup(result.status)).toEqual("2xx");
+	  expect(result.status).toEqual(403);
     });
     it('Is allowed with default Write access on parent', async () => {
       const containerUrl = `${testFolderUrl}accessToAppend/`;
@@ -204,13 +134,13 @@ describe('Update', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody(null, 'acl:Write', resourceUrl),
+        body: makeBody(null, 'acl:Write', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicAlice.fetch(resourceUrl, {
+      const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PUT',
         body: 'hello world',
         headers: {
@@ -220,7 +150,7 @@ describe('Update', () => {
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
-    it('Is disallowed with default Read+Control access on parent', async () => {
+    it('Is disallowed with default Read+Append+Control access on parent', async () => {
       const containerUrl = `${testFolderUrl}accessToAppend/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
@@ -237,13 +167,13 @@ describe('Update', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody(null, 'acl:Read, acl:Control', resourceUrl),
+        body: makeBody(null, 'acl:Read, acl:Append, acl:Control', resourceUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicAlice.fetch(resourceUrl, {
+      const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PUT',
         body: 'hello world',
         headers: {
@@ -278,7 +208,7 @@ describe('Update', () => {
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicAlice.fetch(resourceUrl, {
+      const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PUT',
         body: 'goodbye',
         headers: {
@@ -310,7 +240,7 @@ describe('Update', () => {
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicAlice.fetch(resourceUrl, {
+      const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PUT',
         body: 'goodbye',
         headers: {
@@ -318,7 +248,7 @@ describe('Update', () => {
           'If-Match': etagInQuotes
         }
       });
-      expect(responseCodeGroup(result.status)).toEqual("2xx");
+      expect(result.status).toEqual(403);
     });
     it('Is allowed with default Write access on parent', async () => {
       const containerUrl = `${testFolderUrl}accessToAppend/`;
@@ -337,13 +267,13 @@ describe('Update', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody(null, 'acl:Write', resourceUrl),
+        body: makeBody(null, 'acl:Write', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicAlice.fetch(resourceUrl, {
+      const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PUT',
         body: 'goodbye',
         headers: {
@@ -376,7 +306,7 @@ describe('Update', () => {
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicAlice.fetch(resourceUrl, {
+      const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PUT',
         body: 'goodbye',
         headers: {
@@ -409,7 +339,7 @@ describe('Update', () => {
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicAlice.fetch(resourceUrl, {
+      const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
         body: 'INSERT { <#how> <#are> <#you> . }',
         headers: {
@@ -440,7 +370,7 @@ describe('Update', () => {
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicAlice.fetch(resourceUrl, {
+      const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
         body: 'INSERT { <#how> <#are> <#you> . }',
         headers: {
@@ -471,14 +401,14 @@ describe('Update', () => {
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicAlice.fetch(resourceUrl, {
+      const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
         body: 'INSERT { <#how> <#are> <#you> . }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }
       });
-      expect(responseCodeGroup(result.status)).toEqual("2xx");
+      expect(result.status).toEqual(403);
     });
     it('Is allowed with default Append access on parent', async () => {
       const containerUrl = `${testFolderUrl}accessToAppend/`;
@@ -497,13 +427,13 @@ describe('Update', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody(null, 'acl:Append', resourceUrl),
+        body: makeBody(null, 'acl:Append', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicAlice.fetch(resourceUrl, {
+      const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
         body: 'INSERT { <#how> <#are> <#you> . }',
         headers: {
@@ -529,13 +459,13 @@ describe('Update', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody(null, 'acl:Write', resourceUrl),
+        body: makeBody(null, 'acl:Write', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicAlice.fetch(resourceUrl, {
+      const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
         body: 'INSERT { <#how> <#are> <#you> . }',
         headers: {
@@ -567,7 +497,7 @@ describe('Update', () => {
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicAlice.fetch(resourceUrl, {
+      const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
         body: 'INSERT { <#how> <#are> <#you> . }',
         headers: {
@@ -601,7 +531,7 @@ describe('Update', () => {
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicAlice.fetch(resourceUrl, {
+      const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
         body: 'DELETE { <#hello> <#linked> <#world> . }',
         headers: {
@@ -632,14 +562,14 @@ describe('Update', () => {
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicAlice.fetch(resourceUrl, {
+      const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
         body: 'DELETE { <#hello> <#linked> <#world> . }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }
       });
-      expect(responseCodeGroup(result.status)).toEqual("2xx");
+      expect(result.status).toEqual(403);
     });
     it('Is allowed with default Write access on parent', async () => {
       const containerUrl = `${testFolderUrl}accessToAppend/`;
@@ -658,13 +588,13 @@ describe('Update', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody(null, 'acl:Write', resourceUrl),
+        body: makeBody(null, 'acl:Write', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicAlice.fetch(resourceUrl, {
+      const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
         body: 'DELETE { <#hello> <#linked> <#world> . }',
         headers: {
@@ -696,7 +626,7 @@ describe('Update', () => {
           'If-None-Match': '*'
         }
       });
-      const result = await solidLogicAlice.fetch(resourceUrl, {
+      const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
         body: 'DELETE { <#hello> <#linked> <#world> . }',
         headers: {
@@ -705,5 +635,6 @@ describe('Update', () => {
       });
       expect(result.status).toEqual(403);
     });
+
   });
 });
