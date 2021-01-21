@@ -138,7 +138,7 @@ describe('Read', () => {
     const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
     await solidLogicAlice.fetch(aclDocUrl, {
       method: 'PUT',
-      body: makeBody(null, 'acl:Append, acl:Write, acl:Control', resourceUrl),
+      body: makeBody(null, 'acl:Append, acl:Write, acl:Control', containerUrl),
       headers: {
         'Content-Type': 'text/turtle',
         'If-None-Match': '*'
@@ -236,7 +236,7 @@ describe('Read', () => {
     const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
     await solidLogicAlice.fetch(aclDocUrl, {
       method: 'PUT',
-      body: makeBody(null, 'acl:Append, acl:Write, acl:Control', resourceUrl),
+      body: makeBody(null, 'acl:Append, acl:Write, acl:Control', containerUrl),
       headers: {
         'Content-Type': 'text/turtle',
         'If-None-Match': '*'
