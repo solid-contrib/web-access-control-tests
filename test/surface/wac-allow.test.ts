@@ -78,13 +78,8 @@ describe('From accessTo', () => {
   });
   
   const { testFolderUrl } = generateTestFolder('ALICE');
-  beforeEach(async () => {
-    // FIXME: NSS ACL cache,
-    // wait for ACL cache to clear:
-    await new Promise(resolve => setTimeout(resolve, 20));
-  });
 
-  afterEach(() => {
+  afterAll(() => {
     return solidLogicAlice.recursiveDelete(testFolderUrl);
   });
 
@@ -162,13 +157,8 @@ describe('From default', () => {
   });
 
   const { testFolderUrl } = generateTestFolder('ALICE');
-  beforeEach(async () => {
-    // FIXME: NSS ACL cache,
-    // wait for ACL cache to clear:
-    await new Promise(resolve => setTimeout(resolve, 20));
-  });
 
-  afterEach(() => {
+  afterAll(() => {
     return solidLogicAlice.recursiveDelete(testFolderUrl);
   });
 
