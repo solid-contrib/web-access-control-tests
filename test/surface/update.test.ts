@@ -42,11 +42,11 @@ describe('Update', () => {
   });
   
   const { testFolderUrl } = generateTestFolder('ALICE');
-  beforeEach(async () => {
+  /* beforeEach(async () => {
     // FIXME: NSS ACL cache,
     // wait for ACL cache to clear:
     await new Promise(resolve => setTimeout(resolve, 20));
-  });
+  }); */
 
   afterEach(() => {
     return solidLogicAlice.recursiveDelete(testFolderUrl);
@@ -508,8 +508,9 @@ describe('Update', () => {
     });
   });
 
+  // Read+Write needed following https://github.com/solid/specification/issues/220
   describe('Using PATCH to overwrite', () => {
-    it('Is allowed with accessTo Write access on resource', async () => {
+    it('Is allowed with accessTo Read+Write access on resource', async () => {
       const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -525,7 +526,7 @@ describe('Update', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody('acl:Write', null, resourceUrl),
+        body: makeBody('acl:Read, acl:Write', null, resourceUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
@@ -571,7 +572,38 @@ describe('Update', () => {
       });
       expect(result.status).toEqual(403);
     });
-    it('Is allowed with default Write access on parent', async () => {
+    it('Is disallowed with accessTo Write+Control access on resource', async () => {
+      const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
+      // This will do mkdir-p:
+      const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
+        method: 'PUT',
+        body: '<#hello> <#linked> <#world> .',
+        headers: {
+          'Content-Type': 'text/turtle',
+          'If-None-Match': '*'
+        }
+      });
+      const etagInQuotes = creationResult.headers.get('etag');
+      // console.log({ etag: etagInQuotes });
+      const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
+      await solidLogicAlice.fetch(aclDocUrl, {
+        method: 'PUT',
+        body: makeBody('acl:Write, acl:Control', null, resourceUrl),
+        headers: {
+          'Content-Type': 'text/turtle',
+          'If-None-Match': '*'
+        }
+      });
+      const result = await solidLogicBob.fetch(resourceUrl, {
+        method: 'PATCH',
+        body: 'DELETE { <#hello> <#linked> <#world> . }',
+        headers: {
+          'Content-Type': 'application/sparql-update'
+        }
+      });
+      expect(result.status).toEqual(403);
+    });
+    it('Is allowed with default Read+Write access on parent', async () => {
       const containerUrl = `${testFolderUrl}accessToAppend/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
@@ -588,7 +620,7 @@ describe('Update', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody(null, 'acl:Write', containerUrl),
+        body: makeBody(null, 'acl:Read, acl:Write', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
@@ -621,6 +653,38 @@ describe('Update', () => {
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
         body: makeBody(null, 'acl:Read, acl:Append, acl:Control', containerUrl),
+        headers: {
+          'Content-Type': 'text/turtle',
+          'If-None-Match': '*'
+        }
+      });
+      const result = await solidLogicBob.fetch(resourceUrl, {
+        method: 'PATCH',
+        body: 'DELETE { <#hello> <#linked> <#world> . }',
+        headers: {
+          'Content-Type': 'application/sparql-update'
+        }
+      });
+      expect(result.status).toEqual(403);
+    });
+    it('Is disallowed with default Write+Control access on parent', async () => {
+      const containerUrl = `${testFolderUrl}accessToAppend/`;
+      const resourceUrl = `${containerUrl}test.txt`;
+      // This will do mkdir-p:
+      const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
+        method: 'PUT',
+        body: '<#hello> <#linked> <#world> .',
+        headers: {
+          'Content-Type': 'text/turtle',
+          'If-None-Match': '*'
+        }
+      });
+      const etagInQuotes = creationResult.headers.get('etag');
+      // console.log({ etag: etagInQuotes });
+      const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
+      await solidLogicAlice.fetch(aclDocUrl, {
+        method: 'PUT',
+        body: makeBody(null, 'acl:Write, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           'If-None-Match': '*'
