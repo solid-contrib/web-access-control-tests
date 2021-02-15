@@ -7,14 +7,14 @@ export SYSTEM_UNDER_TEST=http://localhost:3000
 export HELP_SERVER_HOST=solidcommunity.net
 
 export OIDC_ISSUER_ALICE=https://$HELP_SERVER_HOST
-export USERNAME_ALICE=solid-crud-tests-example-1
-export PASSWORD_ALICE=123
+export USERNAME_ALICE=solidtestsuite
+export PASSWORD_ALICE=Testing123
 export WEBID_ALICE=https://$USERNAME_ALICE.$HELP_SERVER_HOST/profile/card#me
 
 export OIDC_ISSUER_BOB=https://solidcommunity.net
 export USERNAME_BOB=solid-crud-tests-example-2
 export PASSWORD_BOB=123
-export WEBID_ALICE=https://$USERNAME_BOB.$HELP_SERVER_HOST/profile/card#me
+export WEBID_BOB=https://$USERNAME_BOB.$HELP_SERVER_HOST/profile/card#me
 
 export RESULTS_PATH=../CSS-wac-results.json
 
@@ -39,7 +39,7 @@ echo OIDC issuer: $OIDC_ISSUER_BOB
 echo WebID: $WEBID_BOB
 
 echo Setting root acl in system under test:
-echo "@prefix acl: <http://www.w3.org/ns/auth/acl#>. <#alice> a acl:Authorization ; acl:Agent <$WEBID_ALICE> ; acl:accessTo </>; acl:default </>; acl:mode acl:Read, acl:Write, acl:Control ." > root-acl.ttl
+echo "@prefix acl: <http://www.w3.org/ns/auth/acl#>. <#alice> a acl:Authorization ; acl:agent <$WEBID_ALICE> ; acl:accessTo </>; acl:default </>; acl:mode acl:Read, acl:Write, acl:Control ." > root-acl.ttl
 curl -v -X PUT -H 'Content-Type: text/turtle' -T root-acl.ttl $SYSTEM_UNDER_TEST/.acl
 export NODE_TLS_REJECT_UNAUTHORIZED=0
 
@@ -49,3 +49,4 @@ export STORAGE_ROOT_ALICE=$SYSTEM_UNDER_TEST/
 # npm run jest "$@"
 # npm run jest -- --json --outputFile="$RESULTS_PATH" "$@"
 
+DEBUG=* ./node_modules/.bin/jest test/surface/

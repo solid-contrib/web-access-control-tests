@@ -80,7 +80,7 @@ describe('Create', () => {
           'Content-Type': 'text/plain'
         }
       });
-      expect(result.status).toEqual(201);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it(`Is allowed with accessTo Write access`, async () => {
       const containerUrl = `${testFolderUrl}2/accessToWrite/`;
@@ -106,7 +106,7 @@ describe('Create', () => {
         method: 'POST',
         body: 'hello'
       });
-      expect(result.status).toEqual(201);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it(`Is disallowed otherwise`, async () => {
       const containerUrl = `${testFolderUrl}3/allOtherModes/`;
@@ -168,7 +168,7 @@ describe('Create', () => {
           'If-None-Match': '*'
         }
       });
-      expect(result.status).toEqual(201);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it(`Is allowed with accessTo Append and default Write access`, async () => {
       const containerUrl = `${testFolderUrl}5/accessToAndDefaultWrite/`;
@@ -198,7 +198,7 @@ describe('Create', () => {
           'If-None-Match': '*'
         }
       });
-      expect(result.status).toEqual(201);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it(`is disallowed without default Write`, async () => {
       const containerUrl = `${testFolderUrl}6/allOtherModes/`;
@@ -231,7 +231,8 @@ describe('Create', () => {
       expect(result.status).toEqual(403);
     });
 
-    it(`is disallowed without accessTo Write or Append`, async () => {
+    // DISPUTED, see https://github.com/solid/specification/issues/236
+    it.skip(`is disallowed without accessTo Write or Append`, async () => {
       const containerUrl = `${testFolderUrl}7/allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -414,7 +415,7 @@ describe('Create', () => {
           'If-None-Match': '*'
         }
       });
-      expect(result.status).toEqual(201);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it(`Is allowed with accessTo Append and default Write access`, async () => {
       const containerUrl = `${testFolderUrl}13/accessToAndDefaultWrite/`;
@@ -444,7 +445,7 @@ describe('Create', () => {
           'If-None-Match': '*'
         }
       });
-      expect(result.status).toEqual(201);
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it(`is disallowed without default Write`, async () => {
       const containerUrl = `${testFolderUrl}14/allOtherModes/`;
