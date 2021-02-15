@@ -18,3 +18,5 @@ In another terminal window:
 - run `node ./setup.js` to create a root ACL at http://localhost:3000/.acl which gives https://solidtestsuite.solidcommunity.net/profile/card#me full read/write/control access.
 - run `node ./fetch.js` to check that the ACL is configured correctly.
 * advanced test (uses the same root ACL doc, but from bash): `bash ./run-against-css.sh`
+
+You can also cut-and-paste the lines from run-against-css.sh into your bash shell, then you can more easily run tests interactively.
