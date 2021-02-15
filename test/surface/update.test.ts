@@ -669,7 +669,10 @@ describe('Update', () => {
       });
       expect(result.status).toEqual(403);
     });
-    it('Is disallowed with default Write+Control access on parent', async () => {
+
+    // DISPUTED: This used to require Read access as per https://github.com/solid/specification/issues/220
+    // but looks like neither CSS nor ESS implemented it that way.
+    it.skip('Is disallowed with default Write+Control access on parent', async () => {
       const containerUrl = `${testFolderUrl}20/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
