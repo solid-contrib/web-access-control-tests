@@ -341,7 +341,7 @@ describe('Update', () => {
       });
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'INSERT { <#how> <#are> <#you> . }',
+        body: 'INSERT DATA { <#how> <#are> <#you> . }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }
@@ -372,7 +372,7 @@ describe('Update', () => {
       });
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'INSERT { <#how> <#are> <#you> . }',
+        body: 'INSERT DATA { <#how> <#are> <#you> . }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }
@@ -403,7 +403,7 @@ describe('Update', () => {
       });
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'INSERT { <#how> <#are> <#you> . }',
+        body: 'INSERT DATA { <#how> <#are> <#you> . }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }
@@ -435,7 +435,7 @@ describe('Update', () => {
       });
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'INSERT { <#how> <#are> <#you> . }',
+        body: 'INSERT DATA { <#how> <#are> <#you> . }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }
@@ -467,7 +467,7 @@ describe('Update', () => {
       });
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'INSERT { <#how> <#are> <#you> . }',
+        body: 'INSERT DATA { <#how> <#are> <#you> . }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }
@@ -499,7 +499,7 @@ describe('Update', () => {
       });
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'INSERT { <#how> <#are> <#you> . }',
+        body: 'INSERT DATA { <#how> <#are> <#you> . }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }

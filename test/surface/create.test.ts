@@ -288,7 +288,7 @@ describe('Create', () => {
       });
       const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
         method: 'PATCH',
-        body: 'INSERT { <#hello> <#linked> <#world> . }',
+        body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }
@@ -317,7 +317,7 @@ describe('Create', () => {
       });
       const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
         method: 'PATCH',
-        body: 'INSERT { <#hello> <#linked> <#world> . }',
+        body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }
@@ -344,9 +344,11 @@ describe('Create', () => {
           'If-None-Match': '*'
         }
       });
+
+
       const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
         method: 'PATCH',
-        body: 'INSERT { <#hello> <#linked> <#world> . }',
+        body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }
@@ -354,7 +356,8 @@ describe('Create', () => {
       expect(result.status).toEqual(403);
     });
 
-    it(`is disallowed without accessTo Write or Append`, async () => {
+    // DISPUTED, see https://github.com/solid/specification/issues/236
+    it.skip(`is disallowed without accessTo Write or Append`, async () => {
       const containerUrl = `${testFolderUrl}11/allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -376,7 +379,7 @@ describe('Create', () => {
       });
       const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
         method: 'PATCH',
-        body: 'INSERT { <#hello> <#linked> <#world> . }',
+        body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }
@@ -478,7 +481,8 @@ describe('Create', () => {
       expect(result.status).toEqual(403);
     });
 
-    it(`is disallowed without accessTo Write or Append`, async () => {
+    // DISPUTED, see https://github.com/solid/specification/issues/236
+    it.skip(`is disallowed without accessTo Write or Append`, async () => {
       const containerUrl = `${testFolderUrl}15/allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -534,7 +538,7 @@ describe('Create', () => {
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {
         method: 'PATCH',
-        body: 'INSERT { <#hello> <#linked> <#world> . }',
+        body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }
@@ -563,7 +567,7 @@ describe('Create', () => {
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {
         method: 'PATCH',
-        body: 'INSERT { <#hello> <#linked> <#world> . }',
+        body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }
@@ -592,7 +596,7 @@ describe('Create', () => {
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {
         method: 'PATCH',
-        body: 'INSERT { <#hello> <#linked> <#world> . }',
+        body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }
@@ -600,7 +604,8 @@ describe('Create', () => {
       expect(result.status).toEqual(403);
     });
 
-    it(`is disallowed without accessTo Write or Append`, async () => {
+    // DISPUTED, see https://github.com/solid/specification/issues/236
+    it.skip(`is disallowed without accessTo Write or Append`, async () => {
       const containerUrl = `${testFolderUrl}19/allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -622,7 +627,7 @@ describe('Create', () => {
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {
         method: 'PATCH',
-        body: 'INSERT { <#hello> <#linked> <#world> . }',
+        body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }
