@@ -54,7 +54,7 @@ describe('Update', () => {
 
   describe('Using PUT to append', () => {
     it('Is allowed with accessTo Write access on resource', async () => {
-      const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
+      const resourceUrl = `${testFolderUrl}1/test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
         method: 'PUT',
@@ -86,7 +86,7 @@ describe('Update', () => {
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is disallowed with accessTo Read+Append+Control access on resource', async () => {
-      const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
+      const resourceUrl = `${testFolderUrl}2/test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
         method: 'PUT',
@@ -118,7 +118,7 @@ describe('Update', () => {
 	  expect(result.status).toEqual(403);
     });
     it('Is allowed with default Write access on parent', async () => {
-      const containerUrl = `${testFolderUrl}accessToAppend/`;
+      const containerUrl = `${testFolderUrl}3/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -151,7 +151,7 @@ describe('Update', () => {
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is disallowed with default Read+Append+Control access on parent', async () => {
-      const containerUrl = `${testFolderUrl}accessToAppend/`;
+      const containerUrl = `${testFolderUrl}4/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -187,7 +187,7 @@ describe('Update', () => {
 
   describe('Using PUT to overwrite', () => {
     it('Is allowed with accessTo Write access on resource', async () => {
-      const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
+      const resourceUrl = `${testFolderUrl}5/test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
         method: 'PUT',
@@ -219,7 +219,7 @@ describe('Update', () => {
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is disallowed with accessTo Read+Append+Control access on resource', async () => {
-      const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
+      const resourceUrl = `${testFolderUrl}6/test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
         method: 'PUT',
@@ -251,7 +251,7 @@ describe('Update', () => {
       expect(result.status).toEqual(403);
     });
     it('Is allowed with default Write access on parent', async () => {
-      const containerUrl = `${testFolderUrl}accessToAppend/`;
+      const containerUrl = `${testFolderUrl}7/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -284,7 +284,7 @@ describe('Update', () => {
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is disallowed with default Read+Append+Control access on parent', async () => {
-      const containerUrl = `${testFolderUrl}accessToAppend/`;
+      const containerUrl = `${testFolderUrl}8/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -320,7 +320,7 @@ describe('Update', () => {
 
   describe('Using PATCH to append', () => {
     it('Is allowed with accessTo Append access on resource', async () => {
-      const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
+      const resourceUrl = `${testFolderUrl}9/test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
         method: 'PUT',
@@ -349,7 +349,7 @@ describe('Update', () => {
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is allowed with accessTo Write access on resource', async () => {
-      const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
+      const resourceUrl = `${testFolderUrl}10/test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
         method: 'PUT',
@@ -380,7 +380,7 @@ describe('Update', () => {
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is disallowed with accessTo Read+Control access on resource', async () => {
-      const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
+      const resourceUrl = `${testFolderUrl}11/test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
         method: 'PUT',
@@ -411,7 +411,7 @@ describe('Update', () => {
       expect(result.status).toEqual(403);
     });
     it('Is allowed with default Append access on parent', async () => {
-      const containerUrl = `${testFolderUrl}accessToAppend/`;
+      const containerUrl = `${testFolderUrl}12/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -443,7 +443,7 @@ describe('Update', () => {
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is allowed with default Write access on parent', async () => {
-      const containerUrl = `${testFolderUrl}accessToAppend/`;
+      const containerUrl = `${testFolderUrl}13/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -475,7 +475,7 @@ describe('Update', () => {
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is disallowed with default Read+Control access on parent', async () => {
-      const containerUrl = `${testFolderUrl}accessToAppend/`;
+      const containerUrl = `${testFolderUrl}14/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -511,7 +511,7 @@ describe('Update', () => {
   // Read+Write needed following https://github.com/solid/specification/issues/220
   describe('Using PATCH to overwrite', () => {
     it('Is allowed with accessTo Read+Write access on resource', async () => {
-      const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
+      const resourceUrl = `${testFolderUrl}15/test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
         method: 'PUT',
@@ -542,7 +542,7 @@ describe('Update', () => {
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is disallowed with accessTo Read+Append+Control access on resource', async () => {
-      const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
+      const resourceUrl = `${testFolderUrl}16/test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
         method: 'PUT',
@@ -572,8 +572,9 @@ describe('Update', () => {
       });
       expect(result.status).toEqual(403);
     });
-    it('Is disallowed with accessTo Write+Control access on resource', async () => {
-      const resourceUrl = `${testFolderUrl}accessToAppend/test.txt`;
+    // DISPUTED: Should this require Read access?
+    it.only('Is disallowed with accessTo Write+Control access on resource', async () => {
+      const resourceUrl = `${testFolderUrl}17/test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
         method: 'PUT',
@@ -604,7 +605,7 @@ describe('Update', () => {
       expect(result.status).toEqual(403);
     });
     it('Is allowed with default Read+Write access on parent', async () => {
-      const containerUrl = `${testFolderUrl}accessToAppend/`;
+      const containerUrl = `${testFolderUrl}18/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -636,7 +637,7 @@ describe('Update', () => {
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
     it('Is disallowed with default Read+Append+Control access on parent', async () => {
-      const containerUrl = `${testFolderUrl}accessToAppend/`;
+      const containerUrl = `${testFolderUrl}19/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -668,7 +669,7 @@ describe('Update', () => {
       expect(result.status).toEqual(403);
     });
     it('Is disallowed with default Write+Control access on parent', async () => {
-      const containerUrl = `${testFolderUrl}accessToAppend/`;
+      const containerUrl = `${testFolderUrl}20/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
