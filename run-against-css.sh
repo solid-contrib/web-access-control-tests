@@ -49,4 +49,4 @@ export STORAGE_ROOT_ALICE=$SYSTEM_UNDER_TEST/
 # npm run jest "$@"
 # npm run jest -- --json --outputFile="$RESULTS_PATH" "$@"
 
-DEBUG=* ./node_modules/.bin/jest
+DEBUG=* ./node_modules/.bin/jest test/surface/wac-allow.test.ts
