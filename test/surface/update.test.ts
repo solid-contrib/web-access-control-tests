@@ -534,7 +534,7 @@ describe('Update', () => {
       });
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'DELETE { <#hello> <#linked> <#world> . }',
+        body: 'DELETE DATA { <#hello> <#linked> <#world> }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }
@@ -565,7 +565,7 @@ describe('Update', () => {
       });
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'DELETE { <#hello> <#linked> <#world> . }',
+        body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }
@@ -596,7 +596,7 @@ describe('Update', () => {
       });
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'DELETE { <#hello> <#linked> <#world> . }',
+        body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }
@@ -628,7 +628,7 @@ describe('Update', () => {
       });
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'DELETE { <#hello> <#linked> <#world> . }',
+        body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }
@@ -660,7 +660,7 @@ describe('Update', () => {
       });
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'DELETE { <#hello> <#linked> <#world> . }',
+        body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }
@@ -692,7 +692,7 @@ describe('Update', () => {
       });
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'DELETE { <#hello> <#linked> <#world> . }',
+        body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
         headers: {
           'Content-Type': 'application/sparql-update'
         }
