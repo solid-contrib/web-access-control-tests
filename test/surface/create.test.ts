@@ -557,7 +557,7 @@ describe('Create', () => {
         method: 'PUT',
         body: 'hello',
         headers: {
-          'Content-Type': 'text/turtle',
+          'Content-Type': 'text/plain',
           'If-None-Match': '*'
         }
       });
