@@ -2,6 +2,8 @@ import { SolidLogic } from 'solid-logic';
 import { generateTestFolder, getSolidLogicInstance, WEBID_ALICE, WEBID_BOB } from '../helpers/env';
 import { responseCodeGroup } from '../helpers/util';
 
+jest.setTimeout(10000);
+
 function makeBody(accessToModes: string, defaultModes: string, target: string) {
   let str = [
     '@prefix acl: <http://www.w3.org/ns/auth/acl#>.',
