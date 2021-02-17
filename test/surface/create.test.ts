@@ -285,7 +285,7 @@ describe('Create', () => {
         body: makeBody('acl:Write', 'acl:Write', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
@@ -304,7 +304,7 @@ describe('Create', () => {
         method: 'PUT',
         body: 'hello',
         headers: {
-          'Content-Type': 'text/turtle',
+          'Content-Type': 'text/plain',
           'If-None-Match': '*'
         }
       });
