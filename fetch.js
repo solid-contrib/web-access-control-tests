@@ -14,6 +14,9 @@ async function run(url) {
   console.log('Fetching', { url });
   const result = await fetcher.fetch(url);
   console.log(result.status, await result.text());
+  for (let pair of result.headers.entries()) {
+     console.log(`Response header: ${pair[0]}: ${pair[1]}`);
+  }
 }
 
 // ...

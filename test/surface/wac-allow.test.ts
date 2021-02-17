@@ -101,7 +101,7 @@ describe('From accessTo', () => {
         body: makeBody(null, null, 'acl:Read', null, containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
     });
