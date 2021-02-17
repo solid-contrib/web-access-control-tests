@@ -379,8 +379,6 @@ describe('Update', () => {
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
-  });
-});
     it('Is allowed with accessTo Write access on resource', async () => {
       const resourceUrl = `${testFolderUrl}10/test.txt`;
       // This will do mkdir-p:
