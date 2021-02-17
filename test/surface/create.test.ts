@@ -70,7 +70,7 @@ describe('Create', () => {
         body: makeBody('acl:Append', null, containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
       const result = await solidLogicBob.fetch(`${testFolderUrl}1/accessToAppend/`, {
@@ -99,7 +99,7 @@ describe('Create', () => {
         body: makeBody('acl:Write', null, containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
       const result = await solidLogicBob.fetch(`${testFolderUrl}2/accessToWrite/`, {
@@ -125,7 +125,7 @@ describe('Create', () => {
         body: makeBody('acl:Read, acl:Control', 'acl:Read, acl:Append, acl:Write, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
       const result = await solidLogicBob.fetch(containerUrl, {
@@ -157,7 +157,7 @@ describe('Create', () => {
         body: makeBody('acl:Write', 'acl:Write', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
@@ -187,7 +187,7 @@ describe('Create', () => {
         body: makeBody('acl:Append', 'acl:Write', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
@@ -217,7 +217,7 @@ describe('Create', () => {
         body: makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Append, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
@@ -249,7 +249,7 @@ describe('Create', () => {
         body: makeBody('acl:Read, acl:Control', 'acl:Read, acl:Append, acl:Write, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
@@ -312,7 +312,7 @@ describe('Create', () => {
         body: makeBody('acl:Append', 'acl:Write', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
@@ -343,7 +343,7 @@ describe('Create', () => {
         body: makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Append, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
 
@@ -376,7 +376,7 @@ describe('Create', () => {
         body: makeBody('acl:Read, acl:Control', 'acl:Read, acl:Append, acl:Write, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
@@ -409,7 +409,7 @@ describe('Create', () => {
         body: makeBody('acl:Write', 'acl:Write', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {
@@ -439,7 +439,7 @@ describe('Create', () => {
         body: makeBody('acl:Append', 'acl:Write', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {
@@ -470,7 +470,7 @@ describe('Create', () => {
         body: makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Append, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {
@@ -502,7 +502,7 @@ describe('Create', () => {
         body: makeBody('acl:Read, acl:Control', 'acl:Read, acl:Append, acl:Write, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {
@@ -536,7 +536,7 @@ describe('Create', () => {
         body: makeBody('acl:Write', 'acl:Write', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {
@@ -565,7 +565,7 @@ describe('Create', () => {
         body: makeBody('acl:Append', 'acl:Write', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {
@@ -596,7 +596,7 @@ describe('Create', () => {
         body: makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Append, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {
@@ -627,7 +627,7 @@ describe('Create', () => {
         body: makeBody('acl:Read, acl:Control', 'acl:Read, acl:Append, acl:Write, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {

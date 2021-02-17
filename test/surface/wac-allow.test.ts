@@ -133,7 +133,7 @@ describe('From accessTo', () => {
         body: makeBody('acl:Write', null, 'acl:Read, acl:Append', null, containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
     });
@@ -180,7 +180,7 @@ describe('From default', () => {
         body: makeBody(null, 'acl:Write', null, 'acl:Read, acl:Append', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
     });

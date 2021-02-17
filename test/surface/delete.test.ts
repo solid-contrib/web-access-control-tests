@@ -69,8 +69,8 @@ describe('Delete', () => {
       body: makeBody('acl:Write', null, resourceUrl),
       headers: {
         'Content-Type': 'text/turtle',
-        'If-None-Match': '*'
-      }
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
+        }
     });
     const result = await solidLogicBob.fetch(resourceUrl, {
       method: 'DELETE'
@@ -95,8 +95,8 @@ describe('Delete', () => {
       body: makeBody('acl:Read, acl:Append, acl:Control', null, resourceUrl),
       headers: {
         'Content-Type': 'text/turtle',
-        'If-None-Match': '*'
-      }
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
+        }
     });
     const result = await solidLogicBob.fetch(resourceUrl, {
       method: 'DELETE'
@@ -122,8 +122,8 @@ describe('Delete', () => {
       body: makeBody(null, 'acl:Write', containerUrl),
       headers: {
         'Content-Type': 'text/turtle',
-        'If-None-Match': '*'
-      }
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
+        }
     });
     const result = await solidLogicBob.fetch(resourceUrl, {
       method: 'DELETE'
@@ -151,8 +151,8 @@ describe('Delete', () => {
       body: makeBody(null, 'acl:Read, acl:Append, acl:Control', containerUrl),
       headers: {
         'Content-Type': 'text/turtle',
-        'If-None-Match': '*'
-      }
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
+        }
     });
     const result = await solidLogicBob.fetch(resourceUrl, {
       method: 'DELETE'
