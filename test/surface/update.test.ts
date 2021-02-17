@@ -2,6 +2,8 @@ import { SolidLogic } from 'solid-logic';
 import { generateTestFolder, getSolidLogicInstance, WEBID_ALICE, WEBID_BOB } from '../helpers/env';
 import { responseCodeGroup } from '../helpers/util';
 
+jest.setTimeout(10000)
+
 function makeBody(accessToModes: string, defaultModes: string, target: string) {
   let str = [
     '@prefix acl: <http://www.w3.org/ns/auth/acl#>.',
@@ -49,7 +51,7 @@ describe('Update', () => {
   }); */
 
   afterEach(() => {
-    return solidLogicAlice.recursiveDelete(testFolderUrl);
+    // return solidLogicAlice.recursiveDelete(testFolderUrl);
   });
 
   describe('Using PUT to append', () => {
@@ -65,7 +67,7 @@ describe('Update', () => {
         }
       });
       const etagInQuotes = creationResult.headers.get('etag');
-      // console.log({ etag: etagInQuotes });
+
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
@@ -75,13 +77,16 @@ describe('Update', () => {
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
+      const headers = {
+        'Content-Type': 'text/plain',
+      };
+      if (etagInQuotes) {
+        headers['If-Match'] = etagInQuotes
+      }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PUT',
         body: 'hello world',
-        headers: {
-          'Content-Type': 'text/plain',
-          'If-Match': etagInQuotes
-        }
+        headers
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
@@ -107,13 +112,16 @@ describe('Update', () => {
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
+      const headers = {
+        'Content-Type': 'text/plain',
+      };
+      if (etagInQuotes) {
+        headers['If-Match'] = etagInQuotes
+      }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PUT',
         body: 'hello world',
-        headers: {
-          'Content-Type': 'text/plain',
-          'If-Match': etagInQuotes
-        }
+        headers
       });
 	  expect(result.status).toEqual(403);
     });
@@ -140,13 +148,16 @@ describe('Update', () => {
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
+      const headers = {
+        'Content-Type': 'text/plain',
+      };
+      if (etagInQuotes) {
+        headers['If-Match'] = etagInQuotes
+      }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PUT',
         body: 'hello world',
-        headers: {
-          'Content-Type': 'text/plain',
-          'If-Match': etagInQuotes
-        }
+        headers
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
@@ -173,13 +184,16 @@ describe('Update', () => {
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
+      const headers = {
+        'Content-Type': 'text/plain',
+      };
+      if (etagInQuotes) {
+        headers['If-Match'] = etagInQuotes
+      }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PUT',
         body: 'hello world',
-        headers: {
-          'Content-Type': 'text/plain',
-          'If-Match': etagInQuotes
-        }
+        headers
       });
       expect(result.status).toEqual(403);
     });
@@ -208,13 +222,16 @@ describe('Update', () => {
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
+      const headers = {
+        'Content-Type': 'text/plain',
+      };
+      if (etagInQuotes) {
+        headers['If-Match'] = etagInQuotes
+      }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PUT',
         body: 'goodbye',
-        headers: {
-          'Content-Type': 'text/plain',
-          'If-Match': etagInQuotes
-        }
+        headers
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
@@ -240,13 +257,16 @@ describe('Update', () => {
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
+      const headers = {
+        'Content-Type': 'text/plain',
+      };
+      if (etagInQuotes) {
+        headers['If-Match'] = etagInQuotes
+      }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PUT',
         body: 'goodbye',
-        headers: {
-          'Content-Type': 'text/plain',
-          'If-Match': etagInQuotes
-        }
+        headers
       });
       expect(result.status).toEqual(403);
     });
@@ -273,13 +293,16 @@ describe('Update', () => {
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
+      const headers = {
+        'Content-Type': 'text/plain',
+      };
+      if (etagInQuotes) {
+        headers['If-Match'] = etagInQuotes
+      }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PUT',
         body: 'goodbye',
-        headers: {
-          'Content-Type': 'text/plain',
-          'If-Match': etagInQuotes
-        }
+        headers
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
@@ -306,13 +329,16 @@ describe('Update', () => {
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
+      const headers = {
+        'Content-Type': 'text/plain',
+      };
+      if (etagInQuotes) {
+        headers['If-Match'] = etagInQuotes
+      }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PUT',
         body: 'goodbye',
-        headers: {
-          'Content-Type': 'text/plain',
-          'If-Match': etagInQuotes
-        }
+        headers
       });
       expect(result.status).toEqual(403);
     });
@@ -330,24 +356,31 @@ describe('Update', () => {
           'If-None-Match': '*'
         }
       });
+      const etagInQuotes = creationResult.headers.get('etag');
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody('acl:Append', null, resourceUrl),
+        body: makeBody('acl:Write', null, resourceUrl),
         headers: {
           'Content-Type': 'text/turtle',
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
+      const headers = {
+        'Content-Type': 'application/sparql-update',
+      };
+      if (etagInQuotes) {
+        headers['If-Match'] = etagInQuotes
+      }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
         body: 'INSERT DATA { <#how> <#are> <#you> . }',
-        headers: {
-          'Content-Type': 'application/sparql-update'
-        }
+        headers
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
+  });
+});
     it('Is allowed with accessTo Write access on resource', async () => {
       const resourceUrl = `${testFolderUrl}10/test.txt`;
       // This will do mkdir-p:
@@ -370,12 +403,16 @@ describe('Update', () => {
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
+      const headers = {
+        'Content-Type': 'application/sparql-update',
+      };
+      if (etagInQuotes) {
+        headers['If-Match'] = etagInQuotes
+      }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
         body: 'INSERT DATA { <#how> <#are> <#you> . }',
-        headers: {
-          'Content-Type': 'application/sparql-update'
-        }
+        headers
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
@@ -393,6 +430,7 @@ describe('Update', () => {
       const etagInQuotes = creationResult.headers.get('etag');
       // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
+      
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
         body: makeBody('acl:Read, acl:Control', null, resourceUrl),
@@ -401,12 +439,16 @@ describe('Update', () => {
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
+      const headers = {
+        'Content-Type': 'application/sparql-update',
+      };
+      if (etagInQuotes) {
+        headers['If-Match'] = etagInQuotes
+      }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
         body: 'INSERT DATA { <#how> <#are> <#you> . }',
-        headers: {
-          'Content-Type': 'application/sparql-update'
-        }
+        headers
       });
       expect(result.status).toEqual(403);
     });
@@ -433,12 +475,16 @@ describe('Update', () => {
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
+      const headers = {
+        'Content-Type': 'application/sparql-update',
+      };
+      if (etagInQuotes) {
+        headers['If-Match'] = etagInQuotes
+      }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
         body: 'INSERT DATA { <#how> <#are> <#you> . }',
-        headers: {
-          'Content-Type': 'application/sparql-update'
-        }
+        headers
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
@@ -465,12 +511,16 @@ describe('Update', () => {
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
+      const headers = {
+        'Content-Type': 'application/sparql-update',
+      };
+      if (etagInQuotes) {
+        headers['If-Match'] = etagInQuotes
+      }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
         body: 'INSERT DATA { <#how> <#are> <#you> . }',
-        headers: {
-          'Content-Type': 'application/sparql-update'
-        }
+        headers
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
@@ -497,12 +547,16 @@ describe('Update', () => {
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
+      const headers = {
+        'Content-Type': 'application/sparql-update',
+      };
+      if (etagInQuotes) {
+        headers['If-Match'] = etagInQuotes
+      }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
         body: 'INSERT DATA { <#how> <#are> <#you> . }',
-        headers: {
-          'Content-Type': 'application/sparql-update'
-        }
+        headers
       });
       expect(result.status).toEqual(403);
     });
@@ -563,12 +617,16 @@ describe('Update', () => {
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
+      const headers = {
+        'Content-Type': 'application/sparql-update',
+      };
+      if (etagInQuotes) {
+        headers['If-Match'] = etagInQuotes
+      }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
         body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
-        headers: {
-          'Content-Type': 'application/sparql-update'
-        }
+        headers
       });
       expect(result.status).toEqual(403);
     });
@@ -596,12 +654,16 @@ describe('Update', () => {
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
+      const headers = {
+        'Content-Type': 'application/sparql-update',
+      };
+      if (etagInQuotes) {
+        headers['If-Match'] = etagInQuotes
+      }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
         body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
-        headers: {
-          'Content-Type': 'application/sparql-update'
-        }
+        headers
       });
       expect(result.status).toEqual(403);
     });
@@ -628,12 +690,16 @@ describe('Update', () => {
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
+      const headers = {
+        'Content-Type': 'application/sparql-update',
+      };
+      if (etagInQuotes) {
+        headers['If-Match'] = etagInQuotes
+      }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
         body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
-        headers: {
-          'Content-Type': 'application/sparql-update'
-        }
+        headers
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
@@ -660,12 +726,16 @@ describe('Update', () => {
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
+      const headers = {
+        'Content-Type': 'application/sparql-update',
+      };
+      if (etagInQuotes) {
+        headers['If-Match'] = etagInQuotes
+      }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
         body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
-        headers: {
-          'Content-Type': 'application/sparql-update'
-        }
+        headers
       });
       expect(result.status).toEqual(403);
     });
@@ -695,12 +765,16 @@ describe('Update', () => {
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
+      const headers = {
+        'Content-Type': 'application/sparql-update',
+      };
+      if (etagInQuotes) {
+        headers['If-Match'] = etagInQuotes
+      }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
         body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
-        headers: {
-          'Content-Type': 'application/sparql-update'
-        }
+        headers
       });
       expect(result.status).toEqual(403);
     });
