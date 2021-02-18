@@ -15,8 +15,9 @@ In another terminal window:
 * check out this repo from https://github.com/solid/web-access-control-tests and run `npm ci`
 * check out the `run-against-css` branch
 * simple test (sets a root ACL doc from node and reads it back):
-- run `node ./setup.js` to create a root ACL at http://localhost:3000/.acl which gives https://solidtestsuite.solidcommunity.net/profile/card#me full read/write/control access.
-- run `node ./fetch.js` to check that the ACL is configured correctly.
+- run `node ./setup.js http://localhost:3000/.acl` to create a root ACL at http://localhost:3000/.acl which gives https://solidtestsuite.solidcommunity.net/profile/card#me full read/write/control access.
+- run `node ./fetch.js http://localhost:3000/.acl` to check that Alice ('solidtestsuite') can access it.
+- run `node ./fetch-bob.js http://localhost:3000/.acl` to check that Bob ('solid-crud-tests-example-2') can *not* access it.
 * advanced test (uses the same root ACL doc, but from bash): `bash ./run-against-css.sh`
 
 You can also cut-and-paste the lines from run-against-css.sh into your bash shell, then you can more easily run tests interactively.
