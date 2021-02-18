@@ -360,7 +360,7 @@ describe('Update', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody('acl:Write', null, resourceUrl),
+        body: makeBody('acl:Append', null, resourceUrl),
         headers: {
           'Content-Type': 'text/turtle',
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
