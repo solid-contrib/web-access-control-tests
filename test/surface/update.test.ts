@@ -51,7 +51,7 @@ describe('Update', () => {
   }); */
 
   afterEach(() => {
-    // return solidLogicAlice.recursiveDelete(testFolderUrl);
+    return solidLogicAlice.recursiveDelete(testFolderUrl);
   });
 
   describe('Using PUT to append', () => {
@@ -428,7 +428,6 @@ describe('Update', () => {
       const etagInQuotes = creationResult.headers.get('etag');
       // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
-      
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
         body: makeBody('acl:Read, acl:Control', null, resourceUrl),
