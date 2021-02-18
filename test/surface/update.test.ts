@@ -51,7 +51,7 @@ describe('Update', () => {
   }); */
 
   afterEach(() => {
-    // return solidLogicAlice.recursiveDelete(testFolderUrl);
+    return solidLogicAlice.recursiveDelete(testFolderUrl);
   });
 
   describe('Using PUT to append', () => {
@@ -360,7 +360,7 @@ describe('Update', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody('acl:Write', null, resourceUrl),
+        body: makeBody('acl:Append', null, resourceUrl),
         headers: {
           'Content-Type': 'text/turtle',
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
@@ -428,7 +428,6 @@ describe('Update', () => {
       const etagInQuotes = creationResult.headers.get('etag');
       // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
-      
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
         body: makeBody('acl:Read, acl:Control', null, resourceUrl),
