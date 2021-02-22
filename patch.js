@@ -17,7 +17,7 @@ async function run(url) {
     headers: {
       'Content-Type': 'application/sparql-update'
     },
-    body: 'INSERT DATA { <#patch> <#to> <#create> }'
+    body: 'INSERT DATA { <#patch> <#to> <#create> . }'
   });
   console.log(result.status, await result.text());
 }
