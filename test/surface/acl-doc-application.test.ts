@@ -150,8 +150,8 @@ describe('ACL doc application', () => {
     afterAll(() => {
       return solidLogicAlice.recursiveDelete(testFolderUrl);
     });
-
-    it('does not allow GET accessTo/', async () => {
+    // DISPUTED: https://github.com/solid/specification/issues/193#issuecomment-784050910
+    it.skip('does not allow GET accessTo/', async () => {
       const result = await solidLogicBob.fetch(containerUrl);
       expect(result.status).toEqual(403);
     });
