@@ -15,7 +15,7 @@ async function run(url) {
   const result = await fetcher.fetch(url, {
     method: 'PATCH',
     headers: {
-      'Content-Type': 'application/sparql-update'
+      'Content-Type': 'application/sparql-update-single-match'
     },
     body: 'INSERT DATA { <#patch> <#to> <#create> . }'
   });

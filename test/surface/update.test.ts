@@ -367,7 +367,7 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'application/sparql-update-single-match',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
@@ -402,7 +402,7 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'application/sparql-update-single-match',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
@@ -437,7 +437,7 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'application/sparql-update-single-match',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
@@ -473,7 +473,7 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'application/sparql-update-single-match',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
@@ -509,7 +509,7 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'application/sparql-update-single-match',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
@@ -545,7 +545,7 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'application/sparql-update-single-match',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
@@ -587,7 +587,7 @@ describe('Update', () => {
         method: 'PATCH',
         body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'application/sparql-update'
+          'Content-Type': 'application/sparql-update-single-match'
         }
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
@@ -615,7 +615,7 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'application/sparql-update-single-match',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
@@ -652,7 +652,7 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'application/sparql-update-single-match',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
@@ -688,7 +688,7 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'application/sparql-update-single-match',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
@@ -724,7 +724,7 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'application/sparql-update-single-match',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
@@ -763,7 +763,7 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'application/sparql-update-single-match',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
