@@ -25,7 +25,15 @@ You'll see something like:
 ```
 Just above the 'FAIL' line you'll see the PUT request that Bob did to create new.txt.
 
-To see that the resource was indeed created, have a look through the console output to see which test container it used. For instance if it was `web-access-control-tests-1614931894635` then you can now do:
+But careful! If you try to re-run that, it will give a 403 since the resource now exists. So instead,
+have a look through the console output to see which test container it used. For instance if it was `web-access-control-tests-1614931894635` then you can do:
+```sh
+node put-bob.js https://pod-compat.inrupt.com/solidtestsuite/solidtestsuite/web-access-control-tests-1614931894635/6/allOtherModes/new2.txt
+[...]
+201
+```
+
+To see that the resource was indeed created, you can now do:
 ```sh
 node fetch.js "https://pod-compat.inrupt.com/solidtestsuite/solidtestsuite/web-access-control-tests-1614931894635/6/allOtherModes/new.txt"
 [...]
