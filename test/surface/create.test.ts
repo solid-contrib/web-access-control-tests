@@ -110,8 +110,7 @@ describe('Create', () => {
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
-    // DISPUTED: https://github.com/solid/specification/issues/193#issuecomment-784050910
-    it.skip(`Is disallowed otherwise`, async () => {
+    it(`Is disallowed otherwise`, async () => {
       const containerUrl = `${testFolderUrl}3/allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {

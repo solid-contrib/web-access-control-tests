@@ -627,9 +627,7 @@ describe('Update', () => {
       });
       expect(result.status).toEqual(403);
     });
-    // DISPUTED: This used to require Read access as per https://github.com/solid/specification/issues/220
-    // but looks like neither CSS nor ESS implemented it that way.
-    it.skip('Is disallowed with accessTo Write+Control access on resource', async () => {
+    it('Is disallowed with accessTo Write+Control access on resource', async () => {
       const resourceUrl = `${testFolderUrl}17/test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -737,9 +735,7 @@ describe('Update', () => {
       expect(result.status).toEqual(403);
     });
 
-    // DISPUTED: This used to require Read access as per https://github.com/solid/specification/issues/220
-    // but looks like neither CSS nor ESS implemented it that way.
-    it.skip('Is disallowed with default Write+Control access on parent', async () => {
+    it('Is disallowed with default Write+Control access on parent', async () => {
       const containerUrl = `${testFolderUrl}20/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
