@@ -23,8 +23,18 @@ You'll see something like:
     Received: 201
 [...]
 ```
+Just above the 'FAIL' line you'll see the PUT request that Bob did to create new.txt.
 
 Have a look through the console output to see which test container it used. For instance if it was `web-access-control-tests-1614931894635` then you can now do:
+```sh
+node fetch.js "https://pod-compat.inrupt.com/solidtestsuite/solidtestsuite/web-access-control-tests-1614931894635/6/allOtherModes/new.txt"
+[...]
+200 hello
+[...]
+```
+
+To see that the resource was indeed created. To see what the ACL was, you can do (using the same test container URL from your own console output):
+
 ```sh
 node fetch.js "https://pod-compat.inrupt.com/solidtestsuite/solidtestsuite/web-access-control-tests-1614931894635/6/allOtherModes/?ext=acl"
 ```
@@ -34,7 +44,6 @@ And you'll see something like:
 <https://pod-compat.inrupt.com/solidtestsuite/solidtestsuite/web-access-control-tests-1614931894635/6/allOtherModes/?ext=acl#bobAccessTo>
         acl:mode        acl:Write ;
         acl:accessTo    <https://pod-compat.inrupt.com/solidtestsuite/solidtestsuite/web-access-control-tests-1614931894635/6/allOtherModes/> ;
-        acl:agentClass  foaf:Agent ;
         acl:agent       <https://solid-crud-tests-example-2.solidcommunity.net/profile/card#me> ;
         rdf:type        acl:Authorization .
 
@@ -47,4 +56,8 @@ And you'll see something like:
         acl:agent     <https://solidtestsuite.solidcommunity.net/profile/card#me> ;
         rdf:type      acl:Authorization .
 [...]
+```
+
+You can also do:
+```sh
 ```

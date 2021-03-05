@@ -5,7 +5,6 @@ import { responseCodeGroup } from '../helpers/util'
 function makeBody(accessToModes: string, defaultModes: string, target: string) {
   let str = [
     '@prefix acl: <http://www.w3.org/ns/auth/acl#>.',
-    '@prefix foaf: <http://xmlns.com/foaf/0.1/>.',
     '',
     `<#alice> a acl:Authorization;\n  acl:agent <${WEBID_ALICE}>;`,
     `  acl:accessTo <${target}>;`,
@@ -17,7 +16,6 @@ function makeBody(accessToModes: string, defaultModes: string, target: string) {
     str += [
       '<#bobAccessTo> a acl:Authorization;',
       `  acl:agent <${WEBID_BOB}>;`,
-      `  acl:agentClass foaf:Agent;`,
       `  acl:accessTo <${target}>;`,
       `  acl:mode ${accessToModes}.`,
       ''
@@ -27,7 +25,6 @@ function makeBody(accessToModes: string, defaultModes: string, target: string) {
     str += [
       '<#bobDefault> a acl:Authorization;',
       `  acl:agent <${WEBID_BOB}>;`,
-      `  acl:agentClass foaf:Agent;`,
       `  acl:default <${target}>;`,
       `  acl:mode ${defaultModes}.`,
       ''
