@@ -2,8 +2,6 @@ import { SolidLogic } from 'solid-logic';
 import { generateTestFolder, getSolidLogicInstance, WEBID_ALICE, WEBID_BOB } from '../helpers/env';
 import { responseCodeGroup } from '../helpers/util'
 
-jest.setTimeout(10000);
-
 function makeBody(accessToModes: string, defaultModes: string, target: string) {
   let str = [
     '@prefix acl: <http://www.w3.org/ns/auth/acl#>.',
@@ -19,7 +17,7 @@ function makeBody(accessToModes: string, defaultModes: string, target: string) {
     str += [
       '<#bobAccessTo> a acl:Authorization;',
       `  acl:agent <${WEBID_BOB}>;`,
-      // `  acl:agentClass foaf:Agent;`,
+      `  acl:agentClass foaf:Agent;`,
       `  acl:accessTo <${target}>;`,
       `  acl:mode ${accessToModes}.`,
       ''
@@ -29,7 +27,7 @@ function makeBody(accessToModes: string, defaultModes: string, target: string) {
     str += [
       '<#bobDefault> a acl:Authorization;',
       `  acl:agent <${WEBID_BOB}>;`,
-      // `  acl:agentClass foaf:Agent;`,
+      `  acl:agentClass foaf:Agent;`,
       `  acl:default <${target}>;`,
       `  acl:mode ${defaultModes}.`,
       ''

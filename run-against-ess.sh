@@ -16,13 +16,9 @@ export USERNAME_BOB=solid-crud-tests-example-2
 export PASSWORD_BOB=123
 export WEBID_BOB=https://$USERNAME_BOB.$HELP_SERVER_HOST/profile/card#me
 
-export RESULTS_PATH=../CSS-wac-results.json
-
 echo Automated way to get an OIDC issuer cookie for Alice:
 export CURL_RESULT_ALICE=`curl -ki $OIDC_ISSUER_ALICE/login/password -d"username=$USERNAME_ALICE&password=$PASSWORD_ALICE" | grep Set-Cookie`
 export COOKIE_ALICE=`expr "$CURL_RESULT_ALICE" : '^Set-Cookie:\ \(.*\).'`
-
-echo Other env vars for Alice:
 
 echo Automated way to get an OIDC issuer cookie for Bob:
 export CURL_RESULT_BOB=`curl -ki $OIDC_ISSUER_BOB/login/password -d"username=$USERNAME_BOB&password=$PASSWORD_BOB" | grep Set-Cookie`
@@ -38,6 +34,5 @@ echo Cookie: $COOKIE_BOB
 echo OIDC issuer: $OIDC_ISSUER_BOB
 echo WebID: $WEBID_BOB
 
-export STORAGE_ROOT_ALICE=$SYSTEM_UNDER_TEST/
 export DEBUG=*
 ./node_modules/.bin/jest test/surface/
