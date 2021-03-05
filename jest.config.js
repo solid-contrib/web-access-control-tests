@@ -6,7 +6,7 @@ module.exports = {
     testEnvironment: 'node',
     verbose: false,
     collectCoverage: false,
-    testTimeout: 10000,
+    testTimeout: 60000,
     globals: {
         'ts-jest': {
             // reference: https://kulshekhar.github.io/ts-jest/user/config/
