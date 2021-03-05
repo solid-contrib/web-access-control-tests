@@ -203,7 +203,7 @@ describe('Create', () => {
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
-    // DISPUTED: https://github.com/solid/specification/issues/236#issuecomment-784063453
+    // DISPUTED: https://github.com/solid/specification/issues/246
     it.skip(`is disallowed without default Write`, async () => {
       const containerUrl = `${testFolderUrl}6/allOtherModes/`;
       // This will do mkdir-p:
@@ -457,7 +457,7 @@ describe('Create', () => {
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
 
-    // DISPUTED: https://github.com/solid/specification/issues/236#issuecomment-784063453
+    // DISPUTED: https://github.com/solid/specification/issues/246
     it.skip(`is disallowed without default Write`, async () => {
       const containerUrl = `${testFolderUrl}14/allOtherModes/`;
       // This will do mkdir-p:
