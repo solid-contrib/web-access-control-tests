@@ -8,8 +8,7 @@ function makeBody(accessToModes: string, defaultModes: string, target: string) {
     '',
     `<#alice> a acl:Authorization;\n  acl:agent <${WEBID_ALICE}>;`,
     `  acl:accessTo <${target}>;`,
-    `  acl:default <${target}>;`,
-    '  acl:mode acl:Read, acl:Write, acl:Control.',
+    '  acl:mode acl:Control.',
     ''
   ].join('\n')
   if (accessToModes) {
