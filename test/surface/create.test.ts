@@ -2,12 +2,14 @@ import { SolidLogic } from 'solid-logic';
 import { generateTestFolder, getSolidLogicInstance, WEBID_ALICE, WEBID_BOB } from '../helpers/env';
 import { responseCodeGroup } from '../helpers/util'
 
+jest.setTimeout(10000);
+
 function makeBody(accessToModes: string, defaultModes: string, target: string) {
   let str = [
     '@prefix acl: <http://www.w3.org/ns/auth/acl#>.',
+    '@prefix foaf: <http://xmlns.com/foaf/0.1/>.',
     '',
     `<#alice> a acl:Authorization;\n  acl:agent <${WEBID_ALICE}>;`,
-    '@prefix foaf: <http://xmlns.com/foaf/0.1/>.',
     `  acl:accessTo <${target}>;`,
     `  acl:default <${target}>;`,
     '  acl:mode acl:Read, acl:Write, acl:Control.',
@@ -16,8 +18,8 @@ function makeBody(accessToModes: string, defaultModes: string, target: string) {
   if (accessToModes) {
     str += [
       '<#bobAccessTo> a acl:Authorization;',
-      // `  acl:agentClass foaf:Agent;`,
       `  acl:agent <${WEBID_BOB}>;`,
+      // `  acl:agentClass foaf:Agent;`,
       `  acl:accessTo <${target}>;`,
       `  acl:mode ${accessToModes}.`,
       ''
@@ -58,7 +60,7 @@ describe('Create', () => {
   describe('Using PUT in existing container', () => {
     // DISPUTED: https://github.com/solid/specification/issues/236#issuecomment-784063453
     it.only(`is disallowed without default Write`, async () => {
-      const containerUrl = `${testFolderUrl}`;
+      const containerUrl = `${testFolderUrl}6/allOtherModes/`;
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
@@ -71,7 +73,7 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Append, acl:Control', containerUrl),
+        body: makeBody('acl:Write', '', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs

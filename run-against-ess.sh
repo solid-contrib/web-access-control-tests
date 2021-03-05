@@ -39,5 +39,5 @@ echo OIDC issuer: $OIDC_ISSUER_BOB
 echo WebID: $WEBID_BOB
 
 export STORAGE_ROOT_ALICE=$SYSTEM_UNDER_TEST/
-
+export DEBUG=*
 ./node_modules/.bin/jest test/surface/
