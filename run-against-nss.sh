@@ -38,9 +38,6 @@ echo Cookie: $COOKIE_BOB
 echo OIDC issuer: $OIDC_ISSUER_BOB
 echo WebID: $WEBID_BOB
 
-echo Setting root acl in system under test:
-echo "@prefix acl: <http://www.w3.org/ns/auth/acl#>. <#alice> a acl:Authorization ; acl:agent <$WEBID_ALICE> ; acl:accessTo </>; acl:default </>; acl:mode acl:Read, acl:Write, acl:Control ." > root-acl.ttl
-curl -v -X PUT -H 'Content-Type: text/turtle' -T root-acl.ttl $SYSTEM_UNDER_TEST/.acl
 export NODE_TLS_REJECT_UNAUTHORIZED=0
 
 export STORAGE_ROOT_ALICE=$SYSTEM_UNDER_TEST/
