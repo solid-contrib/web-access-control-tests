@@ -192,5 +192,15 @@ describe('From default', () => {
       const result = await fetch(`${testFolderUrl}3/publicReadBobWrite/test.txt`);
       expect(sortWac(result.headers.get('WAC-Allow'))).toEqual(sortWac('user="read append",public="read append"'));
     });
+    it(`Shows the Link header containing the aclDocUrl to Alice`, async () => {
+      const result = await solidLogicBob.fetch(`${testFolderUrl}3/publicReadBobWrite/test.txt`);
+      const aclDocUrl = await solidLogicAlice.findAclDocUrl(`${testFolderUrl}3/publicReadBobWrite/test.txt`);
+      expect(result.headers.get('Link')).toContain(aclDocUrl);
+    });
+    it(`Does not show a Link header containing the aclDocUrl to the public`, async () => {
+      const result = await solidLogicBob.fetch(`${testFolderUrl}3/publicReadBobWrite/test.txt`);
+      const aclDocUrl = await solidLogicAlice.findAclDocUrl(`${testFolderUrl}3/publicReadBobWrite/test.txt`);
+      expect(result.headers.get('Link')).toNotContain(aclDocUrl);
+    });
   });
 });
