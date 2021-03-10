@@ -774,7 +774,7 @@ describe('Update', () => {
   });
   describe('Update acl file', () => {
     it('Is disallowed with Read+Write', async () => {
-      const containerUrl = `${testFolderUrl}19/`;
+      const containerUrl = `${testFolderUrl}21/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -804,8 +804,8 @@ describe('Update', () => {
       });
       expect(result.status).toEqual(403);
     });
-    it('Is allowed with Read+Control+Write', async () => {
-      const containerUrl = `${testFolderUrl}19/`;
+    it('Is allowed with Control', async () => {
+      const containerUrl = `${testFolderUrl}22/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -819,7 +819,7 @@ describe('Update', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody('acl:Read, acl:Control, acl:Write', 'acl:Read, acl:Control, acl:Write', containerUrl),
+        body: makeBody('acl:Control', 'acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs

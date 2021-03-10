@@ -270,8 +270,8 @@ describe('Read-Public', () => {
     const result = await solidLogicBob.fetch(aclDocUrl);
     expect(responseCodeGroup(result.status)).toEqual("4xx");
   });
-  it('Is allowed to read .acl with Control+Read', async () => {
-    const resourceUrl = `${testFolderUrl}9/test.txt`;
+  it('Is allowed to read .acl with Control', async () => {
+    const resourceUrl = `${testFolderUrl}10/test.txt`;
     // This will do mkdir-p:
     const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
       method: 'PUT',
@@ -284,7 +284,7 @@ describe('Read-Public', () => {
     const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
     await solidLogicAlice.fetch(aclDocUrl, {
       method: 'PUT',
-      body: makeBody('acl:Control, acl:Read', 'acl:Control, acl:Read', resourceUrl),
+      body: makeBody('acl:Control', 'acl:Control', resourceUrl),
       headers: {
         'Content-Type': 'text/turtle',
         // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
