@@ -291,7 +291,7 @@ describe('Create', () => {
         method: 'PATCH',
         body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'application/sparql-update-single-match'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(responseCodeGroup(result.status)).toEqual('2xx');
@@ -320,7 +320,7 @@ describe('Create', () => {
         method: 'PATCH',
         body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'application/sparql-update-single-match'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(responseCodeGroup(result.status)).toEqual('2xx');
@@ -352,7 +352,7 @@ describe('Create', () => {
         method: 'PATCH',
         body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'application/sparql-update-single-match'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(403);
@@ -382,7 +382,7 @@ describe('Create', () => {
         method: 'PATCH',
         body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'application/sparql-update-single-match'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(403);
@@ -541,7 +541,7 @@ describe('Create', () => {
         method: 'PATCH',
         body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'application/sparql-update-single-match'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(responseCodeGroup(result.status)).toEqual('2xx');
@@ -570,7 +570,7 @@ describe('Create', () => {
         method: 'PATCH',
         body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'application/sparql-update-single-match'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(responseCodeGroup(result.status)).toEqual('2xx');
@@ -600,7 +600,7 @@ describe('Create', () => {
         method: 'PATCH',
         body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'application/sparql-update-single-match'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(403);
@@ -630,7 +630,7 @@ describe('Create', () => {
         method: 'PATCH',
         body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'application/sparql-update-single-match'
+          'Content-Type': 'application/sparql-update'
         }
       });
       expect(result.status).toEqual(403);
