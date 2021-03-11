@@ -51,3 +51,30 @@ export class WPSClient {
 export function responseCodeGroup(code) {
   return `${Math.floor(code / 100)}xx`;
 }
+
+// env param is skip for MUST and SHOULD, include for MAY
+export function itIs(level ='', id = '') {
+  switch (level) {
+    case 'SKIP':
+      return (name, runner) => { it.skip(`${level} ${id} ${name}`, runner); }
+    case 'MUST':
+      if (process.env.SKIP_MUST || process.env['SKIP_MUST_' + id]) {
+          return (name, runner) => { it.skip(`${level} ${id} ${name}`, runner); }
+      } else {
+          return (name, runner) => { it(`${level} ${id} ${name}`, runner); }
+      }
+    case 'SHOULD':
+      if (process.env.SKIP_SHOULD || process.env['SKIP_SHOULD_' + id]) {
+        return (name, runner) => { it.skip(`${level} ${id} ${name}`, runner); }
+      } else {
+        return (name, runner) => { it(`${level} ${id} ${name}`, runner); }
+      }
+    case 'MAY':
+      if (process.env.INCLUDE_MAY || process.env['INCLUDE_MAY_' + id]) {
+        return (name, runner) => { it(`${level} ${id} ${name}`, runner); }
+      } else {
+        return (name, runner) => { it.skip(`${level} ${id} ${name}`, runner); }
+      }
+  }
+  return (name, runner) => { it(`${level} ${id} ${name}`, runner); }
+}

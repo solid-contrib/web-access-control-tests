@@ -16,7 +16,7 @@ export USERNAME_BOB=solid-crud-tests-example-2
 export PASSWORD_BOB=123
 export WEBID_BOB=https://$USERNAME_BOB.$HELP_SERVER_HOST/profile/card#me
 
-export RESULTS_PATH=../CSS-wac-results.json
+export RESULTS_PATH=../test-suite/NSS/wac-results.json
 
 echo Automated way to get an OIDC issuer cookie for Alice:
 export CURL_RESULT_ALICE=`curl -ki $OIDC_ISSUER_ALICE/login/password -d"username=$USERNAME_ALICE&password=$PASSWORD_ALICE" | grep Set-Cookie`
@@ -46,4 +46,5 @@ export STORAGE_ROOT_ALICE=$SYSTEM_UNDER_TEST/
 # npm run jest "$@"
 # npm run jest -- --json --outputFile="$RESULTS_PATH" "$@"
 
-DEBUG=* ./node_modules/.bin/jest test/surface/
+export INCLUDE_MAY=1
+./node_modules/.bin/jest test/surface/ --json --outputFile="$RESULTS_PATH" "$@"
