@@ -16,7 +16,7 @@ export USERNAME_BOB=solid-crud-tests-example-2
 export PASSWORD_BOB=123
 export WEBID_BOB=https://$USERNAME_BOB.$HELP_SERVER_HOST/profile/card#me
 
-export RESULTS_PATH=../test-suite/ESSwac-results.json
+export RESULTS_PATH=../test-suite/ESS/wac-results.json
 
 echo Automated way to get an OIDC issuer cookie for Alice:
 export CURL_RESULT_ALICE=`curl -ki $OIDC_ISSUER_ALICE/login/password -d"username=$USERNAME_ALICE&password=$PASSWORD_ALICE" | grep Set-Cookie`
