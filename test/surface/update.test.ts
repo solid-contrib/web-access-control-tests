@@ -627,7 +627,8 @@ describe('Update', () => {
       });
       expect(result.status).toEqual(403);
     });
-    it('Is disallowed with accessTo Write+Control access on resource', async () => {
+    // DISPUTED: https://github.com/solid/specification/issues/139#issuecomment-797338177
+    it.skip('Is disallowed with accessTo Write+Control access on resource', async () => {
       const resourceUrl = `${testFolderUrl}17/test.txt`;
       // This will do mkdir-p:
       const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
@@ -735,7 +736,8 @@ describe('Update', () => {
       expect(result.status).toEqual(403);
     });
 
-    it('Is disallowed with default Write+Control access on parent', async () => {
+    // DISPUTED: https://github.com/solid/specification/issues/139#issuecomment-797338177
+    it.skip('Is disallowed with default Write+Control access on parent', async () => {
       const containerUrl = `${testFolderUrl}20/`;
       const resourceUrl = `${containerUrl}test.txt`;
       // This will do mkdir-p:
