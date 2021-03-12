@@ -771,6 +771,69 @@ describe('Update', () => {
       });
       expect(result.status).toEqual(403);
     });
-
+  });
+  describe('Update acl file', () => {
+    it('Is disallowed with Read+Write', async () => {
+      const containerUrl = `${testFolderUrl}21/`;
+      const resourceUrl = `${containerUrl}test.txt`;
+      // This will do mkdir-p:
+      const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
+        method: 'PUT',
+        body: '<#hello> <#linked> <#world> .',
+        headers: {
+          'Content-Type': 'text/turtle',
+          'If-None-Match': '*'
+        }
+      });
+      const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
+      await solidLogicAlice.fetch(aclDocUrl, {
+        method: 'PUT',
+        body: makeBody('acl:Read, acl:Write', 'acl:Read, acl:Write', containerUrl),
+        headers: {
+          'Content-Type': 'text/turtle',
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
+        }
+      });
+      const result = await solidLogicBob.fetch(aclDocUrl, {
+        method: 'PUT',
+        body: makeBody(null, 'acl:Read', containerUrl),
+        headers: {
+          'Content-Type': 'text/turtle',
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
+        }
+      });
+      expect(result.status).toEqual(403);
+    });
+    it('Is allowed with Control', async () => {
+      const containerUrl = `${testFolderUrl}22/`;
+      const resourceUrl = `${containerUrl}test.txt`;
+      // This will do mkdir-p:
+      const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
+        method: 'PUT',
+        body: '<#hello> <#linked> <#world> .',
+        headers: {
+          'Content-Type': 'text/turtle',
+          'If-None-Match': '*'
+        }
+      });
+      const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
+      await solidLogicAlice.fetch(aclDocUrl, {
+        method: 'PUT',
+        body: makeBody('acl:Control', 'acl:Control', containerUrl),
+        headers: {
+          'Content-Type': 'text/turtle',
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
+        }
+      });
+      const result = await solidLogicBob.fetch(aclDocUrl, {
+        method: 'PUT',
+        body: makeBody(null, 'acl:Read', containerUrl),
+        headers: {
+          'Content-Type': 'text/turtle',
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
+        }
+      });
+      expect(responseCodeGroup(result.status).toEqual("2xx"));
+    });
   });
 });
