@@ -193,8 +193,7 @@ describe('From default', () => {
       expect(sortWac(result.headers.get('WAC-Allow'))).toEqual(sortWac('user="read append",public="read append"'));
     });
 
-    // DISPUTED: See https://github.com/solid/specification/pull/248
-    it.skip(`Shows the Link header containing the aclDocUrl to Alice`, async () => {
+    it(`Shows the Link header containing the aclDocUrl to Alice`, async () => {
       const result = await solidLogicBob.fetch(`${testFolderUrl}3/publicReadBobWrite/test.txt`);
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(`${testFolderUrl}3/publicReadBobWrite/test.txt`);
       expect(result.headers.get('Link')).toContain(aclDocUrl);
