@@ -202,7 +202,7 @@ describe('From default', () => {
     it.skip(`Does not show a Link header containing the aclDocUrl to the public`, async () => {
       const result = await solidLogicBob.fetch(`${testFolderUrl}3/publicReadBobWrite/test.txt`);
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(`${testFolderUrl}3/publicReadBobWrite/test.txt`);
-      expect(result.headers.get('Link')).toNotContain(aclDocUrl);
+      expect(result.headers.get('Link')).not.toContain(aclDocUrl);
     });
   });
 });

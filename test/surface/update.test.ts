@@ -833,7 +833,7 @@ describe('Update', () => {
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
-      expect(responseCodeGroup(result.status).toEqual("2xx"));
+      expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
   });
 });
