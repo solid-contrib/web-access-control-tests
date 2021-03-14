@@ -49,5 +49,6 @@ export STORAGE_ROOT_ALICE=$SYSTEM_UNDER_TEST/
 # npm run jest "$@"
 # DEBUG=*
 export INCLUDE_MAY=1
+mkdir -p ../test-suite/CSS
 npm run jest -- --verbose --json --outputFile="$RESULTS_PATH" "$@"
 

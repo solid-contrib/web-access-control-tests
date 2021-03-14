@@ -196,7 +196,7 @@ describe('From default', () => {
     it(`Shows the Link header containing the aclDocUrl to Alice`, async () => {
       const result = await solidLogicBob.fetch(`${testFolderUrl}3/publicReadBobWrite/test.txt`);
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(`${testFolderUrl}3/publicReadBobWrite/test.txt`);
-      expect(result.headers.get('Link')).toContain(aclDocUrl);
+      expect(result.headers.get('Link')).toMatch(aclDocUrl.split('/').pop());
     });
     // DISPUTED: See https://github.com/solid/specification/pull/248
     it.skip(`Does not show a Link header containing the aclDocUrl to the public`, async () => {
