@@ -47,4 +47,5 @@ export STORAGE_ROOT_ALICE=$SYSTEM_UNDER_TEST/
 # npm run jest -- --json --outputFile="$RESULTS_PATH" "$@"
 
 export INCLUDE_MAY=1
+mkdir -p ../test-suite/NSS
 ./node_modules/.bin/jest test/surface/ --json --outputFile="$RESULTS_PATH" "$@"

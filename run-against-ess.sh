@@ -40,6 +40,7 @@ echo WebID: $WEBID_BOB
 
 export STORAGE_ROOT_ALICE=$SYSTEM_UNDER_TEST/
 
-
+export DEBUG=*
 export INCLUDE_MAY=1
+mkdir -p ../test-suite/ESS
 ./node_modules/.bin/jest test/surface/ --json --outputFile="../test-suite/ESS/wac-results.json"
