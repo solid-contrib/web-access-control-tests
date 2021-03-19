@@ -206,11 +206,5 @@ describe('From default', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(docUrl);
       expect(aclResult.toString()).toBe(aclDocUrl);
     });
-    // DISPUTED: See https://github.com/solid/specification/pull/248
-    it.skip(`Does not show a Link header containing the aclDocUrl to the public`, async () => {
-      const result = await solidLogicBob.fetch(`${testFolderUrl}3/publicReadBobWrite/test.txt`);
-      const aclDocUrl = await solidLogicAlice.findAclDocUrl(`${testFolderUrl}3/publicReadBobWrite/test.txt`);
-      expect(result.headers.get('Link')).not.toContain(aclDocUrl);
-    });
   });
 });
