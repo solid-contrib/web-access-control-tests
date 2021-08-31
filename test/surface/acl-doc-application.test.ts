@@ -1,5 +1,5 @@
 import { SolidLogic } from 'solid-logic';
-import { generateTestFolder, getSolidLogicInstance, WEBID_ALICE } from '../helpers/env';
+import { generateTestFolder, getSolidLogicInstance, WEBID_ALICE, WEBID_BOB } from '../helpers/env';
 import { responseCodeGroup } from '../helpers/util';
 
 function getAclBody(aliceWebId: string, bobWebId: string, target: string, bobAccessTo: string[], bobDefault: string[]) {
@@ -51,7 +51,7 @@ describe('ACL doc application', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(`${testFolderUrl}denied/`);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: getAclBody(solidLogicAlice.me, solidLogicBob.me, containerUrl, [], []),
+        body: getAclBody(WEBID_ALICE, WEBID_BOB, containerUrl, [], []),
         headers: {
           'Content-Type': 'text/turtle'
         }
@@ -94,7 +94,7 @@ describe('ACL doc application', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: getAclBody(solidLogicAlice.me, solidLogicBob.me, containerUrl, ['acl:Read'], []),
+        body: getAclBody(WEBID_ALICE, WEBID_BOB, containerUrl, ['acl:Read'], []),
         headers: {
           'Content-Type': 'text/turtle'
         }
@@ -137,7 +137,7 @@ describe('ACL doc application', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: getAclBody(solidLogicAlice.me, solidLogicBob.me, containerUrl, [], ['acl:Read']),
+        body: getAclBody(WEBID_ALICE, WEBID_BOB, containerUrl, [], ['acl:Read']),
         headers: {
           'Content-Type': 'text/turtle'
         }
