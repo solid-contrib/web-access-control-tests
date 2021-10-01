@@ -150,17 +150,17 @@ describe('ACL doc application', () => {
     afterAll(() => {
       return solidLogicAlice.recursiveDelete(testFolderUrl);
     });
-    it('does not allow GET accessTo/', async () => {
+    it('does not allow GET default/', async () => {
       const result = await solidLogicBob.fetch(containerUrl);
       expect(result.status).toEqual(403);
     });
 
-    it('allows GET accessTo/noAclDoc/', async () => {
+    it('allows GET default/noAclDoc/', async () => {
       const result = await solidLogicBob.fetch(`${containerUrl}noAclDoc/`);
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
 
-    it('allows GET accessTo/noAclDoc/noAclDoc.txt', async () => {
+    it('allows GET default/noAclDoc/noAclDoc.txt', async () => {
       const result = await solidLogicBob.fetch(`${containerUrl}noAclDoc/noAclDoc.txt`);
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
