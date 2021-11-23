@@ -54,7 +54,7 @@ describe('Delete', () => {
     return solidLogicAlice.recursiveDelete(testFolderUrl);
   });
 
-  it.only('Is allowed with Write on parent and on resource', async () => {
+  it('Is allowed with Write on parent and on resource', async () => {
     const parentUrl = `${testFolderUrl}x/testDeleteOK/`;
     const resourceUrl = `${parentUrl}test.txt`;
     // This will do mkdir-p:
@@ -69,7 +69,7 @@ describe('Delete', () => {
     const aclDocUrl = await solidLogicAlice.findAclDocUrl(parentUrl);
     await solidLogicAlice.fetch(aclDocUrl, {
       method: 'PUT',
-      body: makeBody('acl:Write', 'acl:Write', resourceUrl),
+      body: makeBody('acl:Write', 'acl:Write', parentUrl),
       headers: {
         'Content-Type': 'text/turtle',
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
@@ -96,7 +96,7 @@ describe('Delete', () => {
     const aclDocUrl = await solidLogicAlice.findAclDocUrl(parentUrl);
     await solidLogicAlice.fetch(aclDocUrl, {
       method: 'PUT',
-      body: makeBody('acl:Write', null, resourceUrl),
+      body: makeBody('acl:Write', null, parentUrl),
       headers: {
         'Content-Type': 'text/turtle',
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
@@ -123,7 +123,7 @@ describe('Delete', () => {
     const aclDocUrl = await solidLogicAlice.findAclDocUrl(parentUrl);
     await solidLogicAlice.fetch(aclDocUrl, {
       method: 'PUT',
-      body: makeBody(null, 'acl:Write', resourceUrl),
+      body: makeBody(null, 'acl:Write', parentUrl),
       headers: {
         'Content-Type': 'text/turtle',
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
