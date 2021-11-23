@@ -55,7 +55,7 @@ describe('Delete', () => {
   });
 
   it('Is allowed with Write on parent and on resource', async () => {
-    const parentUrl = `${testFolderUrl}x/testDeleteOK/`;
+    const parentUrl = `${testFolderUrl}testDeleteOK/`;
     const resourceUrl = `${parentUrl}test.txt`;
     // This will do mkdir-p:
     const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
