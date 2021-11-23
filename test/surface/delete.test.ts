@@ -54,8 +54,9 @@ describe('Delete', () => {
     return solidLogicAlice.recursiveDelete(testFolderUrl);
   });
 
-  it('Is allowed with accessTo Write access on resource', async () => {
-    const resourceUrl = `${testFolderUrl}1/accessToAppend/test.txt`;
+  it.only('Is allowed with Write on parent and on resource', async () => {
+    const parentUrl = `${testFolderUrl}x/testDeleteOK/`;
+    const resourceUrl = `${parentUrl}test.txt`;
     // This will do mkdir-p:
     const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
       method: 'PUT',
@@ -65,7 +66,34 @@ describe('Delete', () => {
         'If-None-Match': '*'
       }
     });
-    const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
+    const aclDocUrl = await solidLogicAlice.findAclDocUrl(parentUrl);
+    await solidLogicAlice.fetch(aclDocUrl, {
+      method: 'PUT',
+      body: makeBody('acl:Write', 'acl:Write', resourceUrl),
+      headers: {
+        'Content-Type': 'text/turtle',
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
+        }
+    });
+    const result = await solidLogicBob.fetch(resourceUrl, {
+      method: 'DELETE'
+    });
+    expect(responseCodeGroup(result.status)).toEqual("2xx");
+  });
+
+  it('Is disallowed without Write resource', async () => {
+    const parentUrl = `${testFolderUrl}testDeleteWithoutResourceWrite/`;
+    const resourceUrl = `${parentUrl}test.txt`;
+    // This will do mkdir-p:
+    const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
+      method: 'PUT',
+      body: '<#hello> <#linked> <#world> .',
+      headers: {
+        'Content-Type': 'text/turtle',
+        'If-None-Match': '*'
+      }
+    });
+    const aclDocUrl = await solidLogicAlice.findAclDocUrl(parentUrl);
     await solidLogicAlice.fetch(aclDocUrl, {
       method: 'PUT',
       body: makeBody('acl:Write', null, resourceUrl),
@@ -77,38 +105,12 @@ describe('Delete', () => {
     const result = await solidLogicBob.fetch(resourceUrl, {
       method: 'DELETE'
     });
-    expect(responseCodeGroup(result.status)).toEqual("2xx");
-  });
-
-  it('Is disallowed with accessTo Read+Append+Control access on resource', async () => {
-    const resourceUrl = `${testFolderUrl}2/accessToAppend/test.txt`;
-    // This will do mkdir-p:
-    const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
-      method: 'PUT',
-      body: '<#hello> <#linked> <#world> .',
-      headers: {
-        'Content-Type': 'text/turtle',
-        'If-None-Match': '*'
-      }
-    });
-    const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
-    await solidLogicAlice.fetch(aclDocUrl, {
-      method: 'PUT',
-      body: makeBody('acl:Read, acl:Append, acl:Control', null, resourceUrl),
-      headers: {
-        'Content-Type': 'text/turtle',
-          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
-        }
-    });
-    const result = await solidLogicBob.fetch(resourceUrl, {
-      method: 'DELETE'
-    });
     expect(result.status).toEqual(403);
   });
 
-  it('Is allowed with default Write access on parent', async () => {
-    const containerUrl = `${testFolderUrl}3/accessToAppend/`;
-    const resourceUrl = `${containerUrl}test.txt`;
+  it('Is disallowed without Write on parent', async () => {
+    const parentUrl = `${testFolderUrl}testDeleteWithoutParentWrite/`;
+    const resourceUrl = `${parentUrl}test.txt`;
     // This will do mkdir-p:
     const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
       method: 'PUT',
@@ -118,39 +120,10 @@ describe('Delete', () => {
         'If-None-Match': '*'
       }
     });
-    const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
+    const aclDocUrl = await solidLogicAlice.findAclDocUrl(parentUrl);
     await solidLogicAlice.fetch(aclDocUrl, {
       method: 'PUT',
-      body: makeBody(null, 'acl:Write', containerUrl),
-      headers: {
-        'Content-Type': 'text/turtle',
-          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
-        }
-    });
-    const result = await solidLogicBob.fetch(resourceUrl, {
-      method: 'DELETE'
-    });
-    expect(responseCodeGroup(result.status)).toEqual("2xx");
-  });
-
-  it('Is disallowed with default Read+Append+Control access on parent', async () => {
-    const containerUrl = `${testFolderUrl}4/accessToAppend/`;
-    const resourceUrl = `${containerUrl}test.txt`;
-    // This will do mkdir-p:
-    const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
-      method: 'PUT',
-      body: '<#hello> <#linked> <#world> .',
-      headers: {
-        'Content-Type': 'text/turtle',
-        'If-None-Match': '*'
-      }
-    });
-    const etagInQuotes = creationResult.headers.get('etag');
-    // console.log({ etag: etagInQuotes });
-    const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
-    await solidLogicAlice.fetch(aclDocUrl, {
-      method: 'PUT',
-      body: makeBody(null, 'acl:Read, acl:Append, acl:Control', containerUrl),
+      body: makeBody(null, 'acl:Write', resourceUrl),
       headers: {
         'Content-Type': 'text/turtle',
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
