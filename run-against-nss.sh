@@ -3,13 +3,13 @@ set -e
 
 # npm ci
 
-export SYSTEM_UNDER_TEST=https://alice.localhost:8443
+export SYSTEM_UNDER_TEST=https://localhost:8443
 export HELP_SERVER_HOST=solidcommunity.net
 
 export OIDC_ISSUER_ALICE=https://localhost:8443
 export USERNAME_ALICE=alice
 export PASSWORD_ALICE=123
-export WEBID_ALICE=https://alice.localhost:8443/profile/card#me
+export WEBID_ALICE=https://localhost:8443/profile/card#me
 
 export OIDC_ISSUER_BOB=https://solidcommunity.net
 export USERNAME_BOB=solid-crud-tests-example-2
