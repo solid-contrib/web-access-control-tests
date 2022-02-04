@@ -598,7 +598,9 @@ describe('Update', () => {
       });
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
+        body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:deletes { <#hello> <#linked> <#world> . }",
         headers: {
           'Content-Type': 'application/text/n3'
         }
@@ -635,7 +637,9 @@ describe('Update', () => {
       }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
+        body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:deletes { <#hello> <#linked> <#world> . }",
         headers
       });
       expect(result.status).toEqual(403);
@@ -671,7 +675,9 @@ describe('Update', () => {
       }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
+        body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:deletes { <#hello> <#linked> <#world> . }",
         headers
       });
       expect(result.status).toEqual(403);
@@ -707,7 +713,9 @@ describe('Update', () => {
       }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
+        body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:deletes { <#hello> <#linked> <#world> . }",
         headers
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
@@ -743,7 +751,9 @@ describe('Update', () => {
       }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
+        body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:deletes { <#hello> <#linked> <#world> . }",
         headers
       });
       expect(result.status).toEqual(403);
@@ -781,7 +791,9 @@ describe('Update', () => {
       }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
+        body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:deletes { <#hello> <#linked> <#world> . }",
         headers
       });
       expect(result.status).toEqual(403);
