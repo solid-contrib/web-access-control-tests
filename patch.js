@@ -15,9 +15,12 @@ async function run(url) {
   const result = await fetcher.fetch(url, {
     method: 'PATCH',
     headers: {
-      'Content-Type': 'application/sparql-update'
+      "Content-Type": "text/n3",
     },
-    body: 'INSERT DATA { <#patch> <#to> <#create> . }'
+    body:
+    "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+    "#patch a solid:InsertDeletePatch;" +
+    "  solid:inserts { <#patch> <#to> <#create> .}.",
   });
   console.log(result.status, await result.text());
 }

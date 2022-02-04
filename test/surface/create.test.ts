@@ -289,10 +289,13 @@ describe('Create', () => {
       });
       const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
         method: 'PATCH',
-        body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'application/sparql-update'
-        }
+          "Content-Type": "text/n3",
+        },
+        body:
+        "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:inserts { <#hello> <#linked> <#world> .}.",
       });
       expect(responseCodeGroup(result.status)).toEqual('2xx');
     });
@@ -318,10 +321,13 @@ describe('Create', () => {
       });
       const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
         method: 'PATCH',
-        body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'application/sparql-update'
-        }
+          "Content-Type": "text/n3",
+        },
+        body:
+        "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:inserts { <#hello> <#linked> <#world> .}.",
       });
       expect(responseCodeGroup(result.status)).toEqual('2xx');
     });
@@ -350,10 +356,13 @@ describe('Create', () => {
 
       const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
         method: 'PATCH',
-        body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'application/sparql-update'
-        }
+          "Content-Type": "text/n3",
+        },
+        body:
+        "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:inserts { <#hello> <#linked> <#world> .}.",
       });
       expect(result.status).toEqual(403);
     });
@@ -380,10 +389,13 @@ describe('Create', () => {
       });
       const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
         method: 'PATCH',
-        body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'application/sparql-update'
-        }
+          "Content-Type": "text/n3",
+        },
+        body:
+        "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:inserts { <#hello> <#linked> <#world> .}.",
       });
       expect(result.status).toEqual(403);
     });
@@ -539,10 +551,13 @@ describe('Create', () => {
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {
         method: 'PATCH',
-        body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'application/sparql-update'
-        }
+          "Content-Type": "text/n3",
+        },
+        body:
+        "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:inserts { <#hello> <#linked> <#world> .}.",
       });
       expect(responseCodeGroup(result.status)).toEqual('2xx');
     });
@@ -568,10 +583,13 @@ describe('Create', () => {
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {
         method: 'PATCH',
-        body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'application/sparql-update'
-        }
+          "Content-Type": "text/n3",
+        },
+        body:
+        "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:inserts { <#hello> <#linked> <#world> .}.",
       });
       expect(responseCodeGroup(result.status)).toEqual('2xx');
     });
@@ -598,10 +616,13 @@ describe('Create', () => {
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {
         method: 'PATCH',
-        body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'application/sparql-update'
-        }
+          "Content-Type": "text/n3",
+        },
+        body:
+        "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:inserts { <#hello> <#linked> <#world> .}.",
       });
       expect(result.status).toEqual(403);
     });
@@ -628,10 +649,13 @@ describe('Create', () => {
       });
       const result = await solidLogicBob.fetch(`${containerUrl}nested/new.txt`, {
         method: 'PATCH',
-        body: 'INSERT DATA { <#hello> <#linked> <#world> . }',
         headers: {
-          'Content-Type': 'application/sparql-update'
-        }
+          "Content-Type": "text/n3",
+        },
+        body:
+        "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:inserts { <#hello> <#linked> <#world> .}.",
       });
       expect(result.status).toEqual(403);
     });
