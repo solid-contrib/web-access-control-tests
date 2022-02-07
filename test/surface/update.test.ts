@@ -602,7 +602,7 @@ describe('Update', () => {
         "#patch a solid:InsertDeletePatch;" +
         "  solid:deletes { <#hello> <#linked> <#world> . }",
         headers: {
-          'Content-Type': 'application/text/n3'
+          'Content-Type': 'text/n3'
         }
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
