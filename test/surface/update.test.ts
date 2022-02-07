@@ -784,7 +784,7 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/text/n3',
+        'Content-Type': 'text/n3',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
