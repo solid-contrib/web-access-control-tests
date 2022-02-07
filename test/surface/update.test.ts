@@ -367,14 +367,17 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'text/n3',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
       }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'INSERT DATA { <#how> <#are> <#you> . }',
+        body:
+        "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:inserts { <#how> <#are> <#you> . }",
         headers
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
@@ -402,14 +405,16 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'application/text/n3',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
       }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'INSERT DATA { <#how> <#are> <#you> . }',
+        body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:inserts { <#how> <#are> <#you> . }",
         headers
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
@@ -437,14 +442,16 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'text/n3',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
       }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'INSERT DATA { <#how> <#are> <#you> . }',
+        body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:inserts { <#how> <#are> <#you> . }",
         headers
       });
       expect(result.status).toEqual(403);
@@ -473,14 +480,16 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'text/n3',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
       }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'INSERT DATA { <#how> <#are> <#you> . }',
+        body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:inserts { <#how> <#are> <#you> . }",
         headers
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
@@ -509,14 +518,16 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'text/n3',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
       }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'INSERT DATA { <#how> <#are> <#you> . }',
+        body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:inserts { <#how> <#are> <#you> . }",
         headers
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
@@ -545,14 +556,16 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'text/n3',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
       }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'INSERT DATA { <#how> <#are> <#you> . }',
+        body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:inserts { <#how> <#are> <#you> . }",
         headers
       });
       expect(result.status).toEqual(403);
@@ -585,9 +598,11 @@ describe('Update', () => {
       });
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
+        body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:deletes { <#hello> <#linked> <#world> . }",
         headers: {
-          'Content-Type': 'application/sparql-update'
+          'Content-Type': 'text/n3'
         }
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
@@ -615,14 +630,16 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'text/n3',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
       }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
+        body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:deletes { <#hello> <#linked> <#world> . }",
         headers
       });
       expect(result.status).toEqual(403);
@@ -651,14 +668,16 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'text/n3',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
       }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
+        body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:deletes { <#hello> <#linked> <#world> . }",
         headers
       });
       expect(result.status).toEqual(403);
@@ -687,14 +706,16 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'text/n3',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
       }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
+        body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:deletes { <#hello> <#linked> <#world> . }",
         headers
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
@@ -723,14 +744,16 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'text/n3',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
       }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
+        body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:deletes { <#hello> <#linked> <#world> . }",
         headers
       });
       expect(result.status).toEqual(403);
@@ -761,14 +784,16 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/sparql-update',
+        'Content-Type': 'text/n3',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
       }
       const result = await solidLogicBob.fetch(resourceUrl, {
         method: 'PATCH',
-        body: 'DELETE DATA { <#hello> <#linked> <#world> . }',
+        body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
+        "#patch a solid:InsertDeletePatch;" +
+        "  solid:deletes { <#hello> <#linked> <#world> . }",
         headers
       });
       expect(result.status).toEqual(403);
