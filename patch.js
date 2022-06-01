@@ -18,9 +18,9 @@ async function run(url) {
       "Content-Type": "text/n3",
     },
     body:
-    "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
-    "#patch a solid:InsertDeletePatch;" +
-    "  solid:inserts { <#patch> <#to> <#create> .}.",
+    "@prefix solid: <http://www.w3.org/ns/solid/terms#>.\n" +
+    "<#patch> a solid:InsertDeletePatch;\n" +
+    "  solid:inserts { <#patch> <#to> <#create> .}.\n",
   });
   console.log(result.status, await result.text());
 }

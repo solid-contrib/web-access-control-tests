@@ -293,9 +293,9 @@ describe('Create', () => {
           "Content-Type": "text/n3",
         },
         body:
-        "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
-        "#patch a solid:InsertDeletePatch;" +
-        "  solid:inserts { <#hello> <#linked> <#world> .}.",
+        "@prefix solid: <http://www.w3.org/ns/solid/terms#>.\n" +
+        "<#patch> a solid:InsertDeletePatch;\n" +
+        "  solid:inserts { <#hello> <#linked> <#world> .}.\n",
       });
       expect(responseCodeGroup(result.status)).toEqual('2xx');
     });
@@ -325,9 +325,9 @@ describe('Create', () => {
           "Content-Type": "text/n3",
         },
         body:
-        "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
-        "#patch a solid:InsertDeletePatch;" +
-        "  solid:inserts { <#hello> <#linked> <#world> .}.",
+        "@prefix solid: <http://www.w3.org/ns/solid/terms#>.\n" +
+        "<#patch> a solid:InsertDeletePatch;\n" +
+        "  solid:inserts { <#hello> <#linked> <#world> .}.\n",
       });
       expect(responseCodeGroup(result.status)).toEqual('2xx');
     });
@@ -360,9 +360,9 @@ describe('Create', () => {
           "Content-Type": "text/n3",
         },
         body:
-        "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
-        "#patch a solid:InsertDeletePatch;" +
-        "  solid:inserts { <#hello> <#linked> <#world> .}.",
+        "@prefix solid: <http://www.w3.org/ns/solid/terms#>.\n" +
+        "<#patch> a solid:InsertDeletePatch;\n" +
+        "  solid:inserts { <#hello> <#linked> <#world> .}.\n",
       });
       expect(result.status).toEqual(403);
     });
@@ -393,9 +393,9 @@ describe('Create', () => {
           "Content-Type": "text/n3",
         },
         body:
-        "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
-        "#patch a solid:InsertDeletePatch;" +
-        "  solid:inserts { <#hello> <#linked> <#world> .}.",
+        "@prefix solid: <http://www.w3.org/ns/solid/terms#>.\n" +
+        "<#patch> a solid:InsertDeletePatch;\n" +
+        "  solid:inserts { <#hello> <#linked> <#world> .}.\n",
       });
       expect(result.status).toEqual(403);
     });
@@ -555,9 +555,9 @@ describe('Create', () => {
           "Content-Type": "text/n3",
         },
         body:
-        "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
-        "#patch a solid:InsertDeletePatch;" +
-        "  solid:inserts { <#hello> <#linked> <#world> .}.",
+        "@prefix solid: <http://www.w3.org/ns/solid/terms#>.\n" +
+        "<#patch> a solid:InsertDeletePatch;\n" +
+        "  solid:inserts { <#hello> <#linked> <#world> .}.\n",
       });
       expect(responseCodeGroup(result.status)).toEqual('2xx');
     });
@@ -587,9 +587,9 @@ describe('Create', () => {
           "Content-Type": "text/n3",
         },
         body:
-        "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
-        "#patch a solid:InsertDeletePatch;" +
-        "  solid:inserts { <#hello> <#linked> <#world> .}.",
+        "@prefix solid: <http://www.w3.org/ns/solid/terms#>.\n" +
+        "<#patch> a solid:InsertDeletePatch;\n" +
+        "  solid:inserts { <#hello> <#linked> <#world> .}.\n",
       });
       expect(responseCodeGroup(result.status)).toEqual('2xx');
     });
@@ -620,9 +620,9 @@ describe('Create', () => {
           "Content-Type": "text/n3",
         },
         body:
-        "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
-        "#patch a solid:InsertDeletePatch;" +
-        "  solid:inserts { <#hello> <#linked> <#world> .}.",
+        "@prefix solid: <http://www.w3.org/ns/solid/terms#>.\n" +
+        "<#patch> a solid:InsertDeletePatch;\n" +
+        "  solid:inserts { <#hello> <#linked> <#world> .}.\n",
       });
       expect(result.status).toEqual(403);
     });
@@ -653,9 +653,9 @@ describe('Create', () => {
           "Content-Type": "text/n3",
         },
         body:
-        "@prefix solid: <http://www.w3.org/ns/solid/terms#>." +
-        "#patch a solid:InsertDeletePatch;" +
-        "  solid:inserts { <#hello> <#linked> <#world> .}.",
+        "@prefix solid: <http://www.w3.org/ns/solid/terms#>.\n" +
+        "<#patch> a solid:InsertDeletePatch;\n" +
+        "  solid:inserts { <#hello> <#linked> <#world> .}.\n",
       });
       expect(result.status).toEqual(403);
     });
