@@ -81,7 +81,7 @@ describe('Delete', () => {
     expect(responseCodeGroup(result.status)).toEqual("2xx");
   });
 
-  it('Is disallowed without Write resource', async () => {
+  it('Is disallowed without Write on resource', async () => {
     const parentUrl = `${testFolderUrl}testDeleteWithoutResourceWrite/`;
     const resourceUrl = `${parentUrl}test.txt`;
     // This will do mkdir-p:
