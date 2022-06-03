@@ -9,7 +9,7 @@ export HELP_SERVER_HOST=solidcommunity.net
 export OIDC_ISSUER_ALICE=https://localhost:8443
 export USERNAME_ALICE=alice
 export PASSWORD_ALICE=123
-export WEBID_ALICE=https://localhost:8443/profile/card#me
+export WEBID_ALICE=https://$USERNAME_ALICE.localhost:8443/profile/card#me
 
 export OIDC_ISSUER_BOB=https://solidcommunity.net
 export USERNAME_BOB=solid-crud-tests-example-2
@@ -40,12 +40,12 @@ echo WebID: $WEBID_BOB
 
 export NODE_TLS_REJECT_UNAUTHORIZED=0
 
-export STORAGE_ROOT_ALICE=$SYSTEM_UNDER_TEST/
+export STORAGE_ROOT_ALICE=https://$USERNAME_ALICE.localhost:8443/
 
 
 # npm run jest "$@"
 # npm run jest -- --json --outputFile="$RESULTS_PATH" "$@"
-
+export SKIP_CONC=1
 export INCLUDE_MAY=1
 mkdir -p ../test-suite/NSS
 ./node_modules/.bin/jest test/surface/ --json --outputFile="$RESULTS_PATH" "$@"
