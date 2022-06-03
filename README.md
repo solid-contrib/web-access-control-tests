@@ -8,9 +8,14 @@ Start your server with a self-signed cert on port 443 of localhost (for node-sol
 ### Against NSS
 In one terminal window:
 * cd to your checkout of solid/node-solid-server and `npm install`
-* Generate a self-signed certificate with 
+* Generate a self-signed certificate with `$ openssl req -outform PEM -keyform PEM -new -x509 -sha256 -newkey rsa:2048 -nodes -keyout ../privkey.pem -days 365 -out ../fullchain.pem
+  `
 * Install NSS with all the defaults by running `./bin/solid-test init`
+* Run this command when working with self-signed certificate `export NODE_TLS_REJECT_UNAUTHORIZED=0`
 * Run NSS with `ACL_CACHE_TIME=0 ./bin/solid-test start`
+* Open Https://localhost:8443 in your browser 
+* Click on Register and create an account for alice
+* Set Username and password for new account in `./run-against-nss.sh` configs
 In another window:
 * cd to your checkout of solid/web-access-control-tests and `npm install`
 * Run `./run-against-nss.sh`
