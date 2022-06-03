@@ -377,7 +377,7 @@ describe('Update', () => {
         body:
         "@prefix solid: <http://www.w3.org/ns/solid/terms#>.\n" +
         "<#patch> a solid:InsertDeletePatch;\n" +
-        "  solid:inserts { <#how> <#are> <#you> . }\n",
+        "  solid:inserts { <#how> <#are> <#you> . }.\n",
         headers
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
@@ -405,7 +405,7 @@ describe('Update', () => {
         }
       });
       const headers = {
-        'Content-Type': 'application/text/n3',
+        'Content-Type': 'text/n3',
       };
       if (etagInQuotes) {
         headers['If-Match'] = etagInQuotes
@@ -414,7 +414,7 @@ describe('Update', () => {
         method: 'PATCH',
         body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>.\n" +
         "<#patch> a solid:InsertDeletePatch;\n" +
-        "  solid:inserts { <#how> <#are> <#you> . }\n",
+        "  solid:inserts { <#how> <#are> <#you> . }.\n",
         headers
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
@@ -451,7 +451,7 @@ describe('Update', () => {
         method: 'PATCH',
         body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>.\n" +
         "<#patch> a solid:InsertDeletePatch;\n" +
-        "  solid:inserts { <#how> <#are> <#you> . }\n",
+        "  solid:inserts { <#how> <#are> <#you> . }.\n",
         headers
       });
       expect(result.status).toEqual(403);
@@ -489,7 +489,7 @@ describe('Update', () => {
         method: 'PATCH',
         body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>.\n" +
         "<#patch> a solid:InsertDeletePatch;\n" +
-        "  solid:inserts { <#how> <#are> <#you> . }\n",
+        "  solid:inserts { <#how> <#are> <#you> . }.\n",
         headers
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
@@ -527,7 +527,7 @@ describe('Update', () => {
         method: 'PATCH',
         body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>.\n" +
         "<#patch> a solid:InsertDeletePatch;\n" +
-        "  solid:inserts { <#how> <#are> <#you> . }\n",
+        "  solid:inserts { <#how> <#are> <#you> . }.\n",
         headers
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
@@ -565,7 +565,7 @@ describe('Update', () => {
         method: 'PATCH',
         body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>.\n" +
         "<#patch> a solid:InsertDeletePatch;\n" +
-        "  solid:inserts { <#how> <#are> <#you> . }\n",
+        "  solid:inserts { <#how> <#are> <#you> . }.\n",
         headers
       });
       expect(result.status).toEqual(403);
@@ -600,7 +600,7 @@ describe('Update', () => {
         method: 'PATCH',
         body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>.\n" +
         "<#patch> a solid:InsertDeletePatch;\n" +
-        "  solid:deletes { <#hello> <#linked> <#world> . }\n",
+        "  solid:deletes { <#hello> <#linked> <#world> . }.\n",
         headers: {
           'Content-Type': 'text/n3'
         }
@@ -639,7 +639,7 @@ describe('Update', () => {
         method: 'PATCH',
         body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>.\n" +
         "<#patch> a solid:InsertDeletePatch;\n" +
-        "  solid:deletes { <#hello> <#linked> <#world> . }\n",
+        "  solid:deletes { <#hello> <#linked> <#world> . }.\n",
         headers
       });
       expect(result.status).toEqual(403);
@@ -677,7 +677,7 @@ describe('Update', () => {
         method: 'PATCH',
         body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>.\n" +
         "<#patch> a solid:InsertDeletePatch;\n" +
-        "  solid:deletes { <#hello> <#linked> <#world> . }\n",
+        "  solid:deletes { <#hello> <#linked> <#world> . }.\n",
         headers
       });
       expect(result.status).toEqual(403);
@@ -715,7 +715,7 @@ describe('Update', () => {
         method: 'PATCH',
         body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>.\n" +
         "<#patch> a solid:InsertDeletePatch;\n" +
-        "  solid:deletes { <#hello> <#linked> <#world> . }\n",
+        "  solid:deletes { <#hello> <#linked> <#world> . }.\n",
         headers
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
@@ -753,7 +753,7 @@ describe('Update', () => {
         method: 'PATCH',
         body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>.\n" +
         "<#patch> a solid:InsertDeletePatch;\n" +
-        "  solid:deletes { <#hello> <#linked> <#world> . }\n",
+        "  solid:deletes { <#hello> <#linked> <#world> . }.\n",
         headers
       });
       expect(result.status).toEqual(403);
@@ -793,7 +793,7 @@ describe('Update', () => {
         method: 'PATCH',
         body: "@prefix solid: <http://www.w3.org/ns/solid/terms#>.\n" +
         "<#patch> a solid:InsertDeletePatch;\n" +
-        "  solid:deletes { <#hello> <#linked> <#world> . }\n",
+        "  solid:deletes { <#hello> <#linked> <#world> . }.\n",
         headers
       });
       expect(result.status).toEqual(403);
