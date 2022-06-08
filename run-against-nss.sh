@@ -45,7 +45,6 @@ export STORAGE_ROOT_ALICE=https://$USERNAME_ALICE.localhost:8443/
 
 # npm run jest "$@"
 # npm run jest -- --json --outputFile="$RESULTS_PATH" "$@"
-export SKIP_CONC=1
 export INCLUDE_MAY=1
 mkdir -p ../test-suite/NSS
 ./node_modules/.bin/jest test/surface/ --json --outputFile="$RESULTS_PATH" "$@"
