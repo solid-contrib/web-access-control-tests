@@ -185,9 +185,11 @@ describe('Create', () => {
       });
     }
     testAllowed('Write', 'Write');
+    testAllowed('Write', 'Append');
     testAllowed('Append', 'Write');
+    testAllowed('Append', 'Append');
 
-    it(`is disallowed without default Write`, async () => {
+    it(`is disallowed without default Write or Append`, async () => {
       const testing = `test-disallowed-default`;
       const containerUrl = makeContainerUrl(testFolderUrl, using, testing);
       // This will do mkdir-p:
@@ -202,7 +204,7 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Append, acl:Control', containerUrl),
+        body: makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
@@ -290,9 +292,11 @@ describe('Create', () => {
       });
     }
     testAllowed('Write', 'Write');
+    testAllowed('Write', 'Append');
     testAllowed('Append', 'Write');
+    testAllowed('Append', 'Append');
 
-    it(`is disallowed without default Write`, async () => {
+    it(`is disallowed without default Write or Append`, async () => {
       const testing = `test-disallowed-default`;
       const containerUrl = makeContainerUrl(testFolderUrl, using, testing);
       // This will do mkdir-p:
@@ -307,7 +311,7 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Append, acl:Control', containerUrl),
+        body: makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
@@ -400,9 +404,11 @@ describe('Create', () => {
       });
     }
     testAllowed('Write', 'Write');
+    testAllowed('Write', 'Append');
     testAllowed('Append', 'Write');
+    testAllowed('Append', 'Append');
 
-    it(`is disallowed without default Write`, async () => {
+    it(`is disallowed without default Write or Append`, async () => {
       const testing = `disallowed-default`;
       const containerUrl = makeContainerUrl(testFolderUrl, using, testing);
       // This will do mkdir-p:
@@ -417,7 +423,7 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Append, acl:Control', containerUrl),
+        body: makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
@@ -507,10 +513,12 @@ describe('Create', () => {
       });
     }
     testAllowed('Write', 'Write');
+    testAllowed('Write', 'Append');
     testAllowed('Append', 'Write');
+    testAllowed('Append', 'Append');
 
 
-    it(`is disallowed without default Write`, async () => {
+    it(`is disallowed without default Write or Append`, async () => {
       const testing = `disallowed-default`;
       const containerUrl = makeContainerUrl(testFolderUrl, using, testing);
       // This will do mkdir-p:
@@ -525,7 +533,7 @@ describe('Create', () => {
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
       await solidLogicAlice.fetch(aclDocUrl, {
         method: 'PUT',
-        body: makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Append, acl:Control', containerUrl),
+        body: makeBody('acl:Read, acl:Append, acl:Write, acl:Control', 'acl:Read, acl:Control', containerUrl),
         headers: {
           'Content-Type': 'text/turtle',
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
