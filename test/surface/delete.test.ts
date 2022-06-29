@@ -4,34 +4,35 @@ import { responseCodeGroup } from '../helpers/util';
 
 jest.setTimeout(10000);
 
-function makeBody(accessToModes: string, defaultModes: string, target: string) {
+function makeBody(params: {containerModes: string, resourceModes: string, target: string }) {
   let str = [
     '@prefix acl: <http://www.w3.org/ns/auth/acl#>.',
     '',
     `<#alice> a acl:Authorization;\n  acl:agent <${WEBID_ALICE}>;`,
-    `  acl:accessTo <${target}>;`,
-    `  acl:default <${target}>;`,
+    `  acl:accessTo <${params.target}>;`,
+    `  acl:default <${params.target}>;`,
     '  acl:mode acl:Read, acl:Write, acl:Control.',
     ''
   ].join('\n')
-  if (accessToModes) {
+  if (params.containerModes) {
     str += [
       '<#bobAccessTo> a acl:Authorization;',
       `  acl:agent <${WEBID_BOB}>;`,
-      `  acl:accessTo <${target}>;`,
-      `  acl:mode ${accessToModes}.`,
+      `  acl:accessTo <${params.target}>;`,
+      `  acl:mode ${params.containerModes}.`,
       ''
     ].join('\n')
   }
-  if (defaultModes) {
+  if (params.resourceModes) {
     str += [
       '<#bobDefault> a acl:Authorization;',
       `  acl:agent <${WEBID_BOB}>;`,
-      `  acl:default <${target}>;`,
-      `  acl:mode ${defaultModes}.`,
+      `  acl:default <${params.target}>;`,
+      `  acl:mode ${params.resourceModes}.`,
       ''
     ].join('\n')
   }
+  // console.log(str);
   return str
 }
 
@@ -69,7 +70,11 @@ describe('Delete', () => {
     const aclDocUrl = await solidLogicAlice.findAclDocUrl(parentUrl);
     await solidLogicAlice.fetch(aclDocUrl, {
       method: 'PUT',
-      body: makeBody('acl:Write', 'acl:Write', parentUrl),
+      body: makeBody({
+        containerModes: 'acl:Write',
+        resourceModes: 'acl:Write',
+        target: parentUrl
+      }),
       headers: {
         'Content-Type': 'text/turtle',
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
@@ -96,7 +101,11 @@ describe('Delete', () => {
     const aclDocUrl = await solidLogicAlice.findAclDocUrl(parentUrl);
     await solidLogicAlice.fetch(aclDocUrl, {
       method: 'PUT',
-      body: makeBody('acl:Write', null, parentUrl),
+      body: makeBody({
+        containerModes: 'acl:Write',
+        resourceModes: null,
+        target: parentUrl
+      }),
       headers: {
         'Content-Type': 'text/turtle',
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
@@ -123,7 +132,11 @@ describe('Delete', () => {
     const aclDocUrl = await solidLogicAlice.findAclDocUrl(parentUrl);
     await solidLogicAlice.fetch(aclDocUrl, {
       method: 'PUT',
-      body: makeBody(null, 'acl:Write', parentUrl),
+      body: makeBody({
+        containerModes: null,
+        resourceModes: 'acl:Write',
+        target: parentUrl
+      }),
       headers: {
         'Content-Type': 'text/turtle',
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
