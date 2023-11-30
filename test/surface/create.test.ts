@@ -313,7 +313,7 @@ describe('Create', () => {
     testAllowed('Write', 'Write');
     testAllowed('Append', 'Write');
 
-    it(`is disallowed without Write on c/r`, async () => {
+    it(`is allowed with Append on c/r`, async () => {
       const testing = `test-disallowed-default`;
       const containerUrl = makeContainerUrl(testFolderUrl, using, testing);
       // This will do mkdir-p:
@@ -350,7 +350,7 @@ describe('Create', () => {
         "<#patch> a solid:InsertDeletePatch;\n" +
         "  solid:inserts { <#hello> <#linked> <#world> .}.\n",
       });
-      expect(result.status).toEqual(403);
+      expect(result.status).toEqual(200);
     });
 
     it(`is disallowed without Write or Append on c/`, async () => {
@@ -554,7 +554,7 @@ describe('Create', () => {
     testAllowed('Write', 'Write');
     testAllowed('Append', 'Write');
 
-    it(`is disallowed without Write on c/r`, async () => {
+    it(`is allowed with Append on c/r`, async () => {
       const testing = `disallowed-default`;
       const containerUrl = makeContainerUrl(testFolderUrl, using, testing);
       // This will do mkdir-p:
@@ -589,10 +589,10 @@ describe('Create', () => {
         "<#patch> a solid:InsertDeletePatch;\n" +
         "  solid:inserts { <#hello> <#linked> <#world> .}.\n",
       });
-      expect(result.status).toEqual(403);
+      expect(result.status).toEqual(200);
     });
 
-    it(`is disallowed without Write or Append on c/`, async () => {
+    it(`is allowed with Append on c/`, async () => {
       const testing = `disallowed-default`;
       const containerUrl = makeContainerUrl(testFolderUrl, using, testing);
       // This will do mkdir-p:
@@ -627,7 +627,7 @@ describe('Create', () => {
         "<#patch> a solid:InsertDeletePatch;\n" +
         "  solid:inserts { <#hello> <#linked> <#world> .}.\n",
       });
-      expect(result.status).toEqual(403);
+      expect(result.status).toEqual(200);
     });
   });
 });
