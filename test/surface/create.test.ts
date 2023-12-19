@@ -197,7 +197,7 @@ describe('Create', () => {
     testAllowed('Append', 'Write');
 
     it(`is allowed with Append on c/r (create new resource)`, async () => {
-      const testing = `test-disallowed-default`;
+      const testing = `allowed-default`;
       const containerUrl = makeContainerUrl(testFolderUrl, using, testing);
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -350,7 +350,7 @@ describe('Create', () => {
     testAllowed('Append', 'Write');
 
     it(`is allowed with Append on c/r`, async () => {
-      const testing = `test-disallowed-default`;
+      const testing = `allowed-default`;
       const containerUrl = makeContainerUrl(testFolderUrl, using, testing);
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -472,7 +472,7 @@ describe('Create', () => {
     testAllowed('Append', 'Write');
 
     it(`is allowed with Append on c/r (create new resource)`, async () => {
-      const testing = `disallowed-default`;
+      const testing = `allowed-default`;
       const containerUrl = makeContainerUrl(testFolderUrl, using, testing);
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -591,7 +591,7 @@ describe('Create', () => {
     testAllowed('Append', 'Write');
 
     it(`is allowed with Append on c/r`, async () => {
-      const testing = `disallowed-default`;
+      const testing = `allowed-default`;
       const containerUrl = makeContainerUrl(testFolderUrl, using, testing);
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
@@ -629,7 +629,7 @@ describe('Create', () => {
     });
 
     it(`is allowed with Append on c/`, async () => {
-      const testing = `disallowed-default`;
+      const testing = `allowed-default`;
       const containerUrl = makeContainerUrl(testFolderUrl, using, testing);
       // This will do mkdir-p:
       await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
