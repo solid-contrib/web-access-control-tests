@@ -196,7 +196,43 @@ describe('Create', () => {
     testAllowed('Write', 'Write');
     testAllowed('Append', 'Write');
 
-    it(`is disallowed without Write on c/r`, async () => {
+    it(`is allowed with Append on c/r (create new resource)`, async () => {
+      const testing = `test-disallowed-default`;
+      const containerUrl = makeContainerUrl(testFolderUrl, using, testing);
+      // This will do mkdir-p:
+      await solidLogicAlice.fetch(`${containerUrl}test.txt`, {
+        method: 'PUT',
+        body: 'hello',
+        headers: {
+          'Content-Type': 'text/plain',
+          'If-None-Match': '*'
+        }
+      });
+      const aclDocUrl = await solidLogicAlice.findAclDocUrl(containerUrl);
+      await solidLogicAlice.fetch(aclDocUrl, {
+        method: 'PUT',
+        body: makeBody({
+          containerModes: 'acl:Read, acl:Append, acl:Write, acl:Control',
+          resourceModes: 'acl:Read, acl:Append, acl:Control',
+          target: containerUrl
+        }),
+        headers: {
+          'Content-Type': 'text/turtle',
+          // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
+        }
+      });
+      const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
+        method: 'PUT',
+        body: 'hello',
+        headers: {
+          'Content-Type': 'text/plain',
+          'If-None-Match': '*'
+        }
+      });
+      expect(result.status).toEqual(201);
+    });
+
+    it(`is disallowed with Append on c/r (existing resource)`, async () => {
       const testing = `test-disallowed-default`;
       const containerUrl = makeContainerUrl(testFolderUrl, using, testing);
       // This will do mkdir-p:
@@ -435,7 +471,7 @@ describe('Create', () => {
     testAllowed('Write', 'Write');
     testAllowed('Append', 'Write');
 
-    it(`is disallowed without Write on c/r`, async () => {
+    it(`is allowed with Append on c/r (create new resource)`, async () => {
       const testing = `disallowed-default`;
       const containerUrl = makeContainerUrl(testFolderUrl, using, testing);
       // This will do mkdir-p:
@@ -468,7 +504,7 @@ describe('Create', () => {
           'If-None-Match': '*'
         }
       });
-      expect(result.status).toEqual(403);
+      expect(result.status).toEqual(201);
     });
 
     it(`is disallowed without Write or Append on c/`, async () => {
