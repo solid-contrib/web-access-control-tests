@@ -257,7 +257,7 @@ describe('Create', () => {
           // 'If-None-Match': '*' - work around a bug in some servers that don't support If-None-Match on ACL doc URLs
         }
       });
-      const result = await solidLogicBob.fetch(`${containerUrl}new.txt`, {
+      const result = await solidLogicBob.fetch(`${containerUrl}test.txt`, {
         method: 'PUT',
         body: 'hello',
         headers: {
