@@ -262,7 +262,7 @@ describe('Create', () => {
         body: 'hello',
         headers: {
           'Content-Type': 'text/plain',
-          'If-None-Match': '*'
+          // 'If-None-Match': '*'  // precondition may be tested before and return 412
         }
       });
       expect(result.status).toEqual(403);
