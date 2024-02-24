@@ -153,7 +153,7 @@ describe('Read-Public', () => {
   it('Is allowed with accessTo Read access on container resource', async () => {
     const resourceUrl = `${testFolderUrl}5/test/`;
     // This will do mkdir-p:
-    const creationResult =  await solidLogicAlice.fetch(`${resourceUrl}.dummy`, {
+    const creationResult =  await solidLogicAlice.fetch(`${resourceUrl}`, {
       method: 'PUT',
       body: '<#hello> <#linked> <#world> .',
       headers: {
@@ -177,7 +177,7 @@ describe('Read-Public', () => {
   it('Is disallowed with accessTo Append+Write+Control access on non-container resource', async () => {
     const resourceUrl = `${testFolderUrl}6/test/`;
     // This will do mkdir-p:
-    const creationResult =  await solidLogicAlice.fetch(`${resourceUrl}.dummy`, {
+    const creationResult =  await solidLogicAlice.fetch(`${resourceUrl}`, {
       method: 'PUT',
       body: '<#hello> <#linked> <#world> .',
       headers: {
@@ -202,7 +202,7 @@ describe('Read-Public', () => {
     const containerUrl = `${testFolderUrl}7/`;
     const resourceUrl = `${containerUrl}test/`;
     // This will do mkdir-p:
-    const creationResult =  await solidLogicAlice.fetch(`${resourceUrl}.dummy`, {
+    const creationResult =  await solidLogicAlice.fetch(`${resourceUrl}`, {
       method: 'PUT',
       body: '<#hello> <#linked> <#world> .',
       headers: {
@@ -227,7 +227,7 @@ describe('Read-Public', () => {
     const containerUrl = `${testFolderUrl}8/`;
     const resourceUrl = `${containerUrl}test/`;
     // This will do mkdir-p:
-    const creationResult =  await solidLogicAlice.fetch(`${resourceUrl}.dummy`, {
+    const creationResult =  await solidLogicAlice.fetch(`${resourceUrl}`, {
       method: 'PUT',
       body: '<#hello> <#linked> <#world> .',
       headers: {
