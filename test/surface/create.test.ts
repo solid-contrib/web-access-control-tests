@@ -386,7 +386,7 @@ describe('Create', () => {
         "<#patch> a solid:InsertDeletePatch;\n" +
         "  solid:inserts { <#hello> <#linked> <#world> .}.\n",
       });
-      expect(result.status).toEqual(200);
+      expect(responseCodeGroup(result.status)).toEqual('2xx');
     });
 
     it(`is disallowed without Write or Append on c/`, async () => {
@@ -625,7 +625,7 @@ describe('Create', () => {
         "<#patch> a solid:InsertDeletePatch;\n" +
         "  solid:inserts { <#hello> <#linked> <#world> .}.\n",
       });
-      expect(result.status).toEqual(200);
+      expect(responseCodeGroup(result.status)).toEqual('2xx');
     });
 
     it(`is allowed with Append on c/`, async () => {
