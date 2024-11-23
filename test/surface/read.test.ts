@@ -150,7 +150,7 @@ describe('Read', () => {
     expect(result.status).toEqual(403);
   });
 
-  it('Is allowed with accessTo Read access on container resource', async () => { // alain
+  it('Is allowed with accessTo Read access on container resource', async () => {
     const resourceUrl = `${testFolderUrl}5/test/`;
     // This will do mkdir-p:
     const creationResult =  await solidLogicAlice.fetch(`${resourceUrl}`, {
