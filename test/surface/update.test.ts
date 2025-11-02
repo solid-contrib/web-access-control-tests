@@ -211,6 +211,7 @@ describe('Update', () => {
           'If-None-Match': '*'
         }
       });
+      // expect(creationResult.status).toEqual(201);
       const etagInQuotes = creationResult.headers.get('etag');
       // console.log({ etag: etagInQuotes });
       const aclDocUrl = await solidLogicAlice.findAclDocUrl(resourceUrl);
@@ -235,6 +236,19 @@ describe('Update', () => {
       });
       expect(responseCodeGroup(result.status)).toEqual("2xx");
     });
+    it('Fails on if-none-match asterisk precondition on existing resource', async () => {
+      const resourceUrl = `${testFolderUrl}5/test.txt`;
+      // This will do mkdir-p:
+      const creationResult =  await solidLogicAlice.fetch(resourceUrl, {
+        method: 'PUT',
+        body: 'hello',
+        headers: {
+          'Content-Type': 'text/plain',
+          'If-None-Match': '*'
+        }
+      });
+      expect(creationResult.status).toEqual(412);
+    })
     it('Is disallowed with accessTo Read+Append+Control access on resource', async () => {
       const resourceUrl = `${testFolderUrl}6/test.txt`;
       // This will do mkdir-p:
